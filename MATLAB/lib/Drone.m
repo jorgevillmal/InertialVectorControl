@@ -426,157 +426,157 @@ classdef Drone < handle
              %**********************************************************%
 
 
-             % Trayectoria de actitud deseada
-             c_3 = obj.T/norm(obj.T);
-             c_2 = cross(c_3,c_d)/norm(cross(c_3,c_d));
-             c_1 = cross(c_2,c_3);
-             obj.R_des = [c_1, c_2, c_3];
-             obj.dotR_des = gradient(obj.R_des);
-             obj.omega_des = veeMap(obj.R_des'*obj.dotR_des);
-
-
-             obj.v_d_i = obj.R_des'*obj.r_i;
-
-             % Vector aligment error
-
-             % Calcula epsilon(t) y z(t)
-
-             for i = 1:3  % Asumiendo que tienes 3 sensores
-                 obj.epsilon = obj.epsilon + obj.k_i * (1 - dot(obj.v_i(:,i), obj.v_d_i(:,i)));
-                 obj.z = obj.z + obj.k_i * cross(obj.v_i(:,i), obj.v_d_i(:,i));
-             end
-
-             % disp('********** Epsion y z ***************')
-             % disp(obj.epsilon);
-             % %disp(obj.z);
-             % disp('*************************************')
-
-             % Derivate epsilon(t) y z(t)
-
-             obj.dotEpsilon = obj.z' * (obj.omega - obj.omega_des);
-             obj.dotZ = obj.J * (obj.omega - obj.omega_des) + cross(obj.z,obj.omega_des);
-
-             % disp('********** Epsion y z  derivadas ***************')
-             % disp(obj.dotEpsilon);
-             % disp(obj.dotZ);
-             % disp('*************************************')
-
-
-             % Calculating J and implementing the equations
-
-             for i = 1:size(obj.v_d_i, 2)
-                 obj.J = obj.J + obj.k_i * wedgeMap(obj.v_d_i(:,i))' * wedgeMap(obj.v_d_i(:,i));
-             end
-
-             % disp('************* J *************')
-             % disp(obj.J)
-             % disp('*************************************')
-
-
-
-             %  gyro-bias observer
-
-             % Ecuación 1: \hat{b} = \dot{\bar{b}} - \sum ^n_{i =1} k_i(v^\wedge_{f,i})^T \Lambda_iv_i
-
-             sum_term = zeros(3,1);
-
-             for i = 1:3
-                 sum_term = sum_term + obj.k_i * wedgeMap(obj.v_f_i(:,i))' * obj.Lambda_i * obj.v_i(:,i);
-             end
-
-             obj.hat_b = obj.dot_bar_b - sum_term;
-
-             % disp('********** hat_b ***************')
-             % disp(obj.hat_b);
-             % disp('*************************************')
-
-
-
-             % angular velocity estimate
-
-             obj.omega_g = obj.omega + obj.b;
-
-             % disp('********** omega_g ***************')
-             % disp(obj.omega_g);
-             % disp('*************************************')
-
-             obj.hat_omega = obj.omega_g - obj.hat_b;
-
-             % disp('********** hat_omega_g ***************')
-             % disp(obj.hat_omega);
-             % disp('*************************************')
-
-
-              % Ecuación 2: \dot{\bar{b}} = K_f \hat{\omega} + \gamma_f \sum^n_{i=1} k_i (\Lambda_i v_i)^\wedge(v_i - v_{f,i})
-              sum_term = zeros(3,1);
-
-              for i = 1:3
-                  sum_term = sum_term + obj.k_i * cross((obj.Lambda_i * obj.v_i(:,i)),(obj.v_i(:,i) - obj.v_f_i(:,i)));
-              end
-
-              obj.dot_bar_b = obj.K_f * obj.hat_omega + obj.gamma_f * sum_term;
-
-
-              disp('********** dot_bar_b ***************')
-              disp(obj.dot_bar_b);
-              disp('*************************************')
-
-
-              obj.dot_v_f_i = obj.gamma_f * (obj.v_i - obj.v_f_i);
-
-
-
-             % for i = 1:3 % Asumiendo que tienes 3 sensores
-             %     obj.K_f = obj.K_f + obj.k_i * (wedgeMap(obj.v_f_i(:,i))' * obj.Lambda_i * wedgeMap(obj.v_i(:,i)));
+             % % Trayectoria de actitud deseada
+             % c_3 = obj.T/norm(obj.T);
+             % c_2 = cross(c_3,c_d)/norm(cross(c_3,c_d));
+             % c_1 = cross(c_2,c_3);
+             % obj.R_des = [c_1, c_2, c_3];
+             % obj.dotR_des = gradient(obj.R_des);
+             % obj.omega_des = veeMap(obj.R_des'*obj.dotR_des);
+             % 
+             % 
+             % obj.v_d_i = obj.R_des'*obj.r_i;
+             % 
+             % % Vector aligment error
+             % 
+             % % Calcula epsilon(t) y z(t)
+             % 
+             % for i = 1:3  % Asumiendo que tienes 3 sensores
+             %     obj.epsilon = obj.epsilon + obj.k_i * (1 - dot(obj.v_i(:,i), obj.v_d_i(:,i)));
+             %     obj.z = obj.z + obj.k_i * cross(obj.v_i(:,i), obj.v_d_i(:,i));
              % end
-             % obj.K_f = K_f; % Almacenar el resultado en la propiedad K_f del objeto
-
-
-
-             %  disp('********** dot_v_f_i ***************')
-             %  disp(obj.dot_v_f_i);
-             %  disp('*************************************')
+             % 
+             % % disp('********** Epsion y z ***************')
+             % % disp(obj.epsilon);
+             % % %disp(obj.z);
+             % % disp('*************************************')
+             % 
+             % % Derivate epsilon(t) y z(t)
+             % 
+             % obj.dotEpsilon = obj.z' * (obj.omega - obj.omega_des);
+             % obj.dotZ = obj.J * (obj.omega - obj.omega_des) + cross(obj.z,obj.omega_des);
+             % 
+             % % disp('********** Epsion y z  derivadas ***************')
+             % % disp(obj.dotEpsilon);
+             % % disp(obj.dotZ);
+             % % disp('*************************************')
              % 
              % 
-              obj.dotOmega_des = obj.vartheta_1;
-
-
-              % Calcular las derivadas del filtro
-              obj.dot_vartheta_1 = obj.vartheta_2;
-              obj.dot_vartheta_2 = -2*obj.A*obj.vartheta_2 - obj.A^2*(obj.vartheta_1 - obj.omega_des);
-
-
-
-
-
-
-              %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-              % Attitude controller law
-              %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-              obj.omega_r = - obj.lambda_c * obj.z + obj.omega_des;
-
-              obj.dot_hat_omega_r = - obj.lambda_c * obj.J * (obj.hat_omega - obj.omega_des) - obj.lambda_c * cross( obj.z, obj.omega_des) + obj.dotOmega_des;
-
-
-              obj.tau = obj.M * obj.dot_hat_omega_r - cross((obj.M * obj.hat_omega),obj.omega_r) - obj.K_c * (obj.hat_omega - obj.omega_r) - (obj.alpha_1*eye(3) + obj.alpha_2*obj.J')*obj.z; 
-
-              %*******************************************************************************************************************************************************************************
-
-
-
-
-             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-             % obj.u(1) = obj.m*obj.g;
-             % % obj.u(1) = 0.0;
-             % obj.u(2) = 0.0;   % roll(phi)    X
-             % obj.u(3) = 0.0;   % pith(theta)  Y
-             % obj.u(4) = 0.0;   % yaw(psi)     Z
+             % % Calculating J and implementing the equations
+             % 
+             % for i = 1:size(obj.v_d_i, 2)
+             %     obj.J = obj.J + obj.k_i * wedgeMap(obj.v_d_i(:,i))' * wedgeMap(obj.v_d_i(:,i));
+             % end
+             % 
+             % % disp('************* J *************')
+             % % disp(obj.J)
+             % % disp('*************************************')
              % 
              % 
              % 
-             % obj.f = obj.u(1);
-             % obj.tau = obj.u(2:4);
+             % %  gyro-bias observer
+             % 
+             % % Ecuación 1: \hat{b} = \dot{\bar{b}} - \sum ^n_{i =1} k_i(v^\wedge_{f,i})^T \Lambda_iv_i
+             % 
+             % sum_term = zeros(3,1);
+             % 
+             % for i = 1:3
+             %     sum_term = sum_term + obj.k_i * wedgeMap(obj.v_f_i(:,i))' * obj.Lambda_i * obj.v_i(:,i);
+             % end
+             % 
+             % obj.hat_b = obj.dot_bar_b - sum_term;
+             % 
+             % % disp('********** hat_b ***************')
+             % % disp(obj.hat_b);
+             % % disp('*************************************')
+             % 
+             % 
+             % 
+             % % angular velocity estimate
+             % 
+             % obj.omega_g = obj.omega + obj.b;
+             % 
+             % % disp('********** omega_g ***************')
+             % % disp(obj.omega_g);
+             % % disp('*************************************')
+             % 
+             % obj.hat_omega = obj.omega_g - obj.hat_b;
+             % 
+             % % disp('********** hat_omega_g ***************')
+             % % disp(obj.hat_omega);
+             % % disp('*************************************')
+             % 
+             % 
+             % % Ecuación 2: \dot{\bar{b}} = K_f \hat{\omega} + \gamma_f \sum^n_{i=1} k_i (\Lambda_i v_i)^\wedge(v_i - v_{f,i})
+             % sum_term = zeros(3,1);
+             % 
+             % for i = 1:3
+             %     sum_term = sum_term + obj.k_i * cross((obj.Lambda_i * obj.v_i(:,i)),(obj.v_i(:,i) - obj.v_f_i(:,i)));
+             % end
+             % 
+             % obj.dot_bar_b = obj.K_f * obj.hat_omega + obj.gamma_f * sum_term;
+             % 
+             % 
+             % disp('********** dot_bar_b ***************')
+             % disp(obj.dot_bar_b);
+             % disp('*************************************')
+             % 
+             % 
+             % obj.dot_v_f_i = obj.gamma_f * (obj.v_i - obj.v_f_i);
+             % 
+             % 
+             % 
+             % % for i = 1:3 % Asumiendo que tienes 3 sensores
+             % %     obj.K_f = obj.K_f + obj.k_i * (wedgeMap(obj.v_f_i(:,i))' * obj.Lambda_i * wedgeMap(obj.v_i(:,i)));
+             % % end
+             % % obj.K_f = K_f; % Almacenar el resultado en la propiedad K_f del objeto
+             % 
+             % 
+             % 
+             % %  disp('********** dot_v_f_i ***************')
+             % %  disp(obj.dot_v_f_i);
+             % %  disp('*************************************')
+             % %
+             % %
+             % obj.dotOmega_des = obj.vartheta_1;
+             % 
+             % 
+             % % Calcular las derivadas del filtro
+             % obj.dot_vartheta_1 = obj.vartheta_2;
+             % obj.dot_vartheta_2 = -2*obj.A*obj.vartheta_2 - obj.A^2*(obj.vartheta_1 - obj.omega_des);
+             % 
+             % 
+             % 
+             % 
+             % 
+             % 
+             % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+             % % Attitude controller law
+             % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+             % 
+             % obj.omega_r = - obj.lambda_c * obj.z + obj.omega_des;
+             % 
+             % obj.dot_hat_omega_r = - obj.lambda_c * obj.J * (obj.hat_omega - obj.omega_des) - obj.lambda_c * cross( obj.z, obj.omega_des) + obj.dotOmega_des;
+             % 
+             % 
+             % obj.tau = obj.M * obj.dot_hat_omega_r - cross((obj.M * obj.hat_omega),obj.omega_r) - obj.K_c * (obj.hat_omega - obj.omega_r) - (obj.alpha_1*eye(3) + obj.alpha_2*obj.J')*obj.z;
+             % 
+             % %*******************************************************************************************************************************************************************************
+             % 
+             % 
+             % 
+             % 
+             % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+             % % obj.u(1) = obj.m*obj.g;
+             % % % obj.u(1) = 0.0;
+             % % obj.u(2) = 0.0;   % roll(phi)    X
+             % % obj.u(3) = 0.0;   % pith(theta)  Y
+             % % obj.u(4) = 0.0;   % yaw(psi)     Z
+             % %
+             % %
+             % %
+             % % obj.f = obj.u(1);
+             % % obj.tau = obj.u(2:4);
          end
 
          
