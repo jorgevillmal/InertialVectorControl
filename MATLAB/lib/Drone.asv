@@ -248,11 +248,12 @@ classdef Drone < handle
             obj.z = zeros(3, 1);
             obj.J = zeros(3);
 
-            obj.hat_omega = zeros(3, 1);
 
 
-
-            
+            % gyro-bias observer
+            obj.dot_v_f_i = zeros(3, 1);
+            obj.v_f_i = obj.v_i;
+            obj.gamma_f = 10000;
 
             %attitude controler
 
@@ -262,14 +263,9 @@ classdef Drone < handle
             obj.v_i = obj.R'*obj.r_i;
             obj.v_d_i = obj.R_des'*obj.r_i;
 
-            % gyro-bias observer
-            obj.dot_v_f_i = zeros(3, 1);
-            obj.v_f_i = obj.v_i;
-            obj.gamma_f = 10000;
 
-
-            obj.dot_v_i = zeros(3, 1);
-            obj.dot_v_d_i= zeros(3, 1);
+            obj.dot_v_i = 0;
+            obj.dot_v_d_i= 0;
 
             % Inicializar las variables del filtro y la matriz A
             obj.vartheta_1 = zeros(3,1);
@@ -448,7 +444,8 @@ classdef Drone < handle
 
             % Observador gyro-bias
             obj.dot_v_f_i = obj.gamma_f * (obj.v_i - obj.v_f_i);
-            obj.dot_bar_b = obj.K_f * obj.hat_omega + obj.gamma_f * cross(obj.Lambda_i * obj.v_i, obj.v_i - obj.v_f_i);
+            obj.dot_bar_b = obj.K_f * obj.hat_omega + obj.gamma_f * cross(obj.Lambda_i * obj.v_i ...
+                - obj.v_f_i);
             obj.hat_b = obj.dot_bar_b - obj.k_i * wedgeMap(obj.v_f_i)' * obj.Lambda_i * obj.v_i;
 
             % Controlador de actitud
