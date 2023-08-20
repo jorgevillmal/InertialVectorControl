@@ -256,14 +256,12 @@ classdef Drone < handle
 
             %attitude controler
 
-            obj.epsilon = 0;
-
             % Calcula v_d,i
             obj.v_i = obj.R'*obj.r_i;
             obj.v_d_i = obj.R_des'*obj.r_i;
 
             % gyro-bias observer
-            obj.dot_v_f_i = zeros(3, 1);
+            obj.dot_v_f_i = zeros(3);
             obj.v_f_i = obj.v_i;
             obj.gamma_f = 10000;
 
@@ -278,7 +276,7 @@ classdef Drone < handle
             obj.dot_vartheta_1 = zeros(3,1);
             obj.dot_vartheta_2 = zeros(3,1);
 
-            obj.A = diag([20, 20, 20]);
+            obj.A = 20;
 
 
 
@@ -301,7 +299,6 @@ classdef Drone < handle
             obj.dotS(1:3) = obj.v;
             obj.dotS(4:6) = 1 / obj.m *([0; 0; -obj.g * obj.m] + wRb * [0; 0; obj.f]);
 
-
             % Angular velocity
             obj.dotR = obj.R * wedgeMap(obj.omega);
 
@@ -312,25 +309,26 @@ classdef Drone < handle
 
         function ControlStatmet(obj)
 
-            e_z = [0, 0, 1]';
-
             obj.v_err = obj.eta - obj.k_x * obj.x_err - Tanh(obj.e_f);
 
             % CONTROL  STATEMENT
 
+            % Translational Motions
             obj.dotS(1:3) = obj.v_err;
-
-            % obj.dotS(4:6) = 1 / obj.m * (-obj.m * obj.g * e_z - obj.m * obj.ddx_d ...
-            %     + obj.f * obj.R_des * e_z + obj.f * (obj.R - obj.R_des) * e_z);
 
             obj.dotS(4:6) = (1/obj.m) *(-obj.m * (obj.k - obj.k_x) * obj.eta ...
                 + obj.k*Tanh(obj.e_f) - obj.k_x^2*obj.x_err);
 
             % Angular velocity
             obj.dotR = obj.R * wedgeMap(obj.omega);
+            disp(obj.dotR);
 
             % Angular Acceleration
             obj.dotS(7:9) = obj.M \ (cross(obj.omega,obj.M*obj.omega) + obj.tau);
+
+            % Derivadas de vartheta_1 y vartheta_2
+            obj.dot_vartheta_1 = obj.vartheta_2;
+            obj.dot_vartheta_2 = -2 * obj.A * obj.vartheta_2 - obj.A^2 * (obj.vartheta_1 - obj.omega_des);
 
         end
 
@@ -363,7 +361,9 @@ classdef Drone < handle
 
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             obj.hat_b = obj.hat_b + obj.dot_bar_b * obj.dt;
-            obj.v_f_i = obj.v_f_i + obj.dot_v_f_i * obj.dt;
+            for i = 1:size(obj.v_i, 3)
+                obj.v_f_i(:,i) = obj.v_f_i(:,i) + obj.dot_v_f_i(:,i) * obj.dt;
+            end
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
             obj.vartheta_1 = obj.vartheta_1 + obj.dot_vartheta_1 * obj.dt;
@@ -443,20 +443,25 @@ classdef Drone < handle
             obj.omega_des = veeMap(obj.R_des'*obj.dotR_des);
 
             % Error de alineación vectorial
-            obj.epsilon = obj.k_i * (1 - dot(obj.v_i,obj.v_d_i));
-            obj.z = obj.k_i * cross(obj.v_i,obj.v_d_i);
-
+            for i = 1:size(obj.v_i, 2)
+                obj.epsilon = obj.epsilon + obj.k_i * (1 - dot(obj.v_i(:,i)',obj.v_d_i(:,i)));
+                obj.z = obj.z + obj.k_i * cross(obj.v_i(:,i), obj.v_d_i(:,i));
+            end
+            
             % Observador gyro-bias
-            obj.dot_v_f_i = obj.gamma_f * (obj.v_i - obj.v_f_i);
-            obj.dot_bar_b = obj.K_f * obj.hat_omega + obj.gamma_f * cross(obj.Lambda_i * obj.v_i, obj.v_i - obj.v_f_i);
-            obj.hat_b = obj.dot_bar_b - obj.k_i * wedgeMap(obj.v_f_i)' * obj.Lambda_i * obj.v_i;
-
+            for i = size(obj.v_i, 2)
+                obj.dot_v_f_i = obj.gamma_f * (obj.v_i(:,i) - obj.v_f_i(:,i));
+                obj.dot_bar_b = obj.K_f * obj.hat_omega + obj.gamma_f * cross(obj.Lambda_i * obj.v_i(:,i), obj.v_i(:,i) - obj.v_f_i(:,i));
+                obj.hat_b = obj.dot_bar_b - obj.k_i * wedgeMap(obj.v_f_i(:,i))' * obj.Lambda_i * obj.v_i(:,i);
+            end
             % Controlador de actitud
+            obj.dotOmega_des = obj.vartheta_2;
             obj.omega_r = - obj.lambda_c * obj.z + obj.omega_des;
             obj.dot_hat_omega_r = - obj.lambda_c * obj.J * (obj.hat_omega - obj.omega_des) - obj.lambda_c * ...
                 cross(obj.z, obj.omega_des) + obj.dotOmega_des;
             obj.tau = obj.M * obj.dot_hat_omega_r - cross(obj.M * obj.hat_omega,obj.omega_r) - obj.K_c *(obj.hat_omega - obj.omega_r) ...
-                - (obj.alpha_1 * eyes(3) + obj.alpha_2 * obj.J');
+                - (obj.alpha_1 * eye(3) + obj.alpha_2 * obj.J')* obj.z;
+            
 
 
             
