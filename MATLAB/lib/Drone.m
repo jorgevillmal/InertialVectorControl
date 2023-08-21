@@ -118,6 +118,7 @@ classdef Drone < handle
         dot_bar_b
         hat_omega
         dot_v_f_i
+        bar_b
 
         %Filter
         A
@@ -150,6 +151,12 @@ classdef Drone < handle
         z
         dotEpsilon
         dotZ
+    end
+
+    properties
+        omega_err
+        b_err
+        G
     end
 
     %% METHODS
@@ -264,6 +271,7 @@ classdef Drone < handle
             obj.dot_v_f_i = zeros(3);
             obj.v_f_i = obj.v_i;
             obj.gamma_f = 10000;
+            obj.bar_b = zeros(3,1);
 
 
             obj.dot_v_i = zeros(3, 1);
@@ -277,6 +285,8 @@ classdef Drone < handle
             obj.dot_vartheta_2 = zeros(3,1);
 
             obj.A = 20;
+
+            obj.omega_r = - obj.lambda_c * obj.z + obj.omega_des;
 
 
 
@@ -309,26 +319,55 @@ classdef Drone < handle
 
         function ControlStatmet(obj)
 
-            obj.v_err = obj.eta - obj.k_x * obj.x_err - Tanh(obj.e_f);
-
+            % obj.v_err = obj.eta - obj.k_x * obj.x_err - Tanh(obj.e_f);
+            obj.omega_err = obj.omega - obj.omega_r;
+            disp(obj.omega_err);
+            obj.b_err = obj.hat_b - obj.b;
+            obj.G = obj.K_c - cross([obj.omega_r, obj.omega_r, obj.omega_r], obj.M) + obj.lambda_c * obj.M * obj.J;
             % CONTROL  STATEMENT
 
             % Translational Motions
-            obj.dotS(1:3) = obj.v_err;
+            obj.dotS(1:3) = obj.eta - obj.k_x * obj.x_err - Tanh(obj.e_f);
 
             obj.dotS(4:6) = (1/obj.m) *(-obj.m * (obj.k - obj.k_x) * obj.eta ...
                 + obj.k*Tanh(obj.e_f) - obj.k_x^2*obj.x_err);
 
+            % Calculo de la tasa de cambio de epsilon
+            obj.dotEpsilon = obj.z' * (obj.omega - obj.omega_des);
+
+            % Calculo de la matriz J
+            for i = 1:size(obj.v_i, 2)
+                obj.J = obj.J + obj.k_i * (wedgeMap(obj.v_d_i(:, i))' * wedgeMap(obj.v_i));
+            end
+
+            % Cálculo de la tasa de cambio de z
+            obj.dotZ = obj.J * (obj.omega - obj.omega_des) + cross(obj.z, obj.omega_des);
+
+            % Observador gyro-bias
+            for i = size(obj.v_i, 2)
+                obj.dot_bar_b = obj.K_f * obj.hat_omega + obj.gamma_f * cross(obj.Lambda_i * obj.v_i(:,i), obj.v_i(:,i) - obj.v_f_i(:,i));
+            end
+
+            % control actitud
+            obj.dot_hat_omega_r = - obj.lambda_c * obj.J * (obj.hat_omega - obj.omega_des) - obj.lambda_c * ...
+                cross(obj.z, obj.omega_des) + obj.dotOmega_des;
+
+            
+
             % Angular velocity
             obj.dotR = obj.R * wedgeMap(obj.omega);
-            disp(obj.dotR);
+            
 
             % Angular Acceleration
-            obj.dotS(7:9) = obj.M \ (cross(obj.omega,obj.M*obj.omega) + obj.tau);
+            obj.dotS(7:9) = obj.M \ (cross(obj.M * obj.omega, obj.omega_err) - ...
+                obj.K_c * obj.omega_err + obj.G * obj.b_err - ...
+                (obj.alpha_1 * eye(3) + obj.alpha_2 * obj.J')* obj.z);
 
             % Derivadas de vartheta_1 y vartheta_2
             obj.dot_vartheta_1 = obj.vartheta_2;
             obj.dot_vartheta_2 = -2 * obj.A * obj.vartheta_2 - obj.A^2 * (obj.vartheta_1 - obj.omega_des);
+
+            
 
         end
 
@@ -365,9 +404,18 @@ classdef Drone < handle
                 obj.v_f_i(:,i) = obj.v_f_i(:,i) + obj.dot_v_f_i(:,i) * obj.dt;
             end
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            obj.epsilon = obj.epsilon + obj.dotEpsilon * obj.dt;
+            obj.z = obj.z + obj.dotZ * obj.dt;
+            obj.bar_b = obj.bar_b + obj.dot_bar_b * obj.dt;
+
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
             obj.vartheta_1 = obj.vartheta_1 + obj.dot_vartheta_1 * obj.dt;
             obj.vartheta_2 = obj.vartheta_2 + obj.dot_vartheta_2 * obj.dt;
+
+            % Controlador de actitud
+            obj.dotOmega_des = obj.vartheta_2;
+            obj.dot_hat_omega_r = obj.dot_hat_omega_r + obj.omega_r;
 
 
 
@@ -452,7 +500,7 @@ classdef Drone < handle
             for i = size(obj.v_i, 2)
                 obj.dot_v_f_i = obj.gamma_f * (obj.v_i(:,i) - obj.v_f_i(:,i));
                 obj.dot_bar_b = obj.K_f * obj.hat_omega + obj.gamma_f * cross(obj.Lambda_i * obj.v_i(:,i), obj.v_i(:,i) - obj.v_f_i(:,i));
-                obj.hat_b = obj.dot_bar_b - obj.k_i * wedgeMap(obj.v_f_i(:,i))' * obj.Lambda_i * obj.v_i(:,i);
+                obj.hat_b = obj.bar_b - obj.k_i * wedgeMap(obj.v_f_i(:,i))' * obj.Lambda_i * obj.v_i(:,i);
             end
             % Controlador de actitud
             obj.dotOmega_des = obj.vartheta_2;
