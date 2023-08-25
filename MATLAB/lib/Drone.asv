@@ -64,6 +64,12 @@ classdef Drone < handle
 
         dotV_des    % desired acceleration
         dotV_err    % error acceleration
+
+        prev_x_d
+        prev_dx_d
+
+        next_x_d
+        next_dx_d
     end
 
     properties
@@ -175,6 +181,7 @@ classdef Drone < handle
             obj.stateR = obj.R;
             obj.dotS = zeros(9,1);
             obj.dotR = zeros(3);
+            obj.dotR_des = zeros(3);
 
             obj.u = initInputs;
             obj.f = obj.u(1);
@@ -230,7 +237,8 @@ classdef Drone < handle
             obj.Lambda_i = 10*eye(3);
             obj.gamma_f = 10000;
 
-            dot_bar_b = zeros(3)
+            obj.dot_bar_b = zeros(3,1);
+            obj.hat_omega = zeros(3,1);
 
             % attitude law
             obj.bar_b = zeros(3,1);
@@ -247,6 +255,19 @@ classdef Drone < handle
             obj.dot_vartheta_2 = zeros(3,1);
 
             obj.dotOmega_des = zeros(3,1);
+
+            % Filter
+            obj.A = 20;
+
+            % prueba de derivada x_d
+            obj.x_des = zeros(3,1);
+            obj.v_des = zeros(3,1);
+
+            obj.prev_x_d = obj.x_des;
+            obj.prev_dx_d = zeros(3,1);
+
+            obj.next_x_d = zeros(3,1); % o cualquier valor inicial predeterminado
+            obj.next_dx_d = zeros(3,1);
         end
 
         %% RETURNS DRONE STATE
@@ -258,6 +279,7 @@ classdef Drone < handle
 
         %% STATE SPACE (DIFFERENTIAL) EQUATIONS: INCOMPLETE!
         function obj = EvalEOM(obj)
+            % EvalEOM: Evalúa las ecuaciones del movimiento del dron.
 
             % Body to Worl Rotation Matrix
             wRb = obj.R';
@@ -268,6 +290,7 @@ classdef Drone < handle
 
             % Angular velocity
             obj.dotR = obj.R * wedgeMap(obj.omega);
+            
 
             % Angular Acceleration
             obj.dotS(7:9) = (obj.M) \ (cross(obj.omega,obj.M*obj.omega) + obj.tau);
@@ -275,6 +298,8 @@ classdef Drone < handle
         end
 
         function ControlStatmet(obj)
+            % ControlStatmet: Determina las leyes de control para el dron.
+
 
             % CONTROL  STATEMENT
 
@@ -283,22 +308,26 @@ classdef Drone < handle
 
             obj.dotS(4:6) = (1/obj.m) *(-obj.m * (obj.k - obj.k_x) * obj.eta ...
                 + obj.k*Tanh(obj.e_f) - obj.k_x^2*obj.x_err);
-      
+
 
             % Angular velocity
             obj.dotR = obj.R * wedgeMap(obj.omega);
-            
+
+
 
             G = obj.K_c - wedgeMap(obj.omega_r) * obj.M + obj.lambda_c * obj.M * obj.J;
+
             % Angular Acceleration
             obj.dotS(7:9) = obj.M \ (cross(obj.M * obj.omega, obj.omega_err) - ...
                 obj.K_c * obj.omega_err + G * obj.b_err - ...
-                (obj.alpha_1 * eye(3) + obj.alpha_2 * obj.J')* obj.z);  
+                (obj.alpha_1 * eye(3) + obj.alpha_2 * obj.J')* obj.z);
 
         end
 
         %% PREDICT NEXT DRONE STATE
         function obj = UpdateState(obj)
+            % UpdateState: Actualiza el estado del dron usando integración numérica.
+
 
             obj.t = obj.t + obj.dt;
 
@@ -307,6 +336,11 @@ classdef Drone < handle
             obj.ControlStatmet();
             obj.s = obj.s + obj.dotS.*obj.dt;
             obj.stateR = obj.R + obj.dotR.*obj.dt;
+
+            % Re-ortogonaliza la matriz de rotación para asegurar que sigue siendo una matriz ortogonal.
+            % Esto ayuda a mitigar errores numéricos y asegura que R sigue siendo una matriz de rotación válida.
+            [U, ~, V] = svd(obj.R);
+            obj.R = U * V';
 
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             obj.e_f = obj.e_f + obj.dotE_f * obj.dt;
@@ -336,8 +370,9 @@ classdef Drone < handle
             % Filter dotOmega_des
             obj.dot_vartheta_1 = obj.vartheta_2;
             obj.dot_vartheta_2 = -2 * obj.A * obj.vartheta_2 - obj.A^2 * (obj.vartheta_1 - obj.omega_des);
+
             obj.dotOmega_des = obj.dot_vartheta_2;
-            obj.omega_des = obj.omega_des + obj.dotOmega_des * obj.dt;
+            
 
             % Calculo de la matriz J
             for i = 1:size(obj.v_i, 2)
@@ -362,12 +397,6 @@ classdef Drone < handle
             obj.b_err = obj.b_err + obj.dot_b_err * obj.dt;
 
 
-            %%%%%%%%%%%%%%%%%%%%% Measure %%%%%%%%%%%%%%%%%%%%%%%%%
-
-            %             obj.omega(1) = obj.omega(1) + 0.2;
-            %             obj.omega(2) = obj.omega(2) + 0.1;
-            %             obj.omega(3) = obj.omega(3) - 0.1;
-
         end
 
         %% CONTROLLER
@@ -375,22 +404,120 @@ classdef Drone < handle
 
 
             e_z = [0, 0, 1]';
-            c_d = [cos(obj.psi_d), sin(obj.psi_d), 0]';
-            %%%%%%%%%%%%%%%%%%%   Position   %%%%%%%%%%%%%%%%%%%%%%
-            obj.x_des = pos_des;
-            %%%%%%%%%%%%%%%%%%%   Velocity   %%%%%%%%%%%%%%%%%%%%%%
-            % obj.v_des = gradient(obj.x_des);
-            obj.v_des = [gradient(obj.x_des(1)), gradient(obj.x_des(2)), ...
-                gradient(obj.x_des(3))]';
-            %%%%%%%%%%%%%%%%%%% Acceleration %%%%%%%%%%%%%%%%%%%%%%
-            obj.dotV_des = [gradient(obj.v_des(1)), gradient(obj.v_des(2)), ...
-                gradient(obj.v_des(3))]';
-            obj.ddx_d = obj.dotV_des;
+
+            % %%%%%%%%%%%%%%%%%%%   Position   %%%%%%%%%%%%%%%%%%%%%%
+            % obj.x_des = pos_des;
+            % disp('pos_des')
+            % disp(obj.x_des)
+           % 
+           %  %%%%%%%%%%%%%%%%%%%   Velocity   %%%%%%%%%%%%%%%%%%%%%%
+           %  % obj.v_des = gradient(obj.x_des);
+           %  obj.v_des = [gradient(obj.x_des(1)), gradient(obj.x_des(2)), ...
+           %      gradient(obj.x_des(3))]';
+           % 
+           %  % Agregar el primer y último valor para mantener el mismo tamaño
+           %  obj.v_des = [obj.v_des(:, 1), obj.v_des, obj.v_des(:, end)];
+           %  disp('v_des')
+           %  disp(obj.v_des)
+           % 
+           % %%%%%%%%%%%%%%%%%%% Acceleration %%%%%%%%%%%%%%%%%%%%%%
+           %  obj.dotV_des = [gradient(obj.v_des(1)), gradient(obj.v_des(2)), ...
+           %      gradient(obj.v_des(3))]';
+           %  disp('ddx_d')
+           %  disp(obj.ddx_d)
+
+
+
+           % obj.v_des = (obj.x_des - obj.prev_x_d) / obj.dt;   % Primera derivada (velocidad)
+           % disp('v_des')
+           % disp(obj.v_des)
+           % 
+           % obj.ddx_d = (obj.v_des - obj.prev_dx_d) / obj.dt;  % Segunda derivada (aceleración)
+           % disp('ddx_d')
+           % disp(obj.ddx_d)
+           % 
+           % 
+           % 
+           % obj.prev_x_d = obj.x_des;
+           % obj.prev_dx_d = obj.v_des;
+
+
+           % obj.v_des = (obj.next_x_d - obj.x_des) / obj.dt;
+           % disp('v_des')
+           % disp(obj.v_des)
+           % 
+           % obj.ddx_d = (obj.next_dx_d - obj.v_des) / obj.dt;
+           % disp('ddx_d')
+           % disp(obj.ddx_d)
+           % 
+           % obj.x_des = obj.next_x_d;
+           % obj.v_des = obj.next_dx_d;
+
+
+           % obj.v_des = (obj.next_x_d - obj.prev_x_d) / (2 * obj.dt);   % Primera derivada (velocidad)
+           % disp('v_des')
+           % disp(obj.v_des)
+           % 
+           % obj.ddx_d = (obj.next_dx_d - obj.prev_dx_d) / (2 * obj.dt);  % Segunda derivada (aceleración)
+           % disp('ddx_d')
+           % disp(obj.ddx_d)
+           % 
+           % obj.prev_x_d = obj.x_des;
+           % obj.x_des = obj.next_x_d;
+           % 
+           % obj.prev_dx_d = obj.v_des;
+           % obj.v_des = obj.next_dx_d;
+
+
+           % %%%%%%%%%%%%%%%%%%   Position   %%%%%%%%%%%%%%%%%%%%%%
+           % obj.x_des = pos_des;
+           % %%%%%%%%%%%%%%%%%%   Velocity   %%%%%%%%%%%%%%%%%%%%%%
+           % obj.v_des = [centralDifference(obj.x_des, obj.dt)];
+           % disp('v_des')
+           % disp(obj.v_des)
+           % %%%%%%%%%%%%%%%%%% Acceleration %%%%%%%%%%%%%%%%%%%%%%
+           % obj.dotV_des = [centralDifference(obj.v_des, obj.dt)];
+           % obj.ddx_d = obj.dotV_des;
+           % disp('ddx_d')
+           % disp(obj.ddx_d)
+
+           % Asumiendo que obj.x_des ya ha sido asignado y tiene dimensiones 3xN
+N = size(obj.x_des, 2);
+
+% Inicializar con ceros
+obj.v_des = zeros(3, N);
+obj.ddx_d = zeros(3, N);
+
+           %%%%%%%%%%%%%%%%%%%   Position   %%%%%%%%%%%%%%%%%%%%%%
+           obj.x_des = pos_des;
+
+           %%%%%%%%%%%%%%%%%%%   Velocity   %%%%%%%%%%%%%%%%%%%%%%
+           % Calculating for each row of obj.x_des separately
+           obj.v_des(1, :) = centralDifference(obj.x_des(1, :), obj.dt);
+           obj.v_des(2, :) = centralDifference(obj.x_des(2, :), obj.dt);
+           obj.v_des(3, :) = centralDifference(obj.x_des(3, :), obj.dt);
+           disp('v_des')
+           disp(obj.v_des)
+
+           %%%%%%%%%%%%%%%%%% Acceleration %%%%%%%%%%%%%%%%%%%%%%
+           % Calculating for each row of obj.v_des separately
+           obj.dotV_des(1, :) = centralDifference(obj.v_des(1, :), obj.dt);
+           obj.dotV_des(2, :) = centralDifference(obj.v_des(2, :), obj.dt);
+           obj.dotV_des(3, :) = centralDifference(obj.v_des(3, :), obj.dt);
+           obj.ddx_d = obj.dotV_des;
+           disp('ddx_d')
+           disp(obj.ddx_d)
+
+
 
 
             % Error de posición y velocidad
             obj.x_err = obj.x - obj.x_des;
             obj.v_err = obj.v - obj.v_des;
+
+
+            
+
 
 
 
@@ -406,13 +533,60 @@ classdef Drone < handle
             %**********************************************************%
 
 
-             % Trayectoria de actitud deseada
+
+            % Trayectoria de actitud deseada
+
+            obj.psi_d = atan2(obj.x_des(2), obj.x_des(1));
+
+            dx_dt = obj.v_des(1);
+            dy_dt = obj.v_des(2);
+
+            partial_psi_d_x = -obj.x_des(2) / (obj.x_des(1)^2 + obj.x_des(2)^2);
+            partial_psi_d_y = obj.x_des(1) / (obj.x_des(1)^2 + obj.x_des(2)^2);
+
+            obj.dot_psi_d = partial_psi_d_x * dx_dt + partial_psi_d_y * dy_dt;
+            % disp('dot_psi_d');
+            % disp(obj.dot_psi_d);
+
+            c_d = [cos(obj.psi_d); sin(obj.psi_d); 0];
+
+
             c_3 = obj.T/norm(obj.T);
             c_2 = cross(c_3,c_d)/norm(cross(c_3,c_d));
             c_1 = cross(c_2,c_3);
+
             obj.R_des = [c_1, c_2, c_3];
-            obj.dotR_des = gradient(obj.R_des);
-            obj.omega_des = veeMap(obj.R_des'*obj.dotR_des);
+
+            % Para dotRd
+            % Usando la relación: dotRd = Rd * omega_d^wedge
+            % Donde omega_d^wedge = Rd' * dotRd y omega_d = (Rd' * dotRd)^vee
+
+            % Como omega_d = (Rd' * dotRd)^vee, y dotRd = Rd * omega_d^wedge
+            % Podemos reescribir omega_d = (Rd' * Rd * omega_d^wedge)^vee
+            % Esto implica que omega_d es la derivada de los ángulos de Euler de Rd
+
+            % Derivada de los ángulos de Euler
+            euler_angles = rotm2eul(obj.R_des);
+            % disp('euler_angles')
+            % disp(euler_angles)
+
+            dot_euler_angles = [0; 0; obj.dot_psi_d]; % Solo psi_d cambia
+
+            % disp('dot_euler_angles')
+            % disp(dot_euler_angles)
+
+            % Convertir la derivada de los ángulos de Euler a velocidad angular
+            obj.omega_des = eul2omega(dot_euler_angles, euler_angles);
+            % disp('omega_des')
+            % disp(obj.omega_des)
+
+
+            % obj.omega_des = veeMap(obj.R_des'*obj.dotR_des);
+
+            obj.dotR_des = obj.R_des * wedgeMap(obj.omega_des);
+
+            % disp('dotR_des')
+            % disp(obj.dotR_des);
 
             obj.v_d_i = obj.R_des' * obj.r_i;
 
@@ -432,24 +606,22 @@ classdef Drone < handle
             end
 
 
-
-
-
-            
+            obj.tau = obj.M * obj.dot_hat_omega_r - cross(obj.M * obj.hat_omega,obj.omega_r) - obj.K_c *(obj.hat_omega - obj.omega_r) ...
+                - (obj.alpha_1 * eye(3) + obj.alpha_2 * obj.J')* obj.z;
 
 
 
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             % obj.u(1) = obj.m*obj.g;
             % % obj.u(1) = 0.0;
-            obj.u(2) = 0.0;   % roll(phi)    X
-            obj.u(3) = 0.0;   % pith(theta)  Y
-            obj.u(4) = 0.0;   % yaw(psi)     Z
+            % obj.u(2) = 0.0;   % roll(phi)    X
+            % obj.u(3) = 0.0;   % pith(theta)  Y
+            % obj.u(4) = 0.0;   % yaw(psi)     Z
             %
             %
             %
             % obj.f = obj.u(1);
-            obj.tau = obj.u(2:4);
+            % obj.tau = obj.u(2:4);
         end
 
 
