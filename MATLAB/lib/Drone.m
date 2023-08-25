@@ -118,6 +118,7 @@ classdef Drone < handle
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         R_des % desired attitude
         dotR_des 
+        R_tilde
     end
 
     properties
@@ -215,6 +216,8 @@ classdef Drone < handle
             obj.k_i = 0.1;
 
             obj.v_i = obj.R' * obj.r_i;
+
+            
            
 
 
@@ -312,7 +315,7 @@ classdef Drone < handle
 
 
             % Angular velocity
-            obj.dotR = obj.R * wedgeMap(obj.omega);
+            obj.dotR = obj.R * wedgeMap(obj.omega_des);
 
 
 
@@ -337,12 +340,16 @@ classdef Drone < handle
             % obj.EvalEOM();
             obj.ControlStatmet();
             obj.s = obj.s + obj.dotS.*obj.dt;
-            obj.stateR = obj.R + obj.dotR.*obj.dt;
+            obj.stateR = obj.R - obj.dotR.*obj.dt;
+
+          
 
             % Re-ortogonaliza la matriz de rotación para asegurar que sigue siendo una matriz ortogonal.
             % Esto ayuda a mitigar errores numéricos y asegura que R sigue siendo una matriz de rotación válida.
             [U, ~, V] = svd(obj.R);
             obj.R = U * V';
+
+           
 
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             obj.e_f = obj.e_f + obj.dotE_f * obj.dt;
@@ -352,6 +359,7 @@ classdef Drone < handle
             obj.v = obj.s(4:6);
 
             obj.R = obj.stateR;
+            
             obj.euler = rotm2eul(obj.R);
             obj.phi = obj.euler(3);
             obj.theta = obj.euler(2);
@@ -368,9 +376,7 @@ classdef Drone < handle
                 obj.dot_bar_b = obj.dot_bar_b + obj.gamma_f * cross(obj.Lambda_i * obj.v_i(:,i), obj.v_i(:,i) - obj.v_f_i(:,i));
             end
             obj.bar_b = obj.bar_b + obj.dot_bar_b * obj.dt;
-            % disp('obj.dot_bar_b')
-            % disp(obj.dot_bar_b)
-
+          
 
             % Filter dotOmega_des
             obj.dot_vartheta_1 = obj.vartheta_2;
@@ -384,9 +390,7 @@ classdef Drone < handle
                 obj.J = obj.J + obj.k_i * (wedgeMap(obj.v_d_i(:, i))' * wedgeMap(obj.v_i));
             end
 
-            obj.dot_hat_omega_r = - obj.lambda_c * obj.J * (obj.hat_omega - obj.omega_des) - obj.lambda_c * ...
-                cross(obj.z, obj.omega_des) + obj.dotOmega_des;
-            obj.omega_r = obj.omega_r + obj.dot_hat_omega_r * obj.dt;
+           
 
             % alignment error variables
             % Calculo de la tasa de cambio de epsilon
@@ -432,6 +436,12 @@ classdef Drone < handle
             obj.f = norm(obj.T);
             %**********************************************************%
 
+            obj.dot_hat_omega_r = - obj.lambda_c * obj.J * (obj.hat_omega - obj.omega_des) - obj.lambda_c * ...
+                cross(obj.z, obj.omega_des) + obj.dotOmega_des;
+
+
+            %obj.omega_r = obj.omega_r + obj.dot_hat_omega_r * obj.dt;
+            obj.omega_r = - obj.lambda_c * obj.z + obj.omega_des;
 
 
             % Trayectoria de actitud deseada
@@ -486,6 +496,10 @@ classdef Drone < handle
             % Error angular y gyro bias
             obj.omega_err = obj.omega - obj.omega_r;
             obj.b_err = obj.hat_b - obj.b;
+            obj.R_tilde = obj.R * obj.R_des';
+
+
+            
 
             % Vector alignment error
 
@@ -493,10 +507,13 @@ classdef Drone < handle
             obj.z = zeros(3,1);  % Reiniciar z a un vector cero
 
 
+
             for i = 1:size(obj.v_i, 2)
                 obj.epsilon = obj.epsilon + obj.k_i * (1 - dot(obj.v_i(:,i)',obj.v_d_i(:,i)));
                 obj.z = obj.z + obj.k_i * cross(obj.v_i(:,i), obj.v_d_i(:,i));
             end
+
+           
  
 
             % gyro-bias observer
