@@ -229,6 +229,7 @@ classdef Drone < handle
 
 
             % gyro-bias observer
+            
             obj.b_err = zeros(3,1);
             obj.dot_b_err = zeros(3,1);
             obj.hat_b = zeros(3,1);
@@ -315,6 +316,7 @@ classdef Drone < handle
 
 
 
+
             G = obj.K_c - wedgeMap(obj.omega_r) * obj.M + obj.lambda_c * obj.M * obj.J;
 
             % Angular Acceleration
@@ -351,6 +353,10 @@ classdef Drone < handle
 
             obj.R = obj.stateR;
             obj.euler = rotm2eul(obj.R);
+            disp('R')
+            disp(obj.R);
+            disp('euler')
+            disp(obj.euler)
             obj.phi = obj.euler(3);
             obj.theta = obj.euler(2);
             obj.psi = obj.euler(1);
@@ -361,10 +367,13 @@ classdef Drone < handle
             obj.dot_v_f_i = obj.gamma_f * (obj.v_i - obj.v_f_i);
             obj.v_f_i = obj.v_f_i + obj.dot_v_f_i * obj.dt;
 
-            for i = size(obj.v_i, 2)
-                obj.dot_bar_b = obj.K_f * obj.hat_omega + obj.gamma_f * cross(obj.Lambda_i * obj.v_i(:,i), obj.v_i(:,i) - obj.v_f_i(:,i));
+            obj.dot_bar_b = obj.K_f * obj.hat_omega;
+            for i = 1:size(obj.v_i, 2)
+                obj.dot_bar_b = obj.dot_bar_b + obj.gamma_f * cross(obj.Lambda_i * obj.v_i(:,i), obj.v_i(:,i) - obj.v_f_i(:,i));
             end
             obj.bar_b = obj.bar_b + obj.dot_bar_b * obj.dt;
+            % disp('obj.dot_bar_b')
+            % disp(obj.dot_bar_b)
 
 
             % Filter dotOmega_des
@@ -400,126 +409,21 @@ classdef Drone < handle
         end
 
         %% CONTROLLER
-        function obj = PositionCtrl(obj, pos_des)
-
+        function obj = PositionCtrl(obj, pos_des, vel_des, acc_des)
 
             e_z = [0, 0, 1]';
+            
+            
 
-            % %%%%%%%%%%%%%%%%%%%   Position   %%%%%%%%%%%%%%%%%%%%%%
-            % obj.x_des = pos_des;
-            % disp('pos_des')
-            % disp(obj.x_des)
-           % 
-           %  %%%%%%%%%%%%%%%%%%%   Velocity   %%%%%%%%%%%%%%%%%%%%%%
-           %  % obj.v_des = gradient(obj.x_des);
-           %  obj.v_des = [gradient(obj.x_des(1)), gradient(obj.x_des(2)), ...
-           %      gradient(obj.x_des(3))]';
-           % 
-           %  % Agregar el primer y último valor para mantener el mismo tamaño
-           %  obj.v_des = [obj.v_des(:, 1), obj.v_des, obj.v_des(:, end)];
-           %  disp('v_des')
-           %  disp(obj.v_des)
-           % 
-           % %%%%%%%%%%%%%%%%%%% Acceleration %%%%%%%%%%%%%%%%%%%%%%
-           %  obj.dotV_des = [gradient(obj.v_des(1)), gradient(obj.v_des(2)), ...
-           %      gradient(obj.v_des(3))]';
-           %  disp('ddx_d')
-           %  disp(obj.ddx_d)
-
-
-
-           % obj.v_des = (obj.x_des - obj.prev_x_d) / obj.dt;   % Primera derivada (velocidad)
-           % disp('v_des')
-           % disp(obj.v_des)
-           % 
-           % obj.ddx_d = (obj.v_des - obj.prev_dx_d) / obj.dt;  % Segunda derivada (aceleración)
-           % disp('ddx_d')
-           % disp(obj.ddx_d)
-           % 
-           % 
-           % 
-           % obj.prev_x_d = obj.x_des;
-           % obj.prev_dx_d = obj.v_des;
-
-
-           % obj.v_des = (obj.next_x_d - obj.x_des) / obj.dt;
-           % disp('v_des')
-           % disp(obj.v_des)
-           % 
-           % obj.ddx_d = (obj.next_dx_d - obj.v_des) / obj.dt;
-           % disp('ddx_d')
-           % disp(obj.ddx_d)
-           % 
-           % obj.x_des = obj.next_x_d;
-           % obj.v_des = obj.next_dx_d;
-
-
-           % obj.v_des = (obj.next_x_d - obj.prev_x_d) / (2 * obj.dt);   % Primera derivada (velocidad)
-           % disp('v_des')
-           % disp(obj.v_des)
-           % 
-           % obj.ddx_d = (obj.next_dx_d - obj.prev_dx_d) / (2 * obj.dt);  % Segunda derivada (aceleración)
-           % disp('ddx_d')
-           % disp(obj.ddx_d)
-           % 
-           % obj.prev_x_d = obj.x_des;
-           % obj.x_des = obj.next_x_d;
-           % 
-           % obj.prev_dx_d = obj.v_des;
-           % obj.v_des = obj.next_dx_d;
-
-
-           % %%%%%%%%%%%%%%%%%%   Position   %%%%%%%%%%%%%%%%%%%%%%
-           % obj.x_des = pos_des;
-           % %%%%%%%%%%%%%%%%%%   Velocity   %%%%%%%%%%%%%%%%%%%%%%
-           % obj.v_des = [centralDifference(obj.x_des, obj.dt)];
-           % disp('v_des')
-           % disp(obj.v_des)
-           % %%%%%%%%%%%%%%%%%% Acceleration %%%%%%%%%%%%%%%%%%%%%%
-           % obj.dotV_des = [centralDifference(obj.v_des, obj.dt)];
-           % obj.ddx_d = obj.dotV_des;
-           % disp('ddx_d')
-           % disp(obj.ddx_d)
-
-           % Asumiendo que obj.x_des ya ha sido asignado y tiene dimensiones 3xN
-N = size(obj.x_des, 2);
-
-% Inicializar con ceros
-obj.v_des = zeros(3, N);
-obj.ddx_d = zeros(3, N);
-
-           %%%%%%%%%%%%%%%%%%%   Position   %%%%%%%%%%%%%%%%%%%%%%
+           
+           % Asignar a las variables internas
            obj.x_des = pos_des;
-
-           %%%%%%%%%%%%%%%%%%%   Velocity   %%%%%%%%%%%%%%%%%%%%%%
-           % Calculating for each row of obj.x_des separately
-           obj.v_des(1, :) = centralDifference(obj.x_des(1, :), obj.dt);
-           obj.v_des(2, :) = centralDifference(obj.x_des(2, :), obj.dt);
-           obj.v_des(3, :) = centralDifference(obj.x_des(3, :), obj.dt);
-           disp('v_des')
-           disp(obj.v_des)
-
-           %%%%%%%%%%%%%%%%%% Acceleration %%%%%%%%%%%%%%%%%%%%%%
-           % Calculating for each row of obj.v_des separately
-           obj.dotV_des(1, :) = centralDifference(obj.v_des(1, :), obj.dt);
-           obj.dotV_des(2, :) = centralDifference(obj.v_des(2, :), obj.dt);
-           obj.dotV_des(3, :) = centralDifference(obj.v_des(3, :), obj.dt);
-           obj.ddx_d = obj.dotV_des;
-           disp('ddx_d')
-           disp(obj.ddx_d)
-
-
-
+           obj.v_des = vel_des;
+           obj.ddx_d = acc_des;
 
             % Error de posición y velocidad
             obj.x_err = obj.x - obj.x_des;
             obj.v_err = obj.v - obj.v_des;
-
-
-            
-
-
-
 
             %  Positioning Controller  law
             obj.eta = obj.v_err + obj.k_x * obj.x_err + Tanh(obj.e_f);
@@ -545,8 +449,7 @@ obj.ddx_d = zeros(3, N);
             partial_psi_d_y = obj.x_des(1) / (obj.x_des(1)^2 + obj.x_des(2)^2);
 
             obj.dot_psi_d = partial_psi_d_x * dx_dt + partial_psi_d_y * dy_dt;
-            % disp('dot_psi_d');
-            % disp(obj.dot_psi_d);
+
 
             c_d = [cos(obj.psi_d); sin(obj.psi_d); 0];
 
@@ -567,43 +470,50 @@ obj.ddx_d = zeros(3, N);
 
             % Derivada de los ángulos de Euler
             euler_angles = rotm2eul(obj.R_des);
-            % disp('euler_angles')
-            % disp(euler_angles)
+
 
             dot_euler_angles = [0; 0; obj.dot_psi_d]; % Solo psi_d cambia
 
-            % disp('dot_euler_angles')
-            % disp(dot_euler_angles)
 
             % Convertir la derivada de los ángulos de Euler a velocidad angular
             obj.omega_des = eul2omega(dot_euler_angles, euler_angles);
-            % disp('omega_des')
-            % disp(obj.omega_des)
+
 
 
             % obj.omega_des = veeMap(obj.R_des'*obj.dotR_des);
 
             obj.dotR_des = obj.R_des * wedgeMap(obj.omega_des);
 
-            % disp('dotR_des')
-            % disp(obj.dotR_des);
-
             obj.v_d_i = obj.R_des' * obj.r_i;
 
+            
             % Error angular y gyro bias
             obj.omega_err = obj.omega - obj.omega_r;
             obj.b_err = obj.hat_b - obj.b;
 
-            % Vector alignment erro
+            % Vector alignment error
+
+            obj.epsilon = 0;  % Reiniciar epsilon a cero
+            obj.z = zeros(3,1);  % Reiniciar z a un vector cero
+
+
             for i = 1:size(obj.v_i, 2)
                 obj.epsilon = obj.epsilon + obj.k_i * (1 - dot(obj.v_i(:,i)',obj.v_d_i(:,i)));
                 obj.z = obj.z + obj.k_i * cross(obj.v_i(:,i), obj.v_d_i(:,i));
             end
+ 
 
             % gyro-bias observer
-            for i = size(obj.v_i, 2)
-                obj.hat_b = obj.bar_b - obj.k_i * wedgeMap(obj.v_f_i(:,i))' * obj.Lambda_i * obj.v_i(:,i);
+            obj.hat_b = obj.bar_b;
+            for i = 1:size(obj.v_i, 2)
+                obj.hat_b = obj.hat_b - obj.k_i * wedgeMap(obj.v_f_i(:,i))' * obj.Lambda_i * obj.v_i(:,i);
             end
+
+
+
+            obj.hat_omega = obj.omega_g - obj.hat_b;
+
+            
 
 
             obj.tau = obj.M * obj.dot_hat_omega_r - cross(obj.M * obj.hat_omega,obj.omega_r) - obj.K_c *(obj.hat_omega - obj.omega_r) ...
