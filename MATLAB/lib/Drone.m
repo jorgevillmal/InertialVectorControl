@@ -278,6 +278,8 @@ classdef Drone < handle
         function state = GetState(obj)
             state.s = obj.s;
             state.R = obj.R;
+            state.eta = norm(obj.eta);
+            state.tanhe_f = norm(Tanh(obj.e_f));
 
         end
 
