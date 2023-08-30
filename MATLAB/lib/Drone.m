@@ -85,6 +85,7 @@ classdef Drone < handle
         dotE_f
         eta
         ddx_d
+        Tanh_ef
     end
 
     %% Attitude Problem
@@ -160,6 +161,8 @@ classdef Drone < handle
     methods
         % CONSTRUCTOR
         function obj = Drone(params, initStates, initInputs,simTime)
+            e_z = [0, 0, 1]';
+
             obj.g = 9.81;
             obj.t = 0.0;
             obj.dt = 0.1;
@@ -199,7 +202,13 @@ classdef Drone < handle
             obj.e_f = zeros(3,1);
             obj.x_err = zeros(3,1);
             obj.v_err = zeros(3,1);
+            obj.ddx_d = zeros(3,1);
             obj.eta = obj.v_err + obj.k_x * obj.x_err + Tanh(obj.e_f);
+            obj.T = obj.m * obj.g * e_z + obj.m * obj.ddx_d + (obj.k * eye(3) ...
+                + obj.m * (obj.k_x * eye(3) + obj.K_f)) * Tanh(obj.e_f);
+            obj.f = norm(obj.T);
+
+            obj.Tanh_ef = zeros(3,1);
 
 
             % parameters
@@ -282,7 +291,7 @@ classdef Drone < handle
             state.s = obj.s;
             state.R = obj.R;
             state.eta = norm(obj.eta);
-            state.tanhe_f = norm(Tanh(obj.e_f));
+            state.tanhe_f = norm(obj.Tanh_ef);
             state.f = norm(obj.T);
             state.tau = norm(obj.tau);
             state.tilde_x = norm(obj.x_err);
@@ -310,15 +319,16 @@ classdef Drone < handle
 
         function ControlStatmet(obj)
             % ControlStatmet: Determina las leyes de control para el dron.
+            % Body to Worl Rotation Matrix
+            wRb = obj.R';
 
 
             % CONTROL  STATEMENT
 
             % Translational Motions
-            obj.dotS(1:3) = obj.eta - obj.k_x * obj.x_err - Tanh(obj.e_f);
+            obj.dotS(1:3) = obj.eta - obj.k_x * obj.x_err - obj.Tanh_ef;
 
-            obj.dotS(4:6) = (1/obj.m) *(-obj.m * (obj.k - obj.k_x) * obj.eta ...
-                + obj.k*Tanh(obj.e_f) - obj.k_x^2*obj.x_err);
+            obj.dotS(4:6) = 1 / obj.m *([0; 0; -obj.g * obj.m] + wRb * [0; 0; obj.f]);
 
 
             % Angular velocity
@@ -360,7 +370,7 @@ classdef Drone < handle
            
 
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            obj.e_f = obj.e_f + obj.dotE_f * obj.dt;
+%            obj.e_f = obj.e_f + obj.dotE_f * obj.dt;
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
             obj.x = obj.s(1:3);
@@ -418,11 +428,7 @@ classdef Drone < handle
 
         %% CONTROLLER
         function obj = PositionCtrl(obj, pos_des, vel_des, acc_des)
-
             e_z = [0, 0, 1]';
-
-
-
 
             % Asignar a las variables internas
             obj.x_des = pos_des;
@@ -436,20 +442,43 @@ classdef Drone < handle
 
 
             %  Positioning Controller  law
-            obj.eta = obj.v_err + obj.k_x * obj.x_err + Tanh(obj.e_f);
+
             
+
+            obj.Tanh_ef = -obj.K_f * Tanh(obj.e_f) + obj.k_x^2 * (1 - (1/obj.m))* ...
+                obj.x_err - obj.k * obj.eta;
+
+            obj.eta = obj.v_err + obj.k_x * obj.x_err + obj.Tanh_ef;
 
             % Usar la función para obtener el vector Cosh^2(ef)
             squared_values = CoshSquaredVector(obj.e_f);
 
             % Calcular la siguiente parte de la ecuación
-            vector_part = (-obj.K_f * Tanh(obj.e_f) + obj.k_x^2 * (1-(1/obj.m))* obj.x_err - obj.k * obj.eta);
+            vector_part = (-obj.K_f * obj.Tanh_ef + obj.k_x^2 * (1-(1/obj.m))* obj.x_err - obj.k * obj.eta);
 
             % Hacer el producto escalar
-            obj.dotE_f = squared_values' * vector_part;
+            obj.e_f = squared_values * vector_part;
+
+
 
             obj.T = obj.m * obj.g * e_z + obj.m * obj.ddx_d + (obj.k * eye(3) ...
-                + obj.m * (obj.k_x * eye(3) + obj.K_f)) * Tanh(obj.e_f);
+                + obj.m * (obj.k_x * eye(3) + obj.K_f)) * obj.Tanh_ef;
+
+
+            % obj.eta = obj.v_err + obj.k_x * obj.x_err + Tanh(obj.e_f);
+            % 
+            % 
+            % % Usar la función para obtener el vector Cosh^2(ef)
+            % squared_values = CoshSquaredVector(obj.e_f);
+            % 
+            % % Calcular la siguiente parte de la ecuación
+            % vector_part = (-obj.K_f * Tanh(obj.e_f) + obj.k_x^2 * (1-(1/obj.m))* obj.x_err - obj.k * obj.eta);
+            % 
+            % % Hacer el producto escalar
+            % obj.dotE_f = squared_values' * vector_part;
+            % 
+            % obj.T = obj.m * obj.g * e_z + obj.m * obj.ddx_d + (obj.k * eye(3) ...
+            %     + obj.m * (obj.k_x * eye(3) + obj.K_f)) * Tanh(obj.e_f);
 
             %**********************************************************%
             obj.f = norm(obj.T);
