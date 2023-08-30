@@ -70,6 +70,9 @@ classdef Drone < handle
 
         next_x_d
         next_dx_d
+
+        dot_x_err
+        dot_eta
     end
 
     properties
@@ -86,6 +89,7 @@ classdef Drone < handle
         eta
         ddx_d
         Tanh_ef
+        dot_Tanh_ef
     end
 
     %% Attitude Problem
@@ -203,12 +207,17 @@ classdef Drone < handle
             obj.x_err = zeros(3,1);
             obj.v_err = zeros(3,1);
             obj.ddx_d = zeros(3,1);
+            
             obj.eta = obj.v_err + obj.k_x * obj.x_err + Tanh(obj.e_f);
             obj.T = obj.m * obj.g * e_z + obj.m * obj.ddx_d + (obj.k * eye(3) ...
                 + obj.m * (obj.k_x * eye(3) + obj.K_f)) * Tanh(obj.e_f);
             obj.f = norm(obj.T);
 
-            obj.Tanh_ef = zeros(3,1);
+            obj.Tanh_ef = Tanh(obj.e_f);
+            obj.dot_Tanh_ef = zeros(3,1);
+            obj.dot_x_err = zeros(3,1);
+            obj.dot_eta = zeros(3,1);
+            obj.dotE_f = zeros(3,1);
 
 
             % parameters
@@ -291,7 +300,7 @@ classdef Drone < handle
             state.s = obj.s;
             state.R = obj.R;
             state.eta = norm(obj.eta);
-            state.tanhe_f = norm(obj.Tanh_ef);
+            state.tanhe_f = norm(Tanh(obj.e_f));
             state.f = norm(obj.T);
             state.tau = norm(obj.tau);
             state.tilde_x = norm(obj.x_err);
@@ -320,15 +329,16 @@ classdef Drone < handle
         function ControlStatmet(obj)
             % ControlStatmet: Determina las leyes de control para el dron.
             % Body to Worl Rotation Matrix
-            wRb = obj.R';
+            %wRb = obj.R';
 
 
             % CONTROL  STATEMENT
 
             % Translational Motions
-            obj.dotS(1:3) = obj.eta - obj.k_x * obj.x_err - obj.Tanh_ef;
+            obj.dotS(1:3) = obj.v;
 
-            obj.dotS(4:6) = 1 / obj.m *([0; 0; -obj.g * obj.m] + wRb * [0; 0; obj.f]);
+            obj.dotS(4:6) = (1/obj.m) *(-obj.m * (obj.k - obj.k_x) * obj.eta ...
+                + obj.k*Tanh(obj.e_f) - obj.k_x^2*obj.x_err);
 
 
             % Angular velocity
@@ -355,8 +365,8 @@ classdef Drone < handle
             obj.t = obj.t + obj.dt;
 
             % Find(update) the next state of obj.X
-            % obj.EvalEOM();
-            obj.ControlStatmet();
+            obj.EvalEOM();
+            %obj.ControlStatmet();
             obj.s = obj.s + obj.dotS.*obj.dt;
             obj.stateR = obj.R - obj.dotR.*obj.dt;
 
@@ -368,11 +378,7 @@ classdef Drone < handle
             obj.R = U * V';
 
            
-
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%            obj.e_f = obj.e_f + obj.dotE_f * obj.dt;
-            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
             obj.x = obj.s(1:3);
             obj.v = obj.s(4:6);
 
@@ -385,6 +391,17 @@ classdef Drone < handle
 
             obj.omega = obj.s(7:9);
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+            
+            % obj.e_f = obj.e_f + obj.dotE_f * obj.dt;
+
+            %obj.x_err = obj.x_err + obj.dot_x_err * obj.dt;
+            obj.e_f = obj.dotE_f* obj.dt;
+            %obj.eta = obj.eta + obj.dot_eta* obj.dt;
+            obj.Tanh_ef = obj.dot_Tanh_ef;
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
             % gyro-bias observer
             obj.dot_v_f_i = obj.gamma_f * (obj.v_i - obj.v_f_i);
             obj.v_f_i = obj.v_f_i + obj.dot_v_f_i * obj.dt;
@@ -435,20 +452,23 @@ classdef Drone < handle
             obj.v_des = vel_des;
             obj.ddx_d = acc_des;
 
+            obj.eta = obj.v_err + obj.k_x * obj.x_err + obj.Tanh_ef;
+
             % Error de posición y velocidad
             obj.x_err = obj.x - obj.x_des;
-            obj.v_err = obj.v - obj.v_des;
+            % obj.v_err = obj.v - obj.v_des;
+            % obj.v_err = obj.eta - obj.k_x * obj.x_err - obj.Tanh_ef;
+            obj.v_err = obj.eta - obj.k_x * obj.x_err - obj.Tanh_ef;
+            %obj.dot_x_err = obj.v_err;
 
-
-
-            %  Positioning Controller  law
 
             
 
-            obj.Tanh_ef = -obj.K_f * Tanh(obj.e_f) + obj.k_x^2 * (1 - (1/obj.m))* ...
-                obj.x_err - obj.k * obj.eta;
+            %  Positioning Controller  law
 
-            obj.eta = obj.v_err + obj.k_x * obj.x_err + obj.Tanh_ef;
+            obj.dot_eta = (1/obj.m) *(-obj.m * (obj.k - obj.k_x) * obj.eta ...
+                + obj.k* obj.Tanh_ef - obj.k_x^2*obj.x_err);
+            
 
             % Usar la función para obtener el vector Cosh^2(ef)
             squared_values = CoshSquaredVector(obj.e_f);
@@ -457,13 +477,26 @@ classdef Drone < handle
             vector_part = (-obj.K_f * obj.Tanh_ef + obj.k_x^2 * (1-(1/obj.m))* obj.x_err - obj.k * obj.eta);
 
             % Hacer el producto escalar
-            obj.e_f = squared_values * vector_part;
+            obj.dotE_f = squared_values * vector_part;
+
+            obj.dot_Tanh_ef = d_Tanh(obj.K_f, obj.e_f, obj.k_x, obj.m, obj.x_err, obj.k, obj.eta);
+            
+
+
+
+            % obj.Tanh_ef = -obj.K_f * Tanh(obj.e_f) + obj.k_x^2 * (1 - (1/obj.m))* ...
+            %     obj.x_err - obj.k * obj.eta;
 
 
 
             obj.T = obj.m * obj.g * e_z + obj.m * obj.ddx_d + (obj.k * eye(3) ...
-                + obj.m * (obj.k_x * eye(3) + obj.K_f)) * obj.Tanh_ef;
+                + obj.m * (obj.k_x * eye(3) + obj.K_f)) * Tanh(obj.e_f);
 
+           % obj.dot_x_err = obj.eta - obj.k_x * obj.x_err - obj.Tanh_ef;
+
+            
+
+           
 
             % obj.eta = obj.v_err + obj.k_x * obj.x_err + Tanh(obj.e_f);
             % 
@@ -482,6 +515,7 @@ classdef Drone < handle
 
             %**********************************************************%
             obj.f = norm(obj.T);
+            
             %**********************************************************%
 
             obj.dot_hat_omega_r = - obj.lambda_c * obj.J * (obj.hat_omega - obj.omega_des) - obj.lambda_c * ...
