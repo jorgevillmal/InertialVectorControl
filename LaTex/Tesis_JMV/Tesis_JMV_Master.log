@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.11.11)  2 SEP 2023 11:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.11.11)  2 SEP 2023 11:12
 entering extended mode
-**./Tesis_RMP_Master.tex
-(Tesis_RMP_Master.tex
+**./Tesis_JMV_Master.tex
+(Tesis_JMV_Master.tex
 LaTeX2e <2021-06-01> patch level 1
 L3 programming layer <2021-08-27>
 (C:\Users\George\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
@@ -525,9 +525,9 @@ Package tocbasic Info: setting babel extension for `nls' on input line 188.
 \nomitemsep=\skip79
 )
 \@nomenclaturefile=\write3
-\openout3 = `Tesis_RMP_Master.nlo'.
+\openout3 = `Tesis_JMV_Master.nlo'.
 
-Package nomencl Info: Writing nomenclature file Tesis_RMP_Master.nlo on input l
+Package nomencl Info: Writing nomenclature file Tesis_JMV_Master.nlo on input l
 ine 88.
 
 (C:\Users\George\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
@@ -639,7 +639,7 @@ ftex.def
 File: l3backend-pdftex.def 2021-08-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count327
 \l__pdf_internal_box=\box62
-) (Tesis_RMP_Master.aux (Capitulos/Resumen.aux) (Capitulos/Abstract.aux) (Capit
+) (Tesis_JMV_Master.aux (Capitulos/Resumen.aux) (Capitulos/Abstract.aux) (Capit
 ulos/Capitulo1.aux) (Capitulos/Capitulo2.aux) (Capitulos/Capitulo3.aux
 
 LaTeX Warning: Label `eq:modelo1a' multiply defined.
@@ -666,7 +666,7 @@ LaTeX Warning: Label `eq:modelo1a' multiply defined.
 LaTeX Warning: Label `inclusion2' multiply defined.
 
 ) (Capitulos/Capitulo4.aux) (Capitulos/Capitulo5.aux))
-\openout1 = `Tesis_RMP_Master.aux'.
+\openout1 = `Tesis_JMV_Master.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 163.
 LaTeX Font Info:    ... okay on input line 163.
@@ -771,9 +771,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 163.
 LaTeX Info: Redefining \pageref on input line 163.
 LaTeX Info: Redefining \nameref on input line 163.
- (Tesis_RMP_Master.out) (Tesis_RMP_Master.out)
+ (Tesis_JMV_Master.out) (Tesis_JMV_Master.out)
 \@outlinefile=\write4
-\openout4 = `Tesis_RMP_Master.out'.
+\openout4 = `Tesis_JMV_Master.out'.
 
 Package backref Info: ** backref set up for natbib ** on input line 163.
 \c@lstlisting=\count335
@@ -837,9 +837,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 279--280
 
 
 
-]) [12] (Tesis_RMP_Master.toc)
+]) [12] (Tesis_JMV_Master.toc)
 \tf@toc=\write5
-\openout5 = `Tesis_RMP_Master.toc'.
+\openout5 = `Tesis_JMV_Master.toc'.
 
  [13
 
@@ -848,9 +848,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 279--280
 ] [14
 
 ]
-(Tesis_RMP_Master.lof)
+(Tesis_JMV_Master.lof)
 \tf@lof=\write6
-\openout6 = `Tesis_RMP_Master.lof'.
+\openout6 = `Tesis_JMV_Master.lof'.
 
  [1] [2
 
@@ -1015,17 +1015,17 @@ Chapter 4.
 ]
 Chapter 5.
 ) [19]
-No file Tesis_RMP_Master.bbl.
+No file Tesis_JMV_Master.bbl.
 
 Package natbib Warning: There were undefined citations.
 
-(Tesis_RMP_Master.aux (Capitulos/Resumen.aux) (Capitulos/Abstract.aux)
+(Tesis_JMV_Master.aux (Capitulos/Resumen.aux) (Capitulos/Abstract.aux)
 (Capitulos/Capitulo1.aux) (Capitulos/Capitulo2.aux) (Capitulos/Capitulo3.aux)
 (Capitulos/Capitulo4.aux) (Capitulos/Capitulo5.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `Tesis_RMP_Master.out' has not changed.
+Package rerunfilecheck Info: File `Tesis_JMV_Master.out' has not changed.
 (rerunfilecheck)             Checksum: 08ED053AF62B0BAAD20F80E8FCC42328;4402.
  ) 
 Here is how much of TeX's memory you used:
@@ -1058,9 +1058,9 @@ cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/George/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users
 /George/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm1
 0.pfb>
-Output written on Tesis_RMP_Master.pdf (37 pages, 569941 bytes).
+Output written on Tesis_JMV_Master.pdf (37 pages, 569496 bytes).
 PDF statistics:
- 755 PDF objects out of 1000 (max. 8388607)
+ 754 PDF objects out of 1000 (max. 8388607)
  140 named destinations out of 1000 (max. 500000)
  224 words of extra memory for PDF output out of 10000 (max. 10000000)
 
