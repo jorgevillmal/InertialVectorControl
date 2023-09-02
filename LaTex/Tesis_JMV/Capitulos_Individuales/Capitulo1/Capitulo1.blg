@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Capitulo1.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: plainnat.bst
+Illegal, another \bibstyle command---line 144 of file Capitulo1.aux
+ : \bibstyle
+ :          {IEEE}
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+Database file #1: Citas.bib
+You've used 33 entries,
+            2773 wiz_defined-function locations,
+            865 strings with 11966 characters,
+and the built_in function-call counts, 16177 in all, are:
+= -- 1504
+> -- 806
+< -- 23
++ -- 274
+- -- 241
+* -- 1338
+:= -- 2486
+add.period$ -- 152
+call.type$ -- 33
+change.case$ -- 172
+chr.to.int$ -- 33
+cite$ -- 66
+duplicate$ -- 746
+empty$ -- 1359
+format.name$ -- 286
+if$ -- 3470
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 39
+newline$ -- 222
+num.names$ -- 134
+pop$ -- 305
+preamble$ -- 1
+purify$ -- 145
+quote$ -- 0
+skip$ -- 556
+stack$ -- 0
+substring$ -- 687
+swap$ -- 94
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 333
+warning$ -- 0
+while$ -- 129
+width$ -- 0
+write$ -- 533
+(There was 1 error message)

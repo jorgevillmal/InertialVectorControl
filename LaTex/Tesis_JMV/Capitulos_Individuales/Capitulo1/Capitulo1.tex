@@ -1,0 +1,484 @@
+\documentclass[11pt,letterpaper,twoside,openright]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+%preámbulo configuración de página
+\usepackage[width=165mm,top=15mm,bottom=25mm,bindingoffset=20mm,includehead]{geometry}
+
+%Preámbulo de Color de texto =================================================================
+\usepackage{color}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+\definecolor{verde}{rgb}{0.0, 0.5, 0.0}
+
+%preámbulo captions==========================================================================
+\usepackage{caption}
+\captionsetup{margin=40pt,format=hang,indention=-.5cm,font={footnotesize, rm},labelfont=bf,labelsep=colon}
+
+%preámbulo encabezados=======================================================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\setlength{\headheight}{15pt} 
+
+
+%preámbulo matemáticas=======================================================================
+%\spanishdecimal{.}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{mathrsfs}
+\newcommand{\sign}[1]{\mathrm{sign(#1)}} 
+\newcommand{\refe}[1]{(\ref{#1})}
+\newcommand{\rojo}[1]{{\color{red} #1}}
+\newcommand{\RE}{\mathbb{R}}
+\newcommand{\sig}[2]{\lceil#1\rfloor^{#2}}
+\newcommand{\abs}[2]{|#1|^{#2}}
+\usepackage{color}   
+\setcounter{MaxMatrixCols}{20}
+%\decimalpoint
+
+
+%preámbulo sistema internacional de unidades================================================
+\usepackage{siunitx}
+
+
+%preámbulo referencias========================================================================
+\usepackage[numbers]{natbib}
+\bibliographystyle{plainnat}
+\usepackage[hidelinks, breaklinks=true, backref=page,colorlinks=true,linkcolor=blue,citecolor=magenta]{hyperref}
+ 
+
+%preámbulo de gráficos=========================================================================
+\usepackage{graphicx}
+\graphicspath{{figuras/}}
+\usepackage{subfigure}
+\usepackage{float}
+
+%Preámbulo tabla=============================================================================
+\usepackage{multirow, array}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\definecolor{SeaGreen}{rgb}{0.13, 0.7, 0.67}
+\definecolor{Peach}{rgb}{0.97, 0.51, 0.47}
+\definecolor{LimeGreen}{rgb}{0.31, 0.78, 0.47}
+\definecolor{bananayellow}{rgb}{1.0, 0.88, 0.21}
+%preámbulo de apéndices======================================================================
+\usepackage[toc,page]{appendix}
+\renewcommand{\appendixpagename}{Apéndices}
+
+%preámbulo de url============================================================================
+\usepackage{url}
+
+%preámbulo de nomenclatura==================================================================
+\usepackage[intoc,spanish]{nomencl}
+\makenomenclature
+\usepackage{etoolbox}
+
+
+%Preámbulo para código de programación=======================================================
+\usepackage{listings}
+\lstset{ 
+backgroundcolor=\color{white},
+rulesepcolor=\color{black},
+%
+stringstyle=\ttfamily,
+showstringspaces = false,
+basicstyle=\footnotesize\ttfamily,
+commentstyle=\color{gray45},
+keywordstyle=\bfseries,
+%
+}
+\renewcommand{\lstlistingname}{Listado}
+
+%Preámbulo numeros decimales================================================================
+%\spanishdecimal{.}
+
+
+%preámbulo Marcadores=======================================================================
+\usepackage[hidelinks, breaklinks=true, backref=page]{hyperref} 
+
+%Redifiniendo Titulos==========================================================================
+\usepackage{titlesec}
+\newcommand{\bigrule}{\titlerule[0.5mm]}
+\titleformat{\chapter}[display] % Se cambia el formato del capitulo
+%{\bfseries\Huge} % por defecto se usarán caracteres de tamaño \Huge en negrita
+{\bfseries\Huge} % por defecto se usarán caracteres de tamaño \Huge en negrita
+{% contenido de la etiqueta
+\titlerule % línea horizontal
+\filright % texto alineado a la derecha
+\Large\chaptertitlename\ % "Capítulo" o "Apéndice" en tamaño \Large en lugar de \Huge
+\Large\thechapter} % número de capítulo en tamaño \Large
+{0mm} % espacio mínimo entre etiqueta y cuerpo
+{\filright} % texto del cuerpo alineado a la derecha
+[\vspace{0.5mm} \bigrule] % después del cuerpo, dejar espacio vertical y trazar línea horizontal gruesa
+
+%Preámbulo utilidades=========================================================================
+\usepackage{pdfpages}	%Incluye hojas de de archivos PDF
+\usepackage{siunitx}			%Sitema internacional de unidades
+\usepackage[T1]{fontenc}	%Fuentes
+\usepackage{textcomp}		%Fuentes
+
+%preámbulo teoremas, Definiciones y Proposiciones ==============================================================================================================
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{defi}{Definition}[chapter]
+\newtheorem{prop}{Proposition}[chapter]
+\newtheorem{observ}{Observation}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+
+%preámbulo acronimo ===================================================
+\usepackage{acronym}
+\acrodef{fl}[FL]{Función de Lyapunov} \acused{fl}
+\acrodef{pd}[p.d.]{positiva definida}
+\acrodef{ae}[AE]{asintóticamente estable}
+\acrodef{gae}[GAE]{global y asintóticamente estable}
+
+
+%preámbulo de nomenclatura ==========================================
+%\usepackage[intoc, spanish]{nomencl}
+\makenomenclature
+\nomenclature{$MCC$}{Modo de conducción continua}
+%FIN DEL PREÁMBULO===================================================
+
+%====================================================================
+%====================================================================
+%                    INICIO DEL DOCUMENTO
+%====================================================================
+%====================================================================
+\begin{document}
+	\chapter{Introduction}
+The estimation of state variables from known inputs and outputs of the dynamic systems plays a very important role, since in general, not all state variables are available in a control system. This problem is of great interest in various applications, for example, in detection and reconstruction faults, or in the design of robust feedback control laws.
+
+In the case of Linear Time Invariant (LTI) systems, there are well-established approaches such as the Luenberger observer or the Kalman Filter, which provide an asymptotic estimation of the real states of the system. However, in presence of parametric uncertainties or unknown external disturbances, robust approaches have been developed, such as the extended Kalman filter or high-gain observers, which suppress the effect of unknown inputs through a linear injection with a high gain.
+
+In the last decades, in parallel with the development of controllers based upon Sliding Modes (SM) techniques focused on dealing with perturbations in the model, observers based on these tools have been widely considered in reconstruction states and unknown inputs problem \cite{Spurgeon2008}\cite{Yan2007}\cite{Barbot2002}\cite{Boukhobza2003} due to the (more than robust) insensitivity to uncertainties\cite{Fridman2007}.
+Observers based on SM techniques have been shown to achieve very interesting results, because in contrast to those based on linear techniques, they are capable of estimating state variables exactly and in finite time despite the presence of unknown disturbances  belonging to a certain family of functions, which in practical terms is very extensive.
+
+The necessary and sufficient conditions for the existence of Unknown Inputs Observers (UIO) have been well defined, tacking into account arbitrary signal inputs, and are limited to Strongly Observable systems that also satisfy the so-called Observer Matching Condition (OMC), which translates to conditions of minimum phase or invariant zeros and relative degree one condition with respect to the unknown input\cite{Hautus1983}\cite{Fridman2007}. Unfortunately, most physical systems do not fulfill this condition. On the other hand, with this motivation, schemes based upon High-Order Sliding Modes (HOSM) approach have been proposed \cite{Fridman2007}\cite{Fridman2008}\cite{Floquet2007}\cite{Edwards2008}\cite{Fridman2011}, which, although they cannot relax the minimum phase condition, do not require that OMC fulfilled throughout some extra conditions, this increases greatly the family of systems for which UIO with the robust properties inherited from HOSM can be developed.
+
+In general, HOSM observers are based on Levant's Robust Exact Differentiator (RED)\cite{Levant1998},\cite{Levant2003}\cite{Levant2005} which estimates robustly, exactly and in finite time the $n-1$ derivatives of a signal, provided the $n$ derivative is uniformly bounded. That is, in terms of UIO, Levant's RED opened the possibility of relaxing the condition of relative degree one, to arbitrary relative degree, through the extra requirement of having a uniformly bounded unknown input. Therefore, RED can be applied directly as an observer as long as the state variables can be expressed as a function of the outputs, their derivatives and the control inputs only, a condition that turns out to be very restrictive. Moreover, in general this scheme only allows local stability in the dynamics of the observation error due to the necessary bounding conditions in the variables, in addition, the unknown inputs must be differentiable.
+
+To address some of these problems, observation schemes have been proposed consisting of a cascade of a Luenberger observer which ensures global convergence to a bounded region, plus a RED providing exact convergence in finite time in the presence of unknown inputs\cite{Fridman2007}\cite{Fridman2008}\cite{Fridman2011}\cite{Shtessel2014}. However, this construction notably increases the order of the observer, thereby increasing the number of parameters that need to be adjusted.
+
+In homogeneous systems, this property of homogeneity has important implications, local stability implies global stability, and in the case of systems with a homogeneity negative degree, asymptotic stability translates into stability in finite time\cite{Bernstein1997}\cite{Bernstein2000}.
+
+Hence, continuous homogeneous differentiators with homogeneity degree $d\in(-1,0]$ (linear with $d=0$) can estimate in finite time (exponentially) the derivatives of a signal, provided that $f^{(n)}=0$\cite{Tonametl2018}. While in the discontinuous case ($d=-1$), the RED can estimate robustly, exactly and in finite time the derivatives of a signal $f(t)$ subject to the aforementioned conditions, that is, $f^{(n)} $ uniformly bounded\cite{Levant2003}.
+
+An extension to the homogeneous functions has been recently introduced, the concept of bl-homogeneity refers not to a homogeneous function, but to a homogeneous function in the limit\cite{Andrieu2008}, that is, near the origin it can be approximated by a function with homogeneity degree $d_0$ and away from the origin it can be approximated by a function with homogeneity degree $d_{\infty}$, such that $d_0 \leq d_{\infty}$. The application of this idea to the control \cite{CruzZavala2021} differentiation\cite{Moreno2021} and observation problems, results in a dominance effect being produced in the non-linear injection terms of the error, such that for values close to the origin the approximation in 0 of the injection term dominates, which may contain discontinuous terms capable of dealing with bounded unknown inputs, while for values far from the origin the infinity approximation of the injection terms is capable of ensuring global stability. That is, the immediate advantage is that the design of bl-homogeneous systems is more flexible, since the properties near and far from the origin can be assigned independently, in addition, with the appropriate selection of the parameters $d_0$ and $d_\infty$, the results results of continuous and discontinuous homogeneous differentiators can be recovered.
+
+We recall, in bl-homogeneous differentiators, a case of particular interest occurs when the homogeneity degree for the approximation at 0, that is, $d_0$, is equal to -1. Since, in this case, a HOSM is induced at the origin, allowing the estimation of the  the derivatives (in the absence of noise) to be exact, robust and in finite time\cite{Moreno2021}.
+
+A disadvantage of homogeneous differentiators and observers (including Levant's RED) is that the convergence time, despite being finite, grows unboundedly (and faster than linearly) with the size of the initial estimation error\cite{Moreno2021}. This situation has been counteracted with another property of the bl-homogeneous systems design, which in particular for homogeneous differentiators, assigning a positive homogeneity degree to the approximation in the infinite limit and a negative homogeneity degree to the approximation in the zero limit convergence of the estimation will be achieved in Fixed Time (FxT), that is, the estimation error converges globally in finite time, and also the settling-time function is globally bounded by a constant $\bar{T}$, regardless of the size of the initial condition in estimation error. This is important, since the differentiator parameters can be designed such that, after an arbitrarily assigned time $\bar{T}$, we can be sure that the estimation of the derivatives of a signal is correct and exact, regardless of the initial conditions. The idea is to extend these results obtained for bl-homogeneous differentiators towards observers with the same properties, in fact, the observation schemes that will be proposed are closely related.
+
+Furthermore, the extension of the HOSM observer design problem to the Multiple-Input, Multiple-Output (MIMO) case with unknown inputs  is not fully available and still has several weak points. Similar to the SISO case, in the MIMO case the transformation of the system to a suitable representation for the design of observers with all known inputs has been widely described by Luenberger in his works, whose construction is based on the observability indices of the system, however, in such a representation the impact of unknown inputs is not taken into account\cite{Niederwieser2021}. On the other hand, the Chen's so-called Special Coordinate Basis (SCB) transformation \cite{Sannuti1986}\cite{Chen2004} decomposes the system into a set of inter-coupled integrator chains. Such a structure is impossible for the direct application of the RED as an observer, since it requires the bounding of the state variables for a global convergence. Recent works \cite{Niederwieser2021}\cite{Tranninger2021} have developed observation schemes based on a inferior blocks triangular structure, obtained through a set of modifications to the algorithm that builds the SCB representation, such representation is suggested as a new MIMO observer form which allows the direct application of RED as an observer with unknown inputs, achieving convergence in finite time. However, in addition to inheriting the disadvantages of a homogeneous observer, already mentioned previously, the design is restricted to systems expressed in a very particular representation.
+
+The objective of this work is to extend the results in the UIO design obtained so far for LTI MIMO systems with unknown inputs based upon the original SCB representation. Inspired by bl-homogeneous function tools, which in addition to achieving fixed time (FxT) convergence, have the possibility of designing such UIOs in a more general framework, that is, without the need for lower triangular structures. And even more, whose size does not exceed that of the original system.
+
+The convergence and stability proofs will be built from a set of recently proposed smooth Lyapunov functions, whose structure also has terms with bl-homogeneous properties.
+
+
+\section{Literature review}
+In \cite{Hautus1983}\cite{Trentelman2001} the necessary and sufficient conditions for the existence of observers for systems in which the input is not completely available for measurement were introduced, i.e. observers in the presence of unknown inputs signals. Such conditions are described in terms of three concepts directly related to the structure of the system; strong detectability, strong detectability$^*$ and strong observability. The system $\Sigma_s$
+	\begin{equation}\label{ecu: Sigma_s}
+\begin{split}
+\Sigma_s: \left\{
+\begin{array}{rl}
+\dot{x} &= Ax + D\omega, \quad x(0)=x_0 \\
+y&=Cx
+\end{array}
+\right. \\
+\end{split}
+	\end{equation}
+where $x \in \mathbb{R}^n$, $\omega \in \mathbb{R}^m$, $y \in \mathbb{R}^p$ are the state, unknown input, and output respectively, is strongly detectable if the output $y = 0 (t > 0)$ implies $x \rightarrow 0 (t \rightarrow \infty)$ irrespective of the input and the initial condition. Strong detectability is a weaker property than strong observability, which can be defined either by the condition that $y(t) = 0 (t > 0)$ implies $x(t) = 0 (t > 0)$ for any input and initial state. Additionally, a system is said to be strong$^*$ detectable if $y \rightarrow 0 (t \rightarrow \infty)$ implies $x \rightarrow 0 (t \rightarrow \infty)$ irrespective of the input and initial condition. Therefore strong$^*$ detectable implies strong detectable. 
+
+This concepts have also been given in terms of the zeros of the system. To explain this we recall that the zeros of the system \eqref{ecu: Sigma_s} correspond to the values $s\in \mathbb{C}$ for which the Rosenbrock's matrix 
+	\begin{equation}\label{ecu: Rosenbrok}
+\begin{split}
+R(s)=
+\begin{bmatrix}
+sI-A & -D\\
+C & 0	
+\end{bmatrix}, \quad \forall s\in \mathbb{C}
+\end{split}
+	\end{equation} 
+loses rank, i.e. $rank[R(s)] < n+m$.
+
+It has been shown that the system \eqref{ecu: Sigma_s} is strongly detectable if and only if all its zeros satisfy Re$[s]<0$ (equivalently $rank[R(s)]=n+m$), which correspond to minimum-phase condition. In similar way, the system is strong$^*$ detectable if and only if it is strongly detectable and in addition 
+	\begin{equation}\label{ecu: cond strong det}
+\begin{split}
+rank(CD) = rank(D)
+\end{split}
+	\end{equation} 
+	
+The main result in \cite{Hautus1983} is that in presence of arbitrary unknown input signal the system \eqref{ecu: Sigma_s} has a strong observer (estimate only based on the output) if and only if it is strong$^*$ detectable.
+
+The condition \eqref{ecu: cond strong det} is referred as the Observer Matching Condition (OMC), which is equivalent to have relative degree with respect to $\omega$ equal to 1. Unfortunately, in most of practical systems OMC does not old.
+
+These conditions are very restrictive and because they are necessary, it is impossible to overcome them without imposing some further restrictions on the system or relaxing the desired properties of the observer. The condition of strong$^*$ detectablitity is impossible to overcome, but the condition of relative degree 1 w.r.t. $\omega$ can be relaxed imposing some bounding conditions as it will be shown.
+
+Differentiation of signals in real time is an old and well-known problem. Let an input signal $f(t)$, which is assumed to be decomposed as $f(t)=f_0(t)+\nu(t)$. The first term is the unknown base signal $f_0(t)$ to be differentiated and belonging to the class $\mathscr{F}^{n}_{\Delta}$ of signals which are $n-1$ times differentiable and with a $(n-1)th$ derivative  having a known Lipschitz constant $\Delta>0$, i.e. the $n-th$ derivative is bounded, $|f_0^{(n)}(t)|<\Delta$.
+
+The continuous differentiators are the most common in practice, as shown in \cite{Khalil2003}\cite{Khalil2014}\cite{Khalil2017} the linear and homogeneous ones can estimate asymptoticaly the $n-1$ derivatives of a signal when the $n-th$ derivative is bounded. The most popular is the High Gain diferentiator which has the form
+\begin{equation}\label{ecu: HGD}
+\begin{split}
+\hat{\dot{x}}_i &= \hat{x}_{i+1}+\frac{\alpha_i}{\epsilon^i}(y-x_1), \quad i=1,...,n-1 \\
+\hat{\dot{x}}_n &= \frac{\alpha_n}{\epsilon^n}(y-x_1)
+\end{split}
+\end{equation}
+where the positive constants $\alpha_i$ are chosen such that the polynomial 
+\begin{equation}
+s^n+\alpha_1s^{n-1}+...+\alpha_{n-1}s+\alpha_n
+\end{equation}
+is Hurwitz and $\epsilon$ is a small positive constant and when $\epsilon\rightarrow 0$ system \eqref{ecu: HGD} acts as a differentiator with asymptotically convergence. 
+
+The continuous and homogeneous differentiation algorithms presented in \cite{Perruquetti2008} and \cite{Andrieu2008} converge in finite-time, in contrast to the exponential convergence of the linear ones. More recently in ,\cite{Basin2017} \cite{Lopez2018} extend \cite{Perruquetti2008} and develop continuous differentiators converging in fixed-time. 
+
+However, Levant \cite{Levant1998} has shown that differentiators with continuous dynamics are only exact for the rather thin class of signals having vanishing $n-th$ derivative. He has the proposed a High-Order Sliding Mode (HOSM) differentiator which is a discontinuous system that can estimate exactly, robustly and in finite-time the $n-1$ derivatives of a signal when the $n-th$ one is uniformly bounded, which is given by
+\begin{equation}\label{ecu: RED}
+\begin{split}
+\hat{\dot{x}}_i &= -k_i L^{\frac{i}{n}} \sig{ \hat{x}_1-f }{\frac{n-i}{n}} + \hat{x}_{i+1},\quad i=1,...,n-1 \\
+\hat{\dot{x}}_n &= -k_i L \sig{ \hat{x}_1-y }{0}
+\end{split}
+\end{equation}
+
+As we say in the introduction, Levant's RED opened the possibility of relaxing the condition of relative degree one in the observers design, to arbitrary relative degree, through the extra requirement of having a uniformly bounded unknown input. Therefore, RED can be applied directly as an observer as long as the state variables can be expressed as a function of the outputs, their derivatives and the control inputs only, a condition that in general is not fulfilled.
+
+In \cite{Fridman2006}\cite{Fridman2007}\cite{Fridman2008} in addition to present a characterization of strong observability and strong detectability in terms of the relative degree w.r.t the unknown input, a possible solution to he previous problem, it was proposed a novel scheme of observation composed by a cascade of a Luenberger Observer and a HOSM differentatiator which provided global finite-time exact observation of the state vector of strongly observable systems. The observer is built in the form
+\begin{equation}\label{ecu: Cascada Fridman}
+\begin{split}
+\dot{z} &= Az+Bu+L(y-Cz)\\
+\hat{x} &= z +K\nu \\
+\dot{\nu} &= W(y-Cz,\nu)
+\end{split}
+\end{equation}
+where $\hat{x}$ is the estimation of $x$, and the column matrix $L=[l_1,l_2,...,l_n]^T\in \mathbb{R}^n$ is a correction factor chosen so that the eigenvalues of the matrix $A-LC$ have negetive real part. The nonlinear part of \eqref{ecu: Cascada Fridman} is chosen in the form of the $(n-1)th$-order RED of Levant \cite{Levant1998} described in \eqref{ecu: RED}. The disadvantage of this observer scheme is the strong increment in the order of the system.
+
+Recently, a new idea in the observers construction have been presented in \cite{Niederwieser2021} for MIMO LTI systems. For this purpose, a new observer
+normal form is proposed where the system is represented by means of $p$ coupled single-
+output systems which allow for a straightforward design of a robust observer. The corresponding transformation is derived from a modification to the classical Special Coordinate Basis (SCB) \cite{Chen2004}. It is summarized as follows: Let the LTI system \eqref{ecu: Sigma_s} be strongly observable, then, there exist non-singular transformation matrices $T\in \mathbb{R}^{n\times n}$ and $\Gamma \in \mathbb{R}^{n\times n}$ such that teh state transformation $\bar{x}=T^{-1}x$ and the output transformation $\bar{y}=\Gamma y$ yield the system in observer normal form 
+\begin{equation}\label{ecu: Niederwieser SCB}
+\begin{split}
+\dot{\bar{x}} &= \bar{A}\bar{x}+\bar{D}\omega\\
+\bar{y} &= \bar{C}\bar{x}
+\end{split}
+\end{equation}
+with the dynamic matrix
+
+\begin{equation}
+A=\left[
+\begin{array}{ccccc|ccccc|c|ccccc}
+\alpha_{1,1} & 1 & 0 & \cdots & 0   	 & \alpha_{2,1} & 0 & \cdots & \cdots & 0    		&  & \alpha_{p,1} & 0 & \cdots & \cdots & 0 \\
+\alpha_{1,2} & 0 & 1 & \ddots & \vdots   & \alpha_{2,2} & \vdots &  &  & \vdots     		&  & \alpha_{p,2} & \vdots &  &  & \vdots \\
+\vdots & \vdots & \ddots & \ddots & 0    & \vdots & \vdots &  &  & \vdots    				&  & \vdots & \vdots &  &  & \vdots \\
+\vdots & \vdots &  & \ddots & 1          & \vdots & \vdots &  &  & \vdots   			    &  & \vdots & \vdots &  &  & \vdots \\
+\vdots & 0 & \cdots & \cdots & 0         & \vdots & 0 & \cdots & \cdots & 0   			    &  & \vdots & 0 & \cdots & \cdots & 0 \\
+\hline
+\vdots & 0 & 0 & \cdots & 0    			 & \vdots & 1 & 0 & \cdots & 0    					&  & \vdots & 0 & \cdots & \cdots & 0 \\
+\vdots & \vdots &  &  & \vdots    & \vdots & 0 & 1 & \ddots & \vdots   			    &  & \vdots & \vdots &  &  & \vdots \\
+\vdots & \vdots &  &  & 0    & \vdots & \vdots & \ddots & \ddots & 0 		    &  & \vdots & \vdots &  &  & \vdots \\
+\vdots & 0 & \cdots & \cdots & 1    		 & \vdots & \vdots &  & \ddots & 1   			    &  & \vdots & \vdots &  &  & \vdots \\
+\vdots & \beta_{1,2,1}  & \cdots & \cdots & \beta_{1,2,\mu_{1}-1}          & \vdots & 0 & \cdots & \cdots & 0    				&  & \vdots & 0 & \cdots & \cdots & 0 \\
+\hline
+\vdots & \beta_{1,2,1} & \cdots & \cdots & \beta_{1,2,1}    & \vdots & 1 & 0 & \cdots & 0   &  & \vdots & 1 & 0 & \cdots & 0 \\
+\hline
+\vdots & 1 & 0 & \cdots & 0    			 & \vdots & 0 & \cdots & \cdots & 0  				&  & \vdots & 1 & 0 & \cdots & 0 \\
+\vdots & 0 & 1 & \ddots & \vdots   		 & \vdots & \vdots &  &  & \vdots    		    	&  & \vdots & 0 & 1 & \ddots & \vdots \\
+\vdots & \vdots & \ddots & \ddots & 0    & \vdots & \vdots &  &  & \vdots    				&  & \vdots & \vdots & \ddots & \ddots & 0 \\
+\vdots & \vdots &  & \ddots & 1   		 & \vdots & 0 & \cdots & \cdots & 0    				&  & \vdots & \vdots &  & \ddots & 1 \\
+\alpha_{1,n} & \beta_{1,p,1} & \cdots & \cdots & \beta_{1,p,\mu_1-1}    & \alpha_{2,n} & \beta_{2,p,1} & \cdots & \cdots & \beta_{2,p,\mu_2-1}    &  & \alpha_{p,n} & 0 & \cdots & \cdots & 0 \\
+\end{array}
+\right]
+\end{equation}
+
+the unknown-input matrix
+\begin{equation}
+A=\left[
+\begin{array}{ccc}
+0 & \cdots & 0 \\
+\vdots & 	   & \vdots \\
+0 & \cdots & 0 \\
+\bar{d}_{\mu_1,1} & \cdots & \bar{d}_{\mu_1,m} \\
+\hline
+0 & \cdots & 0 \\
+\vdots & 	   & \vdots \\
+0 & \cdots & 0 \\
+\bar{d}_{\mu_1+\mu_2,1} & \cdots & \bar{d}_{\mu_1+\mu_2,m} \\
+\hline
+\vdots & & \vdots \\
+\hline
+0 & \cdots & 0 \\
+\vdots & 	   & \vdots \\
+0 & \cdots & 0 \\
+\bar{d}_{n,1} & \cdots & \bar{d}_{n,m}
+\end{array}
+\right]
+\end{equation}
+
+and the output matrix
+\begin{equation}
+A=\left[
+\begin{array}{ccccc|ccccc|c|ccccc}
+1 & 0 & \cdots & \cdots & 0	&	0 & 0 & \cdots & \cdots & 0 & \cdots &		0 & 0 & \cdots & \cdots & 0 \\
+0 & 0 & \cdots & \cdots & 0	&	1 & 0 & \cdots & \cdots & 0 & \cdots &		0 & 0 & \cdots & \cdots & 0 \\
+\vdots &  &  &  & 		 &  &  &  & 		&  & \ddots &    &  &  & \vdots\\
+0 & 0 & \cdots & \cdots & 0	&	0 & 0 & \cdots & \cdots & 	0	& \cdots &		1 & 0 & \cdots & \cdots & 0		
+\end{array}
+\right]
+\end{equation}
+where the order of the subsystems are given by the integers $\mu_j, j=1,...,p$, with $\mu_1 \geq \mu_2 \geq \cdots \geq \mu_p \geq 0,\quad \sum_{j=1}^{p}\mu_j=n$.
+
+The proposed observer rely on the RED \cite{Levant1998} and it is given by
+\begin{equation}
+\begin{split}
+\hat{\dot{\bar{x}}} &= \bar{A}\hat{\bar{x}} + \bar{\Phi}\sigma_{\bar{y}} + \bar{l}(\sigma_{\bar{y}}) \\
+\hat{\bar{y}} &= \bar{C}\hat{\bar{x}} \\
+\end{split}
+\end{equation}
+where
+\begin{equation}
+\sigma_{\bar{y}} = \bar{y}-\hat{\bar{y}}
+\end{equation}
+is the output error. Additionally, the term
+\begin{equation}
+\bar{\Pi} = \left[
+\begin{array}{ccc}
+\alpha_{1,1} & \cdots & \alpha_{p,1} \\
+\vdots &  & \vdots \\
+\alpha_{1,n} & \cdots & \alpha_{p,n}
+\end{array}
+\right]
+\end{equation}
+output systems provides for a linear output injection in order to compensate for the couplings between the single-output systems. And $\bar{l}(\sigma_{\bar{y}})$ is the nonlinear output injection based upon RED, which is described by
+\begin{small}
+\begin{equation}
+\bar{l}(\sigma_{\bar{y}}) = \left[
+\begin{array}{cccc|c|ccc}
+\kappa_{1,\mu_1-1}\sig{\sigma_1}{\frac{\mu_1-1}{\mu_1}} & \cdots & \kappa_{1,1}\sig{\sigma_1}{\frac{1}{\mu_1}} & \kappa_{1,0}\sig{\sigma_1}{0} & \cdots & \kappa_{p,\mu_p-1}\sig{\sigma_{\mu_1+\mu_{p-1}+1}}{\frac{\mu_p-1}{\mu_p}} & \cdots & \kappa_{p,0}\sig{\sigma_{\mu_1+\mu_{p-1}+1}}{0}
+\end{array}
+\right]^T
+\end{equation}
+\end{small}
+
+The error dynamics for each subsystem in terms of structure coincides with the estimation error dynamics of the RED with additional couplings in the last differential equation. Since the unknown inputs are bounded, the error dynamics present a sequential convergence from the subsystem $1$ to $p$ due to the lower triangular structure of the transformed system \eqref{ecu: Niederwieser SCB}. Therefore, the convergence is achieve exactly in finite time.
+
+Additionally to being attached to a particular lower triangular structure, the disadvantage of this observer and in general the homogeneous ones is that the convergence time, although finite, grows unboundedly (and faster than linearly) with the size of the initial estimation error.
+
+A kind of generalization to homogeneous systems have recently been presented in \cite{Moreno2021}. One of the nice properties of the bl-homogeneous design in general \cite{Andrieu2008}, and of the proposed differentiator in \cite{Moreno2021}, is that assigning a positive homogeneity degree to the $\infty$-limit approximation $d_{\infty} > 0$ and a negative homogeneity degree to the $0$-limit approximation $d_0 < 0$, it is possible to counteract the unbounded increasing effect of the convergence time, i.e. convergence of the estimation will be achieved in Fixed-Time (FxT), that is, the estimation error converges globally, in finite-time and the settling-time function is globally bounded by a positive constant $T$, independent of the initial estimation error.
+
+The diferentiator introduced is a dynamic system with bl-homogeneous properties, which in absence of noise is able to estimate asymptotically the $n-1$ derivatives of a based signal $f_0(t)$ coming from a function $f(t)=f_0(t)+\nu(t)$ with $f_0(t)$ $n$-times differentiable and $|f^{(n)}_0(t)|<\Delta$, and $\nu(t)$ is a uniformly bounded measurable signal.
+
+The diferentiatiator is given by 
+\begin{equation}\label{ecu: bl-diferentiator}
+\begin{split}
+\hat{\dot{x}}_i &= -k_i\phi_i(\hat{x}_1-f)+\hat{x}_{i+1}, \quad i=1,...,n-1\\
+\hat{\dot{x}}_n &= -k_n\phi_n(\hat{x}_1-f)
+\end{split}
+\end{equation}
+where the nonlinear output injection terms, given by
+\begin{equation}
+\phi_i(z) = \varphi_i \circ ... \circ \varphi_2 \circ \varphi_1(z)
+\end{equation} 
+are the composition of the monotonic growing functions
+\begin{equation}
+\varphi_i(s) = \kappa_i \lceil s \rfloor^{\frac{r_{0,i+1}}{r_{0,i}}} + \theta_i \lceil s \rfloor^{\frac{r_{\infty,i+1}}{r_{\infty,i}}} 
+\end{equation}
+with powers selected as $r_{0,n}=r_{\infty,n}=1$, and for $i=1,...,n+1$
+\begin{equation}
+\begin{split}
+r_{0,i} = r_{0,i+1}-d_0 = 1-(n-i)d_0 \\
+r_{\infty,i} = r_{\infty,i+1}-d_\infty = 1-(n-i)d_\infty
+\end{split}
+\end{equation}
+which are completely defined by two parameters $-1 \leq d_0 \leq d_\infty < \frac{1}{n-1}$.
+
+Selecting $-1 \leq d_0 \leq d_{\infty} < \frac{1}{n-1}$ and choosing arbitrary positive (internal) gains $\kappa_i > 0$ and $\theta_i > 0$, for $i = 1,...,n$. It is supposed that either $\Delta=0$ or $d_0=-1$. Under these conditions and in the absence of noise $\nu(t)\equiv 0$, then, there exist appropriate gains $k_i>0$, for $i=1,...,n$, such that the bl-homogeneous differentiator \eqref{ecu: bl-diferentiator} converge globally and asymptotically to the derivatives of the signal. Moreover, it converges in Fixed-Time if either
+\begin{equation}
+\begin{split}
+(a) &-1<d_0<0<d_{\infty}<\frac{1}{n-1}  \quad \textrm{and} \quad f(t) \in \mathscr{F}^{n}_{0}, \textrm{or} \\
+(b) &-1=d_0<0<d_{\infty}<\frac{1}{n-1} \quad \textrm{and} \quad f(t) \in \mathscr{F}^{n}_{\Delta}
+\end{split}
+\end{equation}
+where $\mathscr{F}^{n}_{0} \triangleq \left\lbrace f^{(n)}(t) \equiv 0 \right\rbrace$ represent the class of polinomial signals and $\mathscr{F}^{n}_{\Delta} \triangleq \left\lbrace \left| f^{(n)}(t)\right| \leq \Delta \right\rbrace$ corresponds to the class of $n$-Lipschitz signals \cite{Moreno2021}. This differentiator can be seen has an observer for a particular kind of systems as a result of the present work.
+
+
+\section{Problem Statement}
+Consider a general strictly proper MIMO Linear Time Invatiant system $\Sigma$ with unknown inputs
+\begin{equation}\label{ecu: Sigma}
+\begin{split}
+\Sigma: \left\{
+\begin{array}{rl}
+\dot{x} &= Ax + Bu +D\omega,\quad D\neq 0, \quad x(0)=x_0 \\
+y&=Cx \\
+\omega &= [\omega_1 ... \omega_m]^T, \quad |\omega_i|<\Delta_i
+\end{array}
+\right. \\
+\end{split}
+\end{equation}
+where $x \in \mathbb{R}^n$ is the state vector, $u \in \mathbb{R}^q$ the known input vector, $\zeta \in \mathbb{R}^m$ the unknown input vector and $y \in \mathbb{R}^p$ is the output vector. Accordingly $A\in \mathbb{R}^{n\times n},B\in \mathbb{R}^{n\times q},D\in \mathbb{R}^{n\times m},C\in \mathbb{R}^{p\times n}$. Without loss of generality we assume that all the inputs and outputs are linearly independent,i.e. $rank(D)=m$,$rank(C)=p$.
+
+For simplicity, the system is considered without feedthrough (the arguments are equally applicable with an extra steps in transformation). It can also be assumed that the known inputs $u$ are equal to 0, i.e. $u=0$, since it does not modify the observability properties and the effect of these completely known signals can be easily added in the observer formulation.
+
+The equations are understood in the Filipov sense \cite{Filipov1988}, in order to provide the possibility of using discontinuous signals at the observer. Note that the Filipov solutions coincide with the usual solutions when the right-hand side of the expressions are continuous.
+Assuming $\Sigma$ to be Strongly Observable, the problem is defined as the construction of an observer $\Omega$ with properties of homogeneity in the bi-limit, therefore, capable of estimating exactly in finite time, or preferably in fixed time (FxT) the states of the system, even in the presence of unknown inputs that satisfy a uniform bounded condition.
+\begin{equation}\label{ecu: Omega}
+\begin{split}
+\Omega: \left\{
+\begin{array}{rl}
+\hat{\dot{x}} &= -K\Phi(y,\hat{x},u) + Ax,\quad \hat{x}(0)=x_0
+\end{array}
+\right. \\
+\end{split}
+\end{equation}
+where $\hat{x}$ are the estimated states, $K$ is a design matrix gain and $\Phi(\cdot)$ represent the correction terms.
+The design task is based on the transformation in Special Coordinates Basis (SCB) without any modification, that is, without the need to have a lower triangular structure of the system. Furthermore, the structure of the observer will be in size at most the size of the system.
+
+\section{Objectives}
+\subsection{Overall Objective}
+Design observers for strongly observable MIMO-LTI systems with unknown inputs, based on classical and current results on homogeneous and bl-homogeneous systems, such that they offer global exact convergence in finite time or preferably in fixed time.
+\subsection{Specific Objectives}
+\begin{itemize}
+\item Propose observation schemes with bl-homogeneous properties for MIMO-LTI systems based on the Special Coordinates Basis proposed by Chen \cite{Chen2004}, which decomposes the original system into a set of subsystems with interconnection terms between them, such that the general structure of the observation scheme is made up of a set of observers that are somehow independent of each other.
+
+\item Define a design methodology for the observer parameters, so that the tuning process of gains and adjustable parameters is simple and intuitive for the designer.
+
+\item Give a rigorous proof of the convergence based upon a Lyapunov approach.
+
+\item Show the effectiveness of the proposed observers through some examples of physical and academic systems.
+\end{itemize}
+
+
+\section{Contributions}
+\begin{itemize}
+\item This work presents the design of a type of observers with unknown inputs (UIO) using novel properties of homogeneity in the bi-limit for MIMO-LTI systems with arbitrary relative degree as a direct consequence of recent works on HOSM bl-homogeneous differentiators, which similar to them show exact Fixed Time convergence.
+
+\item The design starts from a general transformation of the system in Special Coordinates Basis (SCB), from which, by assuming strong observability, a set of interconnected subsystems associated with the observable and strongly observable parts of the system are obtained, in such a way that it is shown that it is possible to propose a scheme made up of a set of interconnected observers. It is shown that such interconnections between subsystems can be compensated without the need to bring the system to a triangular structure as reported in recent works. This through the definition of bl-homogeneous correction terms and convenient gains.
+
+\item The structure of the proposed observers does not unnecessarily raise the order of the whole system, that is, the order of the observer is at most the order of the plant.
+
+\item A convergence proof of the estimation error with a Lyapunov approach is presented, which, despite being very detailed, is very intuitive. This results in a simple methodology for observer gain adjustment.
+\end{itemize}
+
+\section{Thesis structure}
+This thesis is organized as follows. Chapter 2 provides some notations, definitions and preliminaries which are necessary to present the observers design and proofs. In Chapter 3 is presented the main result, the design of the observers for MIMO-LTI systems, additionally we give some examples to show the effectiveness in solving the observation problem in presence of unknown inputs. Chapter 4 present an extension to a class of MIMO-LTV systems which can be transformed to a similar structure of the LTI case. In Chapter 5 are given some conclusions and possible future work opportunities. Finally, in Appendix are provided all the proofs in detail.
+
+
+
+
+
+
+
+
+
+	
+	%====================================================================
+	%                          Bibliografia
+	%====================================================================
+	\bibliographystyle{IEEE} 
+	\bibliography{Citas}
+\end{document}

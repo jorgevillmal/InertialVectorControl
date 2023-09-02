@@ -1,0 +1,234 @@
+\documentclass[11pt,letterpaper,twoside,openright]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+%preámbulo configuración de página
+\usepackage[width=165mm,top=15mm,bottom=25mm,bindingoffset=20mm,includehead]{geometry}
+
+%Preámbulo de Color de texto =================================================================
+\usepackage{color}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+\definecolor{verde}{rgb}{0.0, 0.5, 0.0}
+
+%preámbulo captions==========================================================================
+\usepackage{caption}
+\captionsetup{margin=40pt,format=hang,indention=-.5cm,font={footnotesize, rm},labelfont=bf,labelsep=colon}
+
+%preámbulo encabezados=======================================================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\setlength{\headheight}{15pt} 
+
+
+%preámbulo matemáticas=======================================================================
+%\spanishdecimal{.}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{dsfont}
+\usepackage{mathrsfs}
+\newcommand{\sign}[1]{\mathrm{sign(#1)}} 
+\newcommand{\refe}[1]{(\ref{#1})}
+\newcommand{\rojo}[1]{{\color{red} #1}}
+\newcommand{\RE}{\mathbb{R}}
+\newcommand{\sig}[2]{\lceil#1\rfloor^{#2}}
+\newcommand{\abs}[2]{|#1|^{#2}}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\usepackage{color}   
+\setcounter{MaxMatrixCols}{20}
+%\decimalpoint
+
+
+%preámbulo sistema internacional de unidades================================================
+\usepackage{siunitx}
+
+
+%preámbulo referencias========================================================================
+\usepackage[numbers]{natbib}
+%\bibliographystyle{plainnat}
+\usepackage[hidelinks, breaklinks=true, backref=page,colorlinks=true,linkcolor=blue,citecolor=magenta]{hyperref}
+
+
+%preámbulo de gráficos=========================================================================
+\usepackage{graphicx}
+\graphicspath{{figuras/}}
+\usepackage{subfigure}
+\usepackage{float}
+
+%Preámbulo tabla=============================================================================
+\usepackage{multirow, array}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\definecolor{SeaGreen}{rgb}{0.13, 0.7, 0.67}
+\definecolor{Peach}{rgb}{0.97, 0.51, 0.47}
+\definecolor{LimeGreen}{rgb}{0.31, 0.78, 0.47}
+\definecolor{bananayellow}{rgb}{1.0, 0.88, 0.21}
+%preámbulo de apéndices======================================================================
+\usepackage[toc,page]{appendix}
+\renewcommand{\appendixpagename}{Apéndices}
+
+%preámbulo de url============================================================================
+\usepackage{url}
+
+%preámbulo de nomenclatura==================================================================
+\usepackage[intoc,spanish]{nomencl}
+\makenomenclature
+\usepackage{etoolbox}
+
+
+%Preámbulo para código de programación=======================================================
+\usepackage{listings}
+\lstset{ 
+	backgroundcolor=\color{white},
+	rulesepcolor=\color{black},
+	%
+	stringstyle=\ttfamily,
+	showstringspaces = false,
+	basicstyle=\footnotesize\ttfamily,
+	commentstyle=\color{gray45},
+	keywordstyle=\bfseries,
+	%
+}
+\renewcommand{\lstlistingname}{Listado}
+
+%Preámbulo numeros decimales================================================================
+%\spanishdecimal{.}
+
+
+%preámbulo Marcadores=======================================================================
+\usepackage[hidelinks, breaklinks=true, backref=page]{hyperref} 
+
+%Redifiniendo Titulos==========================================================================
+\usepackage{titlesec}
+\newcommand{\bigrule}{\titlerule[0.5mm]}
+\titleformat{\chapter}[display] % Se cambia el formato del capitulo
+%{\bfseries\Huge} % por defecto se usarán caracteres de tamaño \Huge en negrita
+{\bfseries\Huge} % por defecto se usarán caracteres de tamaño \Huge en negrita
+{% contenido de la etiqueta
+	\titlerule % línea horizontal
+	\filright % texto alineado a la derecha
+	\Large\chaptertitlename\ % "Capítulo" o "Apéndice" en tamaño \Large en lugar de \Huge
+	\Large\thechapter} % número de capítulo en tamaño \Large
+{0mm} % espacio mínimo entre etiqueta y cuerpo
+{\filright} % texto del cuerpo alineado a la derecha
+[\vspace{0.5mm} \bigrule] % después del cuerpo, dejar espacio vertical y trazar línea horizontal gruesa
+
+%Preámbulo utilidades=========================================================================
+\usepackage{pdfpages}	%Incluye hojas de de archivos PDF
+\usepackage{siunitx}			%Sitema internacional de unidades
+\usepackage[T1]{fontenc}	%Fuentes
+\usepackage{textcomp}		%Fuentes
+
+%preámbulo teoremas, Definiciones y Proposiciones ==============================================================================================================
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{observation}{Observation}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{property}{Property}[chapter]
+\newtheorem{assumtion}{Assumption}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+
+%preámbulo acronimo ===================================================
+\usepackage{acronym}
+\acrodef{fl}[FL]{Función de Lyapunov} \acused{fl}
+\acrodef{pd}[p.d.]{positiva definida}
+\acrodef{ae}[AE]{asintóticamente estable}
+\acrodef{gae}[GAE]{global y asintóticamente estable}
+
+
+%preámbulo de nomenclatura ==========================================
+%\usepackage[intoc, spanish]{nomencl}
+\makenomenclature
+\nomenclature{$MCC$}{Modo de conducción continua}
+%FIN DEL PREÁMBULO===================================================
+
+%====================================================================
+%====================================================================
+%                    INICIO DEL DOCUMENTO
+%====================================================================
+%====================================================================
+\begin{document}
+\chapter{Conclusions}
+In this work we have proposed a family of observers for the state estimation of strongly observable SISO and MIMO Linear Time Invariant systems, the proposed scheme has bl-homogeneous properties, which allow us to assign behavior near and far from the origin independently, this feature allows us the possibility of accelerating when possible the convergence velocity of the observer achieving finite time or more fixed-time convergence. Additionally, the induced HOSM at the origin allow us to deal with bounded unknown inputs having theoretically exact convergence.
+
+The tuning parameters of the observer are composed by a set of gains, which have an intuitive roll each one, the internal gains $\kappa_{\psi,j},\theta_{psi,j}$ give a relative weight of the low degree terms and the high degree ones in the nonlinear injection terms. The external gains $k_{\psi,j}$ are responsible for ensuring stability of the observer considering the non-presence of interconnections and perturbations, and finally the gains $L,\alpha$ are in charge of dealing with the interconnection and unknown inputs terms respectively by setting them sufficiently large. Thus, the tuning procedure of the observer is simple and structured.
+
+The boundedness of the state variables is not required for global finite-time or fixed-time stability of the estimation error dynamics which allows for its application to unstable plants.
+
+In the SISO case the state estimation for LTI systems with unknown inputs problem can be solved by directly applying a HOSM differentiator (like Levant's one) if we put the system in observer canonical form. Nevertheless, this idea can not be applied if the system is in observability canonical form, since to have global convergence we should have bounded state variables, this reduce its applicability. In the MIMO case this problem is the same, extended to a set of subsystems. Base on this problem, the construction of bl-homogeneous observers allow us to deal with unbounded functions far of the origin, i.e. with $d_{\infty}\geq 0$ we can deal with Lipschitz and then linear functions of the states in last channel of each subsystem and in the case of selecting $d_0=-1$ we have shown that the observer can deal with the effect of unknown inputs due to the HOSM, obviously, in the absence of unknown inputs a linear $d_0=d_{\infty}=0$ or continuous $-1<d_0< 0 < d_{\infty}$ observer is sufficient to achieve asymptotic or exact and finite time convergence, respectively.
+
+This work results in a more general observation scheme, with respect to the already existing in literature offering global convergence. In contrast to the cascade scheme \cite{Fridman2006} composed by a Luenberger observer and a HOSM differentiator the structure is much simpler because the order is not unnecessarily increased, therefore the number of parameters is significantly less.
+
+On the other hand, for the MIMO case, the observer presented in \cite{Niederwieser2021} is based on a MIMO observer normal form which allows to apply directly an homogeneous differentiator (the Levant's RED in particular) this is because in this observer normal form, the resulting subsystems ares interconnected in a convenient form, i.e. the convergence is achieved in a sequential way, when the first subsystem has converged the second one can do, and then sequentially. This observer can not deal with another kind of interconnection terms, for example, those given in observability canonical form. The observer proposed here can deal with both interconnections and in fact, more general. 
+
+The effectiveness of the observer has been illustrated in the presented examples, both of them have unstable dynamics and bounded unknown inputs. The results showed that although the unbounded state variables it has global convergence. Also, it was shown that linear and continuous observers cannot completely compensate the effect of unknown input, keeping the error in a neighborhood of zero only. But the High Order Sliding Mode produced by having $d_0=-1$ homogeneity degree in the $0$-approximation terms allow the observers to compensate these effects. 
+
+\section{Future works}
+The present work opens the possibility to several extensions.
+\begin{itemize}
+	\item Design of Bl-homogeneous observers for strongly detectable SISO and MIMO Linear Time Invariant systems, that is, systems with inaccessible but stable internal dynamics. This is an immediate extension that does not require a lot of extra work. For the SISO case, the problem boils down to designing observers for systems given by
+	\begin{equation}
+		\begin{split}\label{ecu: SISO SCB sys}
+			\Sigma: \left\{
+			\begin{array}{rl}
+				\dot{x}_a &= A_{aa}x_a + H_{ad}y\\
+				\dot{x}_{d,1} &= x_{d,2}, \quad y=x_{1}, \\
+				\dot{x}_{d,j} &= x_{d,j+1} \\
+				& \vdots \quad j=1,...,n_{d}-1\\
+				\dot{x}_{d,n_{b}} &= a_{d,1}x_{d,1} + a_{d,2}x_{d,2} +...+ a_{d,n_d}x_{d,n_d} + \omega
+			\end{array}
+			\right. \\
+		\end{split}
+	\end{equation}
+	
+	\item The design of Bl-homogeneous observers for nonlinear systems with unknown inputs. Although this issue is currently being addressed by colleagues in the same working group, the MIMO non-linear case is still an undeveloped problem. The problem can be seen as the design of observers for a system given by
+	\begin{equation}
+		\begin{split}
+			\dot{x} &= f(t,x,u)+g(x)\omega(t), \quad x(0)=x_0 \\
+			y &= h(x)
+		\end{split}
+	\end{equation}
+	
+	\item Design of observers for networks of non-linear systems in general. The methodology presented in this work in the MIMO case under the SCB transformation is a first approach in the development of this topic, since it can be seen as the design of observers for linear subsystems with also linear interconnections in the states. That is, for future work the task can be extended to the development of observers for more general systems with generally non-linear interconnection functions between them. The problem can be stated the design for a general system given by $N$ non-linear systems with interconnection terms $\Psi_i(\cdot)$ and unknown inputs $\omega(t)$.
+	\begin{equation}
+		\begin{split}
+			\Sigma_i: \left\{
+			\begin{array}{rl}
+				\dot{x}_i & = F_i(x_i,u_i) + \Psi_i(x_1,...,x_ N) + G(x_i)\omega_i(t), \quad x_i(0)=x_{i,0} \\
+				y_i & = H_i(x_i), \quad i=1,...,N
+			\end{array}
+			\right. \\
+		\end{split}
+	\end{equation}
+	$\Psi_i(\cdot)$ is an interconnection function that contains all the states $x_i \in \mathbb{R}^{n_i},i=1,...,N$.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+
+	%====================================================================
+	%                          Bibliografia
+	%====================================================================
+	\bibliographystyle{ieeetr}
+	\bibliography{Citas}
+\end{document}

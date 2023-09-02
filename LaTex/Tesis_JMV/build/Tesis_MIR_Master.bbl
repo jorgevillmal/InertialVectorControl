@@ -1,0 +1,18 @@
+\begin{thebibliography}{}
+
+\bibitem[Bacciotti and Rosier, 2005]{bacciotti2005}
+Bacciotti, A. and Rosier, L. (2005).
+\newblock {\em Liapunov functions and stability in control theory}.
+\newblock Springer Science \& Business Media.
+
+\bibitem[Bernuau et~al., 2014]{bernuau2014h}
+Bernuau, E., Efimov, D., Perruquetti, W., and Polyakov, A. (2014).
+\newblock On homogeneity and its application in sliding mode control.
+\newblock {\em Journal of the Franklin Institute}, 351(4):1866--1901.
+
+\bibitem[Cruz-Zavala and Moreno, 2017]{CRUZZAVALA2017}
+Cruz-Zavala, E. and Moreno, J.~A. (2017).
+\newblock Homogeneous high order sliding mode design: A lyapunov approach.
+\newblock {\em Automatica}, 80:232--238.
+
+\end{thebibliography}

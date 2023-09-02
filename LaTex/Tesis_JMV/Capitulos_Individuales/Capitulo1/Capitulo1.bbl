@@ -1,0 +1,276 @@
+\begin{thebibliography}{33}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Andrieu et~al.(2008)Andrieu, Praly, and Astolfi]{Andrieu2008}
+V.~Andrieu, L.~Praly, and A.~Astolfi.
+\newblock Homogeneous approximation, recursive observer design, and output
+  feedback.
+\newblock \emph{SIAM Journal on Control and Optimization}, 47\penalty0
+  (4):\penalty0 1814--1850, 2008.
+\newblock \doi{10.1137/060675861}.
+\newblock URL \url{https://doi.org/10.1137/060675861}.
+
+\bibitem[{Barbot} et~al.(2002){Barbot}, {Djemai}, and {Boukhobza}]{Barbot2002}
+J-P. {Barbot}, M.~{Djemai}, and T.~{Boukhobza}.
+\newblock Sliding mode observers.
+\newblock In \emph{Sliding Mode Control In Engineering}, Automation and Control
+  Engineering. CRC Press, 2002.
+\newblock ISBN 9780203910856.
+
+\bibitem[Basin et~al.(2017)Basin, Yu, and Shtessel]{Basin2017}
+Michael Basin, Polk Yu, and Yuri Shtessel.
+\newblock Finite- and fixed-time differentiators utilising hosm techniques.
+\newblock \emph{IET Control Theory \& Applications}, 11\penalty0 (8):\penalty0
+  1144--1152, 2017.
+
+\bibitem[Bhat and Bernstein(2000)]{Bernstein2000}
+Sanjay~P Bhat and Dennis~S Bernstein.
+\newblock Finite-time stability of continuous autonomous systems.
+\newblock \emph{SIAM Journal on Control and Optimization}, 38\penalty0
+  (3):\penalty0 751--766, 2000.
+
+\bibitem[Bhat and Bernstein(1997)]{Bernstein1997}
+S.P. Bhat and D.S. Bernstein.
+\newblock Finite-time stability of homogeneous systems.
+\newblock In \emph{Proceedings of the 1997 American Control Conference (Cat.
+  No.97CH36041)}, volume~4, pages 2513--2514 vol.4, 1997.
+\newblock \doi{10.1109/ACC.1997.609245}.
+
+\bibitem[Boukhobza et~al.(2003)Boukhobza, Djemai, and Barbot]{Boukhobza2003}
+T.~Boukhobza, M.~Djemai, and J.P. Barbot.
+\newblock Implicit triangular observer form dedicated to a sliding mode
+  observer for systems with unknown inputs.
+\newblock \emph{Asian Journal of Control}, 5\penalty0 (4):\penalty0 513--527,
+  2003.
+\newblock \doi{10.1111/j.1934-6093.2003.tb00169.x}.
+\newblock URL
+  \url{https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1934-6093.2003.tb00169.x}.
+
+\bibitem[Chen et~al.(2004)Chen, Lin, and Shamash]{Chen2004}
+Ben~M. Chen, Zongli Lin, and Yacov Shamash.
+\newblock \emph{Linear Systems Theory. A Structural Decomposition Approach}.
+\newblock Control Engineering. Birkhäuser Boston, 2004.
+\newblock \doi{https://doi.org/10.1007/978-1-4612-2046-6}.
+
+\bibitem[Cruz-Zavala and Moreno(2020)]{CruzZavala2021}
+Emmanuel Cruz-Zavala and Jaime Moreno.
+\newblock High‐order sliding‐mode control design homogeneous in the
+  bi‐limit.
+\newblock \emph{International Journal of Robust and Nonlinear Control}, 31, 10
+  2020.
+\newblock \doi{10.1002/rnc.5242}.
+
+\bibitem[Edwards et~al.(2008)Edwards, Floquet, and Spurgeon]{Edwards2008}
+Chris Edwards, Thierry Floquet, and Sarah~K. Spurgeon.
+\newblock {Circumventing the relative degree condition in sliding mode design}.
+\newblock In Giorgio Bartolini, Leonid Fridman, Alessandro Pisano, and Elio
+  Usai, editors, \emph{{Modern Sliding Mode Control Theory, New Perspectives
+  and Applications}}, volume 375 of \emph{Lecture Notes in Control and
+  Information Sciences}, pages 137--158. {Spinger Verlag}, 2008.
+\newblock URL \url{https://hal.inria.fr/inria-00293881}.
+
+\bibitem[Filippov(1988)]{Filipov1988}
+A.~F. Filippov.
+\newblock \emph{Differential Equations with Discontinuous Righthand Side},
+  volume~18.
+\newblock Springer Science \& Business Media, 1988.
+
+\bibitem[Floquet et~al.(2006)Floquet, Edwards, and Spurgeon]{Floquet2007}
+T.~Floquet, C.~Edwards, and S.K. Spurgeon.
+\newblock On sliding mode observers for systems with unknown inputs.
+\newblock In \emph{International Workshop on Variable Structure Systems, 2006.
+  VSS'06.}, pages 214--219, 2006.
+\newblock \doi{10.1109/VSS.2006.1644520}.
+
+\bibitem[Fridman et~al.(2006)Fridman, Levant, and Davila]{Fridman2006}
+Leonid Fridman, Arie Levant, and Jorge Davila.
+\newblock High-order sliding-mode observation and identification for linear
+  systems with unknown inputs.
+\newblock In \emph{Proceedings of the 45th IEEE Conference on Decision and
+  Control}, pages 5567--5572, 2006.
+\newblock \doi{10.1109/CDC.2006.377385}.
+
+\bibitem[Fridman et~al.(2007)Fridman, Levant, and Davila]{Fridman2007}
+Leonid Fridman, Arie Levant, and Jorge Davila.
+\newblock Observation of linear systems with unknown inputs via high-order
+  sliding-modes.
+\newblock \emph{International Journal of Systems Science}, 38\penalty0
+  (10):\penalty0 773--791, 2007.
+\newblock \doi{10.1080/00207720701409538}.
+
+\bibitem[Fridman et~al.(2008)Fridman, Davila, and Levant]{Fridman2008}
+Leonid Fridman, Jorge Davila, and Arie Levant.
+\newblock High-order sliding-mode observation of linear systems with unknown
+  inputs.
+\newblock \emph{IFAC Proceedings Volumes}, 41\penalty0 (2):\penalty0
+  4779--4790, 2008.
+\newblock ISSN 1474-6670.
+\newblock \doi{https://doi.org/10.3182/20080706-5-KR-1001.00804}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S1474667016396999}.
+\newblock 17th IFAC World Congress.
+
+\bibitem[Fridman et~al.(2011)Fridman, Davila, and Levant]{Fridman2011}
+Leonid Fridman, Jorge Davila, and Arie Levant.
+\newblock High-order sliding-mode observation for linear systems with unknown
+  inputs.
+\newblock \emph{Nonlinear Analysis: Hybrid Systems}, 5\penalty0 (2):\penalty0
+  189--205, 2011.
+\newblock ISSN 1751-570X.
+\newblock \doi{https://doi.org/10.1016/j.nahs.2010.09.003}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S1751570X10000701}.
+\newblock Special Issue related to IFAC Conference on Analysis and Design of
+  Hybrid Systems (ADHS’09).
+
+\bibitem[Hautus(1983)]{Hautus1983}
+M.L.J. Hautus.
+\newblock Strong detectability and observers.
+\newblock \emph{Linear Algebra and its Applications}, 50:\penalty0 353 -- 368,
+  1983.
+\newblock ISSN 0024-3795.
+\newblock \doi{https://doi.org/10.1016/0024-3795(83)90061-7}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/0024379583900617}.
+
+\bibitem[Khalil and Praly(2014)]{Khalil2014}
+Hassan~K. Khalil and Laurent Praly.
+\newblock High-gain observers in nonlinear feedback control.
+\newblock \emph{International Journal of Robust and Nonlinear Control},
+  24:\penalty0 993–1015, 2014.
+\newblock \doi{10.1002/rnc}.
+
+\bibitem[Khalil(2003)]{Khalil2003}
+H.K. Khalil.
+\newblock \emph{Nonlinear Systems}.
+\newblock Prentice Hall, 2003.
+\newblock ISBN 9780131227408.
+\newblock URL \url{https://books.google.com.mx/books?id=v\_BjPQAACAAJ}.
+
+\bibitem[Khalil(2017)]{Khalil2017}
+H.K. Khalil.
+\newblock \emph{High-Gain Observers in Nonlinear Feedback Control}.
+\newblock SIAM, 2017.
+\newblock ISBN 978-1-61197-485-0.
+\newblock URL \url{https://doi.org/10.1137/1.9781611974867}.
+
+\bibitem[{Levant}(1998)]{Levant1998}
+A.~{Levant}.
+\newblock Robust exact differentiation via sliding mode technique.
+\newblock \emph{Automatica}, 34\penalty0 (3):\penalty0 379 -- 384, 1998.
+\newblock ISSN 0005-1098.
+\newblock \doi{https://doi.org/10.1016/S0005-1098(97)00209-4}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S0005109897002094}.
+
+\bibitem[Levant(2003)]{Levant2003}
+Arie Levant.
+\newblock Higher-order sliding modes, differentiation and output-feedback
+  control.
+\newblock \emph{International Journal of Control}, 76\penalty0 (9-10):\penalty0
+  924--941, 2003.
+\newblock \doi{10.1080/0020717031000099029}.
+\newblock URL \url{https://doi.org/10.1080/0020717031000099029}.
+
+\bibitem[Levant(2005)]{Levant2005}
+Arie Levant.
+\newblock Homogeneity approach to high-order sliding mode design.
+\newblock \emph{Automatica}, 41\penalty0 (5):\penalty0 823--830, 2005.
+\newblock ISSN 0005-1098.
+\newblock \doi{https://doi.org/10.1016/j.automatica.2004.11.029}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0005109805000142}.
+
+\bibitem[Lopez-Ramirez et~al.(2018)Lopez-Ramirez, Polyakov, Efimov, and
+  Perruquetti]{Lopez2018}
+Francisco Lopez-Ramirez, Andrey Polyakov, Denis Efimov, and Wilfrid
+  Perruquetti.
+\newblock Finite-time and fixed-time observer design: Implicit lyapunov
+  function approach.
+\newblock \emph{Automatica}, 87:\penalty0 52--60, 2018.
+\newblock ISSN 0005-1098.
+\newblock \doi{https://doi.org/10.1016/j.automatica.2017.09.007}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S0005109817304776}.
+
+\bibitem[Moreno(2021)]{Moreno2021}
+Jaime~A. Moreno.
+\newblock Arbitrary-order fixed-time differentiators.
+\newblock \emph{IEEE Transactions on Automatic Control}, 67\penalty0
+  (3):\penalty0 1543--1549, 2021.
+\newblock \doi{10.1109/TAC.2021.3071027}.
+
+\bibitem[Niederwieser et~al.(2021)Niederwieser, Tranninger, Seeber, and
+  Reichhartinger]{Niederwieser2021}
+Helmut Niederwieser, Markus Tranninger, Richard Seeber, and Markus
+  Reichhartinger.
+\newblock Higher-order sliding mode observer design for linear time-invariant
+  multivariable systems based on a new observer normal form.
+\newblock \emph{arXiv:2107.12846}, 2021.
+
+\bibitem[Perruquetti et~al.(2008)Perruquetti, Floquet, and
+  Moulay]{Perruquetti2008}
+Wilfrid Perruquetti, Thierry Floquet, and Emmanuel Moulay.
+\newblock Finite-time observers: Application to secure communication.
+\newblock \emph{IEEE Transactions on Automatic Control}, 53\penalty0
+  (1):\penalty0 356--360, 2008.
+\newblock \doi{10.1109/TAC.2007.914264}.
+
+\bibitem[Sanchez et~al.(2018)Sanchez, Cruz-Zavala, and Moreno]{Tonametl2018}
+T.~Sanchez, E.~Cruz-Zavala, and J.~A. Moreno.
+\newblock An sos method for the design of continuous and discontinuous
+  differentiators.
+\newblock \emph{International Journal of Control}, 91\penalty0 (11):\penalty0
+  2597--2614, 2018.
+\newblock \doi{10.1080/00207179.2017.1393564}.
+\newblock URL \url{https://doi.org/10.1080/00207179.2017.1393564}.
+
+\bibitem[Sannuti and Saberi(1986)]{Sannuti1986}
+P.~Sannuti and A.~Saberi.
+\newblock A special coordinate basis of multivariable linear systems- finite
+  and infinite zero structure.
+\newblock In \emph{1986 25th IEEE Conference on Decision and Control}, pages
+  2181--2186, 1986.
+\newblock \doi{10.1109/CDC.1986.267450}.
+
+\bibitem[Shtessel et~al.(2014)Shtessel, Edwards, Fridman, and
+  Levant]{Shtessel2014}
+Y.~Shtessel, C.~Edwards, L.~Fridman, and A.~Levant.
+\newblock \emph{Sliding Mode Control and Observation}.
+\newblock Control Engineering. Springer New York, 2014.
+\newblock ISBN 9780817648930.
+\newblock URL \url{https://books.google.com.mx/books?id=jYQ\_AAAAQBAJ}.
+
+\bibitem[Spurgeon(2008)]{Spurgeon2008}
+Sarah~K. Spurgeon.
+\newblock Sliding mode observers: a survey.
+\newblock \emph{International Journal of Systems Science}, 39\penalty0
+  (8):\penalty0 751--764, 2008.
+
+\bibitem[Tranninger et~al.(2021)Tranninger, Niederwieser, Seeber, and
+  Horn]{Tranninger2021}
+Markus Tranninger, Helmut Niederwieser, Richard Seeber, and Martin Horn.
+\newblock Unknown input observer design for linear time-invariant systems -- a
+  unifying framework.
+\newblock \emph{arXiv:2111.14404}, 2021.
+
+\bibitem[Trentelman et~al.(2001)Trentelman, A., and Hautus]{Trentelman2001}
+H.~L. Trentelman, Stoorvogel~A. A., and M~Hautus.
+\newblock \emph{Control theory for linear system}.
+\newblock Springer, 2001.
+
+\bibitem[Yan and Edwards(2007)]{Yan2007}
+Xing-Gang Yan and Christopher Edwards.
+\newblock Nonlinear robust fault reconstruction and estimation using a sliding
+  mode observer.
+\newblock \emph{Automatica}, 43\penalty0 (9):\penalty0 1605 -- 1614, 2007.
+\newblock ISSN 0005-1098.
+\newblock \doi{https://doi.org/10.1016/j.automatica.2007.02.008}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S0005109807001719}.
+
+\end{thebibliography}

@@ -1,0 +1,23 @@
+\begin{thebibliography}{1}
+
+\bibitem{Filipov1988}
+A.~F. Filippov, {\em Differential Equations with Discontinuous Righthand Side},
+  vol.~18.
+\newblock Springer Science \& Business Media, 1988.
+
+\bibitem{Niederwieser2021}
+H.~Niederwieser, M.~Tranninger, R.~Seeber, and M.~Reichhartinger,
+  ``Higher-order sliding mode observer design for linear time-invariant
+  multivariable systems based on a new observer normal form,'' {\em
+  arXiv:2107.12846}, 2021.
+
+\bibitem{Moreno2021}
+J.~A. Moreno, ``Arbitrary-order fixed-time differentiators,'' {\em IEEE
+  Transactions on Automatic Control}, vol.~67, no.~3, pp.~1543--1549, 2021.
+
+\bibitem{Mudge1988}
+S.~Mudge and R.~Patton, ``Analysis of the technique of robust eigenstructure
+  assignment with application to aircraft control,'' {\em IEE Proceedings D
+  (Control Theory and Applications)}, vol.~135, pp.~275--281(6), July 1988.
+
+\end{thebibliography}

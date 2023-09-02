@@ -1,0 +1,218 @@
+\begin{thebibliography}{23}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Apaza-Perez et~al.(2018{\natexlab{a}})Apaza-Perez, Fridman, and
+  Moreno]{Apaza2018Higher}
+W.~A. Apaza-Perez, L.~Fridman, and J.~A. Moreno.
+\newblock Higher order sliding-mode observers with scaled dissipative
+  stabilisers.
+\newblock \emph{International Journal of Control}, 91\penalty0 (11):\penalty0
+  2511--2523, 2018{\natexlab{a}}.
+\newblock \doi{10.1080/00207179.2016.1269951}.
+
+\bibitem[Apaza-Perez et~al.(2018{\natexlab{b}})Apaza-Perez, Moreno, and
+  Fridman]{Apaza2018Dissipative}
+W.~Alejandro Apaza-Perez, Jaime~A. Moreno, and Leonid~M. Fridman.
+\newblock Dissipative approach to sliding mode observers design for uncertain
+  mechanical systems.
+\newblock \emph{Automatica}, 87:\penalty0 330 -- 336, 2018{\natexlab{b}}.
+\newblock ISSN 0005-1098.
+\newblock \doi{https://doi.org/10.1016/j.automatica.2017.10.016}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S0005109817305162}.
+
+\bibitem[Bejarano et~al.(2007)Bejarano, Fridman, and Poznyak]{Bejarano2007}
+F.~J. Bejarano, L.~Fridman, and A.~Poznyak.
+\newblock Output integral sliding mode control based on algebraic hierarchical
+  observer.
+\newblock \emph{International Journal of Control}, 80\penalty0 (3):\penalty0
+  443--453, 2007.
+\newblock \doi{10.1080/00207170601080205}.
+\newblock URL \url{https://doi.org/10.1080/00207170601080205}.
+
+\bibitem[Besan{\c{c}}on(2007)]{Besancon2007}
+G.~Besan{\c{c}}on.
+\newblock \emph{Nonlinear Observers and Applications}.
+\newblock Lecture Notes in Control and Information Sciences. Springer Berlin
+  Heidelberg, 2007.
+
+\bibitem[{Byrnes} et~al.(1991){Byrnes}, {Isidori}, and {Willems}]{Byrnes1991}
+C.~I. {Byrnes}, A.~{Isidori}, and J.~C. {Willems}.
+\newblock Passivity, feedback equivalence, and the global stabilization of
+  minimum phase nonlinear systems.
+\newblock \emph{IEEE Transactions on Automatic Control}, 36\penalty0
+  (11):\penalty0 1228--1240, Nov 1991.
+\newblock ISSN 0018-9286.
+\newblock \doi{10.1109/9.100932}.
+
+\bibitem[{Davila} et~al.(2005){Davila}, {Fridman}, and {Levant}]{Davila2005}
+J.~{Davila}, L.~{Fridman}, and A.~{Levant}.
+\newblock Second-order sliding-mode observer for mechanical systems.
+\newblock \emph{IEEE Transactions on Automatic Control}, 50\penalty0
+  (11):\penalty0 1785--1789, Nov 2005.
+\newblock ISSN 0018-9286.
+\newblock \doi{10.1109/TAC.2005.858636}.
+
+\bibitem[{Davila} et~al.(2006){Davila}, {Fridman}, and {Poznyak}]{Davila2006}
+J.~{Davila}, L.~{Fridman}, and A.~{Poznyak}.
+\newblock Observation and identification of mechanical systems via second order
+  sliding modes.
+\newblock In \emph{International Workshop on Variable Structure Systems, 2006.
+  VSS'06.}, pages 232--237, June 2006.
+\newblock \doi{10.1109/VSS.2006.1644523}.
+
+\bibitem[E.{Guzm\'an-Baltazar} and {Moreno}(2010)]{Baltazar2010}
+E.{Guzm\'an-Baltazar} and J.~A. {Moreno}.
+\newblock Dissipative design of adaptive observers for systems with multivalued
+  nonlinearities.
+\newblock In \emph{49th IEEE Conference on Decision and Control (CDC)}, pages
+  2625--2630, Dec 2010.
+\newblock \doi{10.1109/CDC.2010.5717230}.
+
+\bibitem[Fridman et~al.(2007)Fridman, Levant, and Davila]{Fridman2007}
+Leonid Fridman, Arie Levant, and Jorge Davila.
+\newblock Observation of linear systems with unknown inputs via high-order
+  sliding-modes.
+\newblock \emph{International Journal of Systems Science}, 38\penalty0
+  (10):\penalty0 773--791, 2007.
+\newblock \doi{10.1080/00207720701409538}.
+
+\bibitem[Hautus(1983)]{Hautus1983}
+M.L.J. Hautus.
+\newblock Strong detectability and observers.
+\newblock \emph{Linear Algebra and its Applications}, 50:\penalty0 353 -- 368,
+  1983.
+\newblock ISSN 0024-3795.
+\newblock \doi{https://doi.org/10.1016/0024-3795(83)90061-7}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/0024379583900617}.
+
+\bibitem[Levant(1998)]{Levant1998}
+Arie Levant.
+\newblock Robust exact differentiation via sliding mode technique**this paper
+  was recommended for publication in final form by associate editor hassan
+  khalil under the direction of editor tamer basar.
+\newblock \emph{Automatica}, 34\penalty0 (3):\penalty0 379 -- 384, 1998.
+\newblock ISSN 0005-1098.
+\newblock \doi{https://doi.org/10.1016/S0005-1098(97)00209-4}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S0005109897002094}.
+
+\bibitem[{Moreno}(2001)]{Moreno2001}
+J.~{Moreno}.
+\newblock Existence of unknown input observers and feedback passivity for
+  linear systems.
+\newblock In \emph{Proceedings of the 40th IEEE Conference on Decision and
+  Control (Cat. No.01CH37228)}, volume~4, pages 3366--3371 vol.4, Dec 2001.
+\newblock \doi{10.1109/CDC.2001.980353}.
+
+\bibitem[Moreno(2004)]{Moreno2004}
+Jaime~A. Moreno.
+\newblock Observer design for nonlinear systems: A dissipative approach.
+\newblock \emph{IFAC Proceedings Volumes}, 37\penalty0 (21):\penalty0 681 --
+  686, 2004.
+\newblock ISSN 1474-6670.
+\newblock \doi{https://doi.org/10.1016/S1474-6670(17)30549-9}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S1474667017305499}.
+\newblock 2nd IFAC Symposium on System Structure and Control, Oaxaca, Mexico,
+  December 8-10, 2004.
+
+\bibitem[Moreno(2005)]{Moreno2005}
+Jaime~A. Moreno.
+\newblock \emph{Approximate Observer Error Linearization by Dissipativity
+  Methods}, pages 35--51.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2005.
+\newblock ISBN 978-3-540-31573-5.
+\newblock \doi{10.1007/11529798_3}.
+\newblock URL \url{https://doi.org/10.1007/11529798_3}.
+
+\bibitem[Moreno et~al.(2014)Moreno, Rocha-C{\'o}zatl, and Wouwer]{Moreno2014}
+Jaime~A. Moreno, Edmundo Rocha-C{\'o}zatl, and Alain~Vande Wouwer.
+\newblock A dynamical interpretation of strong observability and detectability
+  concepts for nonlinear systems with unknown inputs: application to
+  biochemical processes.
+\newblock \emph{Bioprocess and Biosystems Engineering}, 37\penalty0
+  (1):\penalty0 37--49, Jan 2014.
+\newblock ISSN 1615-7605.
+\newblock \doi{10.1007/s00449-013-0915-5}.
+\newblock URL \url{https://doi.org/10.1007/s00449-013-0915-5}.
+
+\bibitem[{Osorio} and {Moreno}(2006)]{Osorio2006}
+M.~{Osorio} and J.~A. {Moreno}.
+\newblock Dissipative design of observers for multivalued nonlinear systems.
+\newblock In \emph{Proceedings of the 45th IEEE Conference on Decision and
+  Control}, pages 5400--5405, Dec 2006.
+\newblock \doi{10.1109/CDC.2006.377335}.
+
+\bibitem[{Rocha-Cozatl} and {Moreno}(2001)]{Rocha2001}
+E.~{Rocha-Cozatl} and J.~{Moreno}.
+\newblock Passification by output injection of nonlinear systems.
+\newblock In \emph{Proceedings of the 2001 IEEE International Conference on
+  Control Applications (CCA'01) (Cat. No.01CH37204)}, pages 1141--1146, Sep.
+  2001.
+\newblock \doi{10.1109/CCA.2001.974025}.
+
+\bibitem[Rocha-Cózat and Moreno(2004)]{Rochacozatl2004}
+Edmundo Rocha-Cózat and Jaime~A. Moreno.
+\newblock Dissipativity and design of unknown input observers for nonlinear
+  systems.
+\newblock \emph{IFAC Proceedings Volumes}, 37\penalty0 (13):\penalty0 471 --
+  476, 2004.
+\newblock ISSN 1474-6670.
+\newblock \doi{https://doi.org/10.1016/S1474-6670(17)31268-5}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S1474667017312685}.
+\newblock 6th IFAC Symposium on Nonlinear Control Systems 2004 (NOLCOS 2004),
+  Stuttgart, Germany, 1-3 September, 2004.
+
+\bibitem[Rocha-Cózatl and Moreno(2011)]{Rochacozatl2011}
+Edmundo Rocha-Cózatl and Jaime~A. Moreno.
+\newblock Dissipative design of unknown input observers for systems with sector
+  nonlinearities.
+\newblock \emph{International Journal of Robust and Nonlinear Control},
+  21\penalty0 (14):\penalty0 1623--1644, 2011.
+\newblock \doi{10.1002/rnc.1656}.
+\newblock URL \url{https://onlinelibrary.wiley.com/doi/abs/10.1002/rnc.1656}.
+
+\bibitem[Shim et~al.(2003)Shim, Seo, and Teel]{Shim2003}
+H.~Shim, J.H. Seo, and A.R. Teel.
+\newblock Nonlinear observer design via passivation of error dynamics.
+\newblock \emph{Automatica}, 39\penalty0 (5):\penalty0 885 -- 892, 2003.
+\newblock ISSN 0005-1098.
+\newblock \doi{https://doi.org/10.1016/S0005-1098(03)00023-2}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S0005109803000232}.
+
+\bibitem[{Walcott} and {Zak}(1986)]{WalcottZak}
+B.~L. {Walcott} and S.~H. {Zak}.
+\newblock Observation of dynamical systems in the presence of bounded
+  nonlinearities/uncertainties.
+\newblock In \emph{1986 25th IEEE Conference on Decision and Control}, pages
+  961--966, Dec 1986.
+\newblock \doi{10.1109/CDC.1986.267514}.
+
+\bibitem[Willems(1972{\natexlab{a}})]{Willems1972PartI}
+Jan~C. Willems.
+\newblock Dissipative dynamical systems part i: General theory.
+\newblock \emph{Archive for Rational Mechanics and Analysis}, 45\penalty0
+  (5):\penalty0 321--351, Jan 1972{\natexlab{a}}.
+\newblock ISSN 1432-0673.
+\newblock \doi{10.1007/BF00276493}.
+\newblock URL \url{https://doi.org/10.1007/BF00276493}.
+
+\bibitem[Willems(1972{\natexlab{b}})]{Willems1972PartII}
+Jan~C. Willems.
+\newblock Dissipative dynamical systems part ii: Linear systems with quadratic
+  supply rates.
+\newblock \emph{Archive for Rational Mechanics and Analysis}, 45\penalty0
+  (5):\penalty0 352--393, Jan 1972{\natexlab{b}}.
+\newblock ISSN 1432-0673.
+\newblock \doi{10.1007/BF00276494}.
+\newblock URL \url{https://doi.org/10.1007/BF00276494}.
+
+\end{thebibliography}

@@ -1,0 +1,74 @@
+\begin{thebibliography}{10}
+
+\bibitem{Luenberger1967}
+D.~Luenberger, ``Canonical forms for linear multivariable systems,'' {\em IEEE
+  Transactions on Automatic Control}, vol.~12, no.~3, pp.~290--293, 1967.
+
+\bibitem{Gupta1974}
+R.~Gupta and F.~Fairman, ``Luenberger's canonical form revisited,'' {\em IEEE
+  Transactions on Automatic Control}, vol.~19, no.~4, pp.~440--441, 1974.
+
+\bibitem{Chen2004}
+B.~M. Chen, Z.~Lin, and Y.~Shamash, {\em Linear Systems Theory. A Structural
+  Decomposition Approach}.
+\newblock Control Engineering, Birkhäuser Boston, 2004.
+
+\bibitem{Sannuti1986}
+P.~Sannuti and A.~Saberi, ``A special coordinate basis of multivariable linear
+  systems- finite and infinite zero structure,'' in {\em 1986 25th IEEE
+  Conference on Decision and Control}, pp.~2181--2186, 1986.
+
+\bibitem{Hautus1983}
+M.~Hautus, ``Strong detectability and observers,'' {\em Linear Algebra and its
+  Applications}, vol.~50, pp.~353 -- 368, 1983.
+
+\bibitem{Trentelman2001}
+H.~L. Trentelman, S.~A. A., and M.~Hautus, {\em Control theory for linear
+  system}.
+\newblock Springer, 2001.
+
+\bibitem{Bernuau2014}
+E.~Bernuau, D.~Efimov, W.~Perruquetti, and A.~Polyakov, ``On homogeneity and
+  its application in sliding mode control,'' {\em {Journal of The Franklin
+  Institute}}, Jan. 2014.
+
+\bibitem{Bhat2005}
+S.~P. Bhat and D.~S. Bernstein, ``Geometric homogeneity with applications to
+  finite-time stability,'' {\em Mathematics of Control, Signals and Systems},
+  vol.~17, pp.~101--127, 2005.
+
+\bibitem{Khalil2003}
+H.~Khalil, {\em Nonlinear Systems}.
+\newblock Prentice Hall, 2003.
+
+\bibitem{BacciottiAndRosier2005}
+A.~Bacciotti and L.~Rosier, {\em Liapunov functions and stability in control
+  theory}.
+\newblock Springer Science \& Business Media, 2005.
+
+\bibitem{Moreno2021}
+J.~A. Moreno, ``Arbitrary-order fixed-time differentiators,'' {\em IEEE
+  Transactions on Automatic Control}, vol.~67, no.~3, pp.~1543--1549, 2021.
+
+\bibitem{CruzZavala2016}
+E.~Cruz-Zavala and J.~A. Moreno, ``Lyapunov functions for continuous and
+  discontinuous differentiators,'' {\em IFAC-PapersOnLine}, vol.~49, no.~18,
+  pp.~660--665, 2016.
+\newblock 10th IFAC Symposium on Nonlinear Control Systems NOLCOS 2016.
+
+\bibitem{Sanchez2018}
+T.~Sanchez, E.~Cruz-Zavala, and J.~A. Moreno, ``An sos method for the design of
+  continuous and discontinuous differentiators,'' {\em International Journal of
+  Control}, vol.~91, no.~11, pp.~2597--2614, 2018.
+
+\bibitem{CruzZavala2019}
+E.~Cruz-Zavala and J.~A. Moreno, ``Levant's arbitrary-order exact
+  differentiator: A lyapunov approach,'' {\em IEEE Transactions on Automatic
+  Control}, vol.~64, no.~7, pp.~3034--3039, 2019.
+
+\bibitem{Jbara2021}
+A.~Jbara, A.~Levant, and A.~Hanan, ``Filtering homogeneous observers in control
+  of integrator chains,'' {\em International Journal of Robust and Nonlinear
+  Control}, vol.~31, no.~9, pp.~3658--3685, 2021.
+
+\end{thebibliography}

@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{Fridman2006}
+L.~Fridman, A.~Levant, and J.~Davila, ``High-order sliding-mode observation and
+  identification for linear systems with unknown inputs,'' in {\em Proceedings
+  of the 45th IEEE Conference on Decision and Control}, pp.~5567--5572, 2006.
+
+\bibitem{Niederwieser2021}
+H.~Niederwieser, M.~Tranninger, R.~Seeber, and M.~Reichhartinger,
+  ``Higher-order sliding mode observer design for linear time-invariant
+  multivariable systems based on a new observer normal form,'' {\em
+  arXiv:2107.12846}, 2021.
+
+\end{thebibliography}

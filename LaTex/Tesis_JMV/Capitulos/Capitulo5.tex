@@ -1,0 +1,83 @@
+\chapter{Conclusions}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%			Ejemplo empieza
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% In this work we have proposed a family of observers for state estimation of strongly observable SISO and MIMO Linear Time Invariant systems, the proposed scheme has bl-homogeneous properties, which allow us to assign behavior near and far from the origin independently, this feature allows us the possibility of accelerating when possible the convergence velocity of the observer achieving finite time or more fixed-time convergence. Additionally, the induced HOSM at the origin allow us to deal with bounded unknown inputs having theoretically exact convergence.
+
+% The tuning parameters of the observer are composed by a set of gains, which have an intuitive roll each one, the internal gains $\kappa_{\psi,j},\theta_{psi,j}$ with $\psi=\{(b,\iota),(d,i)\}$ give a relative weight of the low degree terms and the high degree ones in the nonlinear injection terms. The external gains $k_{\psi,j}$ are responsible for ensuring stability of the observer considering absence of interconnections and perturbations, and finally the gains $L,\alpha$ are in charge of dealing with the interconnection and unknown inputs terms respectively by setting them sufficiently large. Thus, the tuning procedure of the observer is simple and structured.
+
+% The boundedness of the state variables is not required for global finite-time or fixed-time stability of the estimation error dynamics which allows for its application to unstable plants.
+
+% In the SISO case the state estimation for LTI systems with unknown inputs problem can be solved by directly applying a HOSM differentiator (like Levant's RED) if we put the system in observer form. Nevertheless, this idea can not be applied if the system is in observability form, since to have global convergence we should have bounded state variables, and this reduces its applicability. In the MIMO case this problem is the same, extended to a set of subsystems. Base on this problem, the construction of bl-homogeneous observers allow us to deal with unbounded functions far of the origin, i.e. with $d_{\infty}\geq 0$ we can deal with Lipschitz and then linear functions of the states in last channel of each subsystem and in the case of selecting $d_0=-1$ we have proof that the observer can deal with the effect of unknown inputs due to the HOSM, obviously, in the absence of unknown inputs a linear $d_0=d_{\infty}=0$ or continuous $-1<d_0< 0 < d_{\infty}$ observer is sufficient to achieve asymptotic or exact and finite time convergence, respectively.
+
+% This work results in a more general observation scheme, with respect to the already existing in literature offering global convergence. In contrast to the cascade scheme \cite{Fridman2006} composed by a Luenberger observer and a HOSM differentiator the structure is much simpler because the order is not unnecessarily increased, therefore the number of parameters is significantly less. Moreover, the Luenberger observer introduce a delay in 
+% the estimation, that is avoided in the present scheme.
+
+% On the other hand, for the MIMO case, the observer presented in \cite{Niederwieser2021} is based on a MIMO observer normal form which allows to apply directly an homogeneous differentiator ( Levant's RED is applied), this is because in this observer normal form the resulting subsystems ares interconnected in a convenient form, i.e. the convergence is achieved in a sequential way, when the first subsystem has converged the second one can do, and then sequentially. This observer can not deal with another kind of interconnection terms, for example, those given in observability form. The observer proposed here can deal with both interconnections and in fact, even more general.
+
+% The effectiveness of the observer has been illustrated in the presented examples, both of them have unstable dynamics and bounded unknown inputs. The results showed that, although the unbounded state variables it has global convergence. Also, it was shown that linear and continuous observers cannot completely compensate the effect of unknown inputs, keeping the error in a neighborhood of zero only. But the High Order Sliding Mode produced by having $d_0=-1$ homogeneity degree in the $0$-approximation terms allows the observers to compensate these effects. 
+
+% Although the respective analysis is not addressed in this work, in presence of measurement noise, some extra simulations confirm the robustness of the observation scheme having ISS, that is, the observation error is final and ultimately bounded.
+
+% \section{Future works}
+% The present work opens the possibility to several extensions.
+% \begin{itemize}
+% 	\item Design of bl-homogeneous observers for strongly observable SISO and MIMO Linear Time Variant (LTV) systems, i.e. linear systems whose parameters vary with time. In the SISO case the problem can be stated as the observer design for a system given by
+% 	\begin{equation}
+% 		\begin{split}
+% 			\Sigma: \left\{
+% 			\begin{array}{rl}
+% 				\dot{x}_{1} &= x_{2}, \quad y=x_{1}, \\
+% 				\dot{x}_{j} &= x_{j+1} \\
+% 				& \vdots \quad j=2,...,n-1\\
+% 				\dot{x}_{n} &= a_{1}(t)x_{1} + a_{2}(t)x_{2} +...+ a_{n}(t)x_{n} + \omega
+% 			\end{array}
+% 			\right. \\
+% 		\end{split}
+% 	\end{equation}
+
+% 	\item Design of bl-homogeneous UIO for strongly detectable SISO and MIMO Linear Time Invariant systems, that is, systems with inaccessible but stable internal dynamics. This is an immediate extension that does not require a lot of extra work. For example, in SISO case, the problem boils down to designing observers for systems given by
+% 	\begin{equation}
+% 		\begin{split}
+% 			\Sigma: \left\{
+% 			\begin{array}{rl}
+% 				\dot{x}_a &= A_{aa}x_a + H_{ad}y\\
+% 				\dot{x}_{d,1} &= x_{d,2}, \quad y=x_{1}, \\
+% 				\dot{x}_{d,j} &= x_{d,j+1} \\
+% 				& \vdots \quad j=2,...,n_{d}-1\\
+% 				\dot{x}_{d,n_{b}} &= a_{d,1}x_{d,1} + a_{d,2}x_{d,2} +...+ a_{d,n_d}x_{d,n_d} + \omega
+% 			\end{array}
+% 			\right. \\
+% 		\end{split}
+% 	\end{equation}
+	
+% 	\item The design of bl-homogeneous UIO for nonlinear systems with unknown inputs. Although this issue is currently being addressed by colleagues in the same working group, the MIMO non-linear case is still an undeveloped problem. The problem can be seen as the design of observers for a system given by
+% 	\begin{equation}
+% 		\begin{split}
+% 			\dot{x} &= f(t,x,u)+g(x)\omega(t), \quad x(0)=x_0 \\
+% 			y &= h(x)
+% 		\end{split}
+% 	\end{equation}
+	
+% 	\item Design of UIO for networks of non-linear systems in general. The methodology presented in this work in the MIMO case under the SCB transformation is a first approach in the development of this topic, since it can be seen as the design of observers for linear subsystems with also linear interconnections in the states. That is, for future works the task can be extended to the development of observers for more general systems with non-linear interconnection functions between them. The problem can be stated a the design for a general system $\Sigma$ given by $N$ non-linear systems with interconnection terms $\Psi_i(\cdot)$ and unknown inputs $\omega(t)$.
+% 	\begin{equation}
+% 		\begin{split}
+% 			\Sigma_i: \left\{
+% 			\begin{array}{rl}
+% 				\dot{x}_i & = F_i(x_i,u_i) + \Psi_i(x_1,...,x_ N) + G(x_i)\omega_i(t), \quad x_i(0)=x_{i,0} \\
+% 				y_i & = H_i(x_i), \quad i=1,...,N
+% 			\end{array}
+% 			\right. \\
+% 		\end{split}
+% 	\end{equation}
+% 	$\Psi_i(\cdot)$ is an interconnection function that contains all the states $x_i \in \mathbb{R}^{n_i},i=1,...,N$.
+% \end{itemize}
+
+

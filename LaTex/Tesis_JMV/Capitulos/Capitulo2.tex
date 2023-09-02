@@ -1,0 +1,710 @@
+\chapter{Marco Teorico}	\label{Cap2}
+
+\section{Homogeneidad}
+Definicion 1 : \cite{bacciotti2005}, \cite{bernuau2014h}  Dado un vector $x=[x_1,...,x_n]^T$ 
+y el operador de dilatación definido como:
+\begin{equation}
+    \triangle^r_\varepsilon x:= \left(\varepsilon^{r_1}x_1,...\varepsilon^{r_n}x_n \right), \;\; \forall \varepsilon \in \mathbb{R}^n,
+\end{equation}
+donde $r_i>0$ son los pesos de las coordenadas y $r=[r_1,...,r_n]$ es el vector de pesos.
+
+Una función $V:\mathbb{R}^n->\mathbb{R}$ es llamada r-homogenea de grado $m\in \mathbb{R}$ si la identidad \ref{hf}
+\begin{equation}
+    V(\triangle^r_\varepsilon x)= \varepsilon^{m}V(x)
+    \label{hf}
+\end{equation}
+
+\section{Problema estándar de control por HOSM}
+Diseñar un controlador para el sistema SISO afín a la entrada
+\begin{equation}
+    \dot{z}=f(t,z)+g(t,z)u
+    \end{equation}
+    \begin{equation}
+    \sigma=h(t,z), \;\;z\in \mathbb{R}^n
+    \end{equation}
+    el controlador debe llevar la salida a $\sigma(t)\equiv 0$ en un tiempo finito $t\geq T$.
+
+    Cuando el grado relativo es conocido y bien definido equivale a diseñar un controlador para el DI
+
+    \begin{equation}
+        \Sigma_{ID} :
+          \left \{
+            \begin{aligned}
+              \dot{x}_i&=x_{i+1} ,i=1,...,\rho -1\\
+              \dot{x}_\rho &\in [-C,C]+[K_m,K_M]u, 
+            \end{aligned}
+          \right .
+        \end{equation}
+    
+\section{Funcion de lyapunov de control}
+    \begin{equation*}\label{3}
+        \dot{x}\in F(x)+g(x)\xi(x)u
+       \end{equation*}
+    
+    Existe una CLF $V(x)$ $C^1$ r-homogenea para el sistema anterior.
+    \begin{equation*}
+    L_{g(x)}V=0\Rightarrow sup_{\upsilon \epsilon F(x)}L_\upsilon V<0,\; \forall x \in  \mathbb{R}^{n} /\left\lbrace 0 \right\rbrace
+    \end{equation*}
+
+\subsection{CFL para HOSMC}
+    Para $i=2,...,\rho$
+    \begin{equation}
+    V_i(\overline{x} _i)=\gamma_{i-1}V_{i-1}(\overline{x}_{i-1})+W_i(\overline{x}_i)
+    \end{equation}
+    
+    \begin{equation}
+    W_i(\overline{x}_i)=\frac{r_i}{m} |x_i|^{\frac{m}{r_i}}-\lceil v_{i-1}\rfloor^{\frac{m-r_i}{r_i}}x_i+(1-\frac{r_i}{m})|v_{i-1}|^{\frac{r_i}{m}}
+    \end{equation}
+    
+    \begin{equation}
+    \upsilon_i(\overline{x}_i)=-k_i\lceil \sigma_i \rfloor^{\frac{r_i+1}{\alpha_i}}
+    \end{equation}
+    \begin{equation}
+    \sigma_i(\overline{x}_i)=\lceil x_i \rfloor^{\frac{\alpha_i}{r_i}}+k_{i-1}^{\frac{\alpha_i}{r_i}}\lceil \sigma_{i-1} \rfloor^{\frac{\alpha_i}{\alpha_i-1}}
+    \end{equation}
+    \begin{equation}
+    V_1(x_1)= \frac{r}{m}|x_1|^{\frac{m}{r}}
+    \end{equation}
+    \begin{equation}
+    \upsilon_1(x_1)=-k_1\lceil \sigma_1 \rfloor^{\frac{r_2}{\alpha_1}}=-k_1\lceil x_1 \rfloor^{\frac{r_2}{\alpha_1}}
+    \end{equation}
+    
+    \begin{equation}
+    \sigma_1=\lceil x_1 \rfloor^{\frac{\alpha_1}{r_1}}
+    \end{equation}
+    
+    donde $\gamma_i>0$, $k_i>0$. $\sigma_i$ es de grado homogénea $\alpha_i$, $\upsilon_i$ de grado $r_{i+1}$ y $V_i$ de grado $m$.
+
+    
+    Teorema: \cite{CRUZZAVALA2017}
+    Si el sistema  satisface la suposición 1, y que $\varphi:\mathbb{R}^n\rightarrow \mathbb{R}$ es r-homogénea de grado 0, tal que:
+    \begin{equation*}
+        \varphi(x)L_{g(x)}V(x)>0 \;\; cuando \;L_{g(x)}V(x)\neq 0
+    \end{equation*}
+    Entonces 
+    \begin{equation*}
+        u=-k\varphi
+    \end{equation*}
+    \begin{equation*}
+        u_1=-k\varphi_1(x)=-k\lceil L_{g(x)}V(x)\rfloor^0
+    \end{equation*}
+    \begin{equation*}
+        u_2=-k\varphi_2(x)=-k\frac{L_{g(x)}V(x)}{M(x)}
+    \end{equation*}
+    donde $M(x)$ es r-homogenea de grado $m+l$. EL sistema en lazo cerrado es GAS en $x=0$ $\forall k\geq k^*>0$, y es GFTS si $l<0$.\\
+    Con $r=\rho$
+    \begin{equation*}
+        u_D=-k_\rho\lceil \sigma_{\rho}(x)\rfloor^0,\;\; u_Q=-k_\rho \frac{ \sigma_{\rho}(x)}{M(x)}
+    \end{equation*}    
+
+
+    \begin{equation*}
+        u=-k_2 \left\lceil \lceil x_2 \rfloor^{\alpha_2}+k_1^{\alpha_2} \lceil x_1 \rfloor^{\frac{\alpha_2}{2}} \right\rfloor^0
+      \end{equation*}   
+\section{Ganancias del controlador}
+
+Para $k_i, i=2,...\rho-1$, con $k_1>0$
+        \begin{equation}
+            Z_{i}(\overline{x}_{i})=\Phi_{i}(\overline{x}_{i})-k_{i}s_{i,d} \lceil \sigma_{i} \rfloor^{\frac{r_{i+1}}{\alpha_{i}}}<0
+        \end{equation}
+        \begin{equation}
+            k_i>\underset{\overline{x}_i \in S_i}{max} \left \lbrace \frac{\Phi_i(\overline{x}_i)}{s_{i,d}\lceil \sigma_i(\overline{x}_i)  \rfloor^{\frac{r_{i+1}}{\alpha_i}}} \right\rbrace:=G_i(k_{i-1})
+        \end{equation}
+
+Para $k_\rho$
+        \begin{equation}
+            \dot{V}\leq max\;L_{F(x)}V(x)-k\xi(x)L_{g(x)}V(x)\varphi(x)
+        \end{equation}
+        \begin{equation}
+            \dot{V}\leq max \left\lbrace \sum_{j=1}^{\rho-1}\partial_{x_j}V_{\rho}\right\rbrace +C|s_{\rho,d}(x)|-k_{\rho} K_m s_{\rho,d}\frac{s_{\rho,d}(x)}{|s_{\rho,d}(x)|}<0
+        \end{equation}
+        \begin{equation}
+            k_{\rho}> \frac{1}{K_m} \left(\underset{x \in S_{\rho}}{max}\left\lbrace \frac{\sum_{j=1}^{\rho-1}\partial_{x_j}V_{\rho}}{|s_{\rho,d}(x)|} \right\rbrace+C\right):=G_i(k_{\rho-1},C,K_m)
+        \end{equation}
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%			Ejemplo empieza
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% In this chapter some definitions and a brief review of necessary mathematical tools will be given in order to have a clear exposition of the problem and results. First we start with the description of systems we are working on and the Special Coordinate Basis (SCB) transformation of linear systems, required in this work to the observer design. Then, we recall the well known concepts of strong observability and strong detectability giving a characterization of them in terms of the zeros and relative degree of the system. Later we state the concepts of classical and weighted homogeneity and some relevant results in functional analysis with this property, immediately we give an extension to homogeneity in the bi-limit, which is part of the central axis of this work. Additionally we have to remember a few important ideas on the Lyapunov stability issue, some recent concepts such as finite-time (FT) stability and fixed-fime (FxT) stability are given formally. Finally we explain how the recently introduced Bl-homogeneous differentiators are built.
+
+% Although they have already been used in the previous chapter, some important notations are as follows. For a real variable $z\in \mathbb{R}$ and a real number $p\in \mathbb{R}$ the symbol $\sig{z}{p}=\abs{z}{p}\sign{z}$ is the signed power $p$ of $z$. According to this $\sig{z}{0}=\sign{z}$, additionally $\frac{d}{dz}\sig{z}{m}=m\abs{z}{m-1}$ and $\frac{d}{dz}\abs{z}{m}=m\sig{z}{m-1}$. Moreover, $\sig{z}{p}\sig{z}{q}=\abs{z}{p+q}$, $\sig{z}{p}\sig{z}{0}=\abs{z}{p}$ and $\sig{z}{0}\abs{z}{p}=\sig{z}{p}$.
+
+% \section{Description of systems and properties about observability}
+% In contrast to the Single Input - Single Output (SISO) case, in the Multi Input - Multi Output (MIMO) case existing normal forms are not clearly defined in order to design Unknown Input Observers (UIO) for example the well-known classical observability canonical form by Luenberger \cite{Luenberger1967},\cite{Gupta1974} which is based on the observability indices does not take the impact of the unknown inputs into account.
+
+% \subsection{Special Coordinate Basis} \label{sec: CH2 SCB}
+% Essentially, the so-called Special Coordinate Basis (SCB) \cite{Chen2004},\cite{Sannuti1986} decomposes the multivariable linear system into coupled chains of integrators. Such that several fundamental properties of linear systems regarding controllability (stabilisability), observability (detectability), invariant zeros, decoupling zeros, infinite zero structure, effect of feedback on zero structure, squaring down, diagonal and triangular decoupling, etc. can be directly displayed in terms of the Special Coordinate Basis.
+
+% Consider a general strictly proper linear system $\Sigma$ characterized by
+% \begin{equation}
+% 	\begin{split}\label{ecu: CH2 Sigma}
+% 		\Sigma: \left\{
+% 		\begin{array}{rl}
+% 			\dot{x} & =Ax+D\omega \\
+% 			y & = Cx
+% 		\end{array}
+% 		\right. \\
+% 	\end{split}
+% \end{equation}
+
+% where $x\in \RE^n, \omega\in \RE^m$ and $y\in \RE^p$ are the state, input and output respectively. Without loss of generality, we assume that all inputs and outputs are linearly independent, i.e. both $D$ and $C$ are full rank. Then we have the following structural or Special Coordinate Basis decomposition of $\Sigma$.
+
+% \begin{theorem}\label{theorem: SCB}
+% 	Consider the strictly proper system $\Sigma$ characterized by \eqref{ecu: Sigma SCB}. There exist a nonsingular state transformation, $\Gamma_s \in \RE^{n\times n}$ , a nonsingular output transformation, $\Gamma_o \in \RE^{p\times p}$, and a nonsingular input transformation, $\Gamma_i \in \RE^{m\times m}$, that will reveal all the structural properties of $\Sigma$. More specifically, we have
+	
+% 	\begin{equation}\label{ecu: CH2 SCB transformation}
+% 		x=\Gamma_s\bar{x}, \quad y=\Gamma_o\bar{y}, \quad \omega=\Gamma_i\bar{\omega},
+% 	\end{equation}
+
+% which transform the system into 
+
+% \begin{equation}
+% 	\begin{split}\label{ecu: Sigma SCB}
+% 		\Sigma_{SCB}: \left\{
+% 		\begin{array}{rl}
+% 			\dot{\bar{x}} & =\bar{A}\bar{x}+\bar{D}\bar{\omega} \\
+% 			\bar{y} & = \bar{C}\bar{x}
+% 		\end{array}
+% 		\right. \\
+% 	\end{split}
+% \end{equation}
+
+% with the new state variables 
+% \begin{equation}
+% 	\bar{x}=
+% 	\begin{bmatrix}
+% 		x_a \\
+% 		x_b \\
+% 		x_c \\
+% 		x_d
+% 	\end{bmatrix}, x_a \in \mathbb{R}^{n_a}, \quad x_b \in \mathbb{R}^{n_b}, \quad x_c \in \mathbb{R}^{n_c}, \quad x_d \in \mathbb{R}^{n_d}
+% \end{equation}
+
+% the new output variables 
+% \begin{equation}
+% 	\bar{y}=
+% 	\begin{bmatrix}
+% 		y_d \\
+% 		y_b
+% 	\end{bmatrix}, y_d \in \mathbb{R}^{p_d}, \quad y_b \in \mathbb{R}^{p_b}
+% \end{equation}
+% and the new input variables
+% \begin{equation}
+% 	\bar{\omega}=
+% 	\begin{bmatrix}
+% 		\omega_d \\
+% 		\omega_c
+% 	\end{bmatrix}, \omega_d \in \mathbb{R}^{p_d}, \quad \omega_c \in \mathbb{R}^{m_c}
+% \end{equation}
+
+% Further, the stare variables $x_b$ can be decomposed as
+% \begin{eqnarray}
+% 	x_b=
+% 	\begin{bmatrix}
+% 		x_{b,1} \\
+% 		x_{b,2} \\
+% 		\vdots \\
+% 		x_{b,p_b}
+% 	\end{bmatrix}, \quad
+% 	y_b=
+% 	\begin{bmatrix}
+% 		y_{b,1} \\
+% 		y_{b,2} \\
+% 		\vdots \\
+% 		y_{b,p_b}
+% 	\end{bmatrix}, \\
+% 	x_{b,\iota} \in \mathbb{R}^{n_{b,i}},\quad
+% 	x_{b,\iota}=
+% 	\begin{bmatrix}
+% 		x_{b,\iota,1} \\
+% 		x_{b,\iota,2} \\
+% 		\vdots \\
+% 		x_{b,\iota,n_{b,\iota}}
+% 	\end{bmatrix}, \quad \iota=1,2,...,p_b,
+% \end{eqnarray}
+% with $n_{b,1} \leq n_{b,2} \leq \hdots \leq n_{b,p_b}$ and $\sum_{\iota=1}^{p_b} n_{b,\iota}=n_b$.
+
+% The state variables $x_c$ can be decomposed as
+% \begin{eqnarray}
+% 	x_c=
+% 	\begin{bmatrix}
+% 		x_{c,1} \\
+% 		x_{c,2} \\
+% 		\vdots \\
+% 		x_{c,m_c}
+% 	\end{bmatrix}, \quad
+% 	\omega_c=
+% 	\begin{bmatrix}
+% 		\omega_{c,1} \\
+% 		\omega_{c,2} \\
+% 		\vdots \\
+% 		\omega_{c,m_c}
+% 	\end{bmatrix}, \\
+% 	x_{c,k} \in \mathbb{R}^{n_{c,k}},\quad
+% 	x_{c,k}=
+% 	\begin{bmatrix}
+% 		x_{c,k,1} \\
+% 		x_{c,k,2} \\
+% 		\vdots \\
+% 		x_{c,k,n_{c,k}}
+% 	\end{bmatrix}, \quad k=1,2,...,m_c,
+% \end{eqnarray}
+% with $n_{c,1} \leq n_{c,2} \leq \hdots \leq n_{c,m_c}$ and $\sum_{k=1}^{m_c} n_{c,k}=n_c$. 
+
+% And finally, the state variable $x_d$ can be decomposed as:
+
+% \begin{eqnarray}
+% 	x_d=
+% 	\begin{bmatrix}
+% 		x_{d,1} \\
+% 		x_{d,2} \\
+% 		\vdots \\
+% 		x_{d,p_d}
+% 	\end{bmatrix}, \quad
+% 	y_d=
+% 	\begin{bmatrix}
+% 		y_{d,1} \\
+% 		y_{d,2} \\
+% 		\vdots \\
+% 		y_{d,p_d}
+% 	\end{bmatrix}, \quad
+% 	\omega_d=
+% 	\begin{bmatrix}
+% 		\omega_{d,1} \\
+% 		\omega_{d,2} \\
+% 		\vdots \\
+% 		\omega_{d,p_d}
+% 	\end{bmatrix}, \\
+% 	x_{d,i} \in \mathbb{R}^{n_{d_{i}}},\quad
+% 	x_{d,i}=
+% 	\begin{bmatrix}
+% 		x_{d,i,1} \\
+% 		x_{d,i,2} \\
+% 		\vdots \\
+% 		x_{d,i,n_{d,i}}
+% 	\end{bmatrix}, \quad i=1,2,...,p_d,
+% \end{eqnarray}
+% with $n_{d_1} \leq n_{d_2} \leq \hdots \leq n_{d_{p_d}}$ and $\sum_{i=1}^{p_d} n_{d,i}=n_d$.
+
+% The decomposed system can be expressed in the following dynamical subsystems. First $\Sigma_a$
+% \begin{equation}\label{ecu: xa}
+% 	\dot{x}_a=A_{aa}x_a + H_{ab}y_b + H_{ad}y_d
+% \end{equation}
+% $\Sigma_b$ composed by each subsystem $\Sigma_{b,\iota}$ associated with $x_{b,\iota},\iota=1,2,...,p_b$,
+% \begin{equation}
+% 	\begin{split}\label{ecu: xb}
+% 	\Sigma_{b,\iota}: \left\{
+% 		\begin{array}{rl}
+% 		\dot{x}_{b,\iota,1} &= x_{b,\iota,2} + H_{bd,\iota,1}y_d, \quad y_{b,\iota}=x_{b,\iota,1}, \\
+% 		\dot{x}_{b,\iota,j} &= x_{b,\iota,j+1} + H_{bd,\iota,j}y_d, \\
+% 		& \vdots \quad j=2,...,n_{b,\iota}-1\\
+% 		\dot{x}_{b,\iota,n_{b,\iota}} &= A_{bb,\iota}x_{b} + H_{bd,\iota,n_{b,\iota}}y_d, 
+% 		\end{array}
+% 	\right. \\
+% 	\end{split}
+% \end{equation}
+
+% $\Sigma_c$ composed by each subsystem $\Sigma_{c,k}$ associated with $x_{c,k}, k=1,2,...,m_c$
+% \begin{equation}
+% 	\begin{split}\label{ecu: xc}
+% 	\Sigma_{c,k}: \left\{
+% 		\begin{array}{rl}
+% 		\dot{x}_{c,k,1} &= x_{c,k,2} + H_{cb,k,1}y_b + H_{cd,k,1}y_d, \\
+% 		\dot{x}_{c,k,j} &= x_{c,k,j+1} + H_{cb,k,j}y_b + H_{cd,k,j}y_d, \\
+% 		& \vdots \quad j=2,...,n_{c,k}-1\\
+% 		\dot{x}_{c,k,n_{c,k}} &= A_{ca,k}x_a + A_{cc,k}x_c + H_{cb,k,n_{c,k}}y_b + H_{cd,k,n_{c,k}}y_d + \omega_{c,k}, 
+% 		\end{array}
+% 	\right. \\
+% 	\end{split}
+% \end{equation}
+% and finally, $\Sigma_d$ composed by each subsystem $\Sigma_{d,i}$ associated with $x_{d,i}, i=1,2,...,p_d$
+% \begin{equation}
+% 	\begin{split}\label{ecu: xd}
+% 	\Sigma_{d,i}: \left\{
+% 		\begin{array}{rl}
+% 		\dot{x}_{d,i,1} &= x_{d,i,2} + H_{dd,i,1}y_d,  \quad y_{d,i} = x_{d,i,1} \\
+% 		\dot{x}_{d,i,j} &= x_{c,i,j+1} + H_{dd,i,j}y_d, \\
+% 		& \vdots \quad j=2,...,n_{c,i}-1\\
+% 		\dot{x}_{d,i,n_{d,i}} &= A_{da,i}x_a + A_{dc,i}x_c + A_{db,i}x_b + A_{dd,i}x_d + w_{d,i}, 
+% 		\end{array}
+% 	\right. \\
+% 	\end{split}
+% \end{equation}
+% where $A_{aa},H_{ab},H_{ad},A_{bb},H_{bd,i,j},A_{cc},A_{ca},H_{cb,k},H_{cd,k},A_{dd},A_{da},A_{dc},A_{db},H_{dd,\iota}$ are constant row vectors of appropriate dimensions. And  we consider $|w_{d,i}(t)|< \Delta_{i} \in \RE_{\geq 0}$.
+% \end{theorem}
+
+% \begin{figure}[H]
+% 	\centering
+% 	\subfigure[$x_a$ the subsystem without direct input and output.]{\includegraphics[scale=1]{xa.png}} \\
+% 	\subfigure[$x_{b,\iota}$ the chain of integrators without a direct input.]{\includegraphics[scale=1]{xb.png}} \\
+% 	\subfigure[$x_{c,k}$ the chain of integrators without a direct output.]{\includegraphics[scale=1]{xc.png}} \\
+% 	\subfigure[$x_{d,i}$ the chain of integrators with direct input and output.]{\includegraphics[scale=1]{xd.png}}
+% 	\caption[Graphic interpretation of SCB.]{Graphic interpretation of structural SCB decomposition of a MIMO system.}
+% 	\label{fig: SCB}
+% \end{figure}
+
+% The proof of this Theorem \ref*{theorem: SCB} is given in \cite{Chen2004}. For simplicity, the system \eqref{ecu: CH2 Sigma} is considered without feedthrough (the arguments in following chapters are equally applicable with some simple extra steps in SCB transformation). Although the procedure for the decomposition of MIMO systems is complicated, the main idea is the identification of chains of integrators between the system inputs and outputs variables. Three different types of chains of integrators can be identified:
+
+% \begin{enumerate}
+% 	\item Chains that start from an input channel and end with an output. This type
+% 	of chain gives the infinite zero structures of the given system and covers the
+% 	subspace corresponding to $x_d$.
+% 	\item Chains that start from an input channel but do not end with an output. This
+% 	type of chain covers the subspace corresponding to $x_c$.
+% 	\item Chains that do not start from an input but end with an output variable. This
+% 	type of chain covers the subspace corresponding to $x_b$.
+% \end{enumerate}
+
+% These subspaces do not cover the whole state space of the given system. The remaining part forms a subspace corresponding to $x_a$, which is related to the invariant zeros of the system, i.e. the zero dynamics. These four subsystems $x_a,x_b,x_c,x_d$ are depicted in graphical form in Figure \ref{fig: SCB}.
+
+
+
+% where the signal indicated by the double-edged arrow in $x_d$ is a linear combination of all the state variables; the signal indicated by the double-edged arrow marked with $a + c$ in $x_c$ is a linear combination of the state variables $x_a$ and $x_c$; the signals indicated by the thick vertical arrows are some linear combinations of the output variables $y_d$ and $y_b$; and the signals indicated by the thin vertical arrows are some linear combinations of the output variable $y_d$.
+
+% The subsystems have the following properties
+% \begin{enumerate}
+% 	\item $\Sigma_a$ corresponds to the zero dynamics. If $A_{aa}$ is Hurwitz then it is detectable. If not it is undetectable.
+% 	\item Subsystem $\Sigma_b$ is not affected by the unknown input vector, and it is observable. Therefore it can be expressed in observer or observability canonical form. Subsystems \eqref{ecu: xd} are expressed as the latter.
+% 	\item Subsystem $\Sigma_c$ is affected by the unknown input, it is not strongly observable.
+% 	\item Subsystem $\Sigma_d$ is affected by the unknown input vector, it is strongly observable, and because the number of inputs and outputs is the same $p_d$ then the subsystem is square.
+% \end{enumerate}
+% For obtaining the SCB transformation of a system, the original analytic procedure can be followed. However, for simplicity, Professor Chen has published a Matlab toolkit at \url{http://linearsystemskit.net}.
+
+% \subsection{Properties and definitions}
+% Several important properties of linear systems related to this work can be displayed in the SCB, nonetheless, before that, some definitions about observability and detectability for systems with unknown inputs have to be remembered.
+
+% \begin{definition}\label{def: CH2 Rosenbrok}
+% 	The zeros of the system \eqref{ecu: CH2 Sigma} correspond to the values $s\in \mathbb{C}$ for which the Rosenbrock's matrix 
+% 	\begin{equation}\label{ecu: Rosenbrok}
+% 		\begin{split}
+% 			R(s)=
+% 			\begin{bmatrix}
+% 				sI-A & -D\\
+% 				C & 0	
+% 			\end{bmatrix}, \quad \forall s\in \mathbb{C}
+% 		\end{split}
+% 	\end{equation} 
+% 	loses rank, i.e. $rank[R(s)] < n+rank[D]$.
+% \end{definition}
+
+% \begin{definition}\label{def: CH2 Strongly obs}
+% 	The system \eqref{ecu: CH2 Sigma} is strongly observable if 
+% 	\begin{equation}
+% 		y(t)=0 \textup{ for } t>0  \quad \textup{ implies }  \quad x(t) = 0 (t > 0)
+% 	\end{equation}
+% 	for any input and initial state. \\
+% 	Equivalently, the system is strongly observable if and only if it has no zeros.
+% \end{definition}
+
+% \begin{definition}\label{def: Strong Det}
+% 	The system \eqref{ecu: CH2 Sigma} is strongly detectable if 
+% 	\begin{equation}
+% 		y(t)=0 \textup{ for } t>0 \quad \textup{ implies }  \quad  x(t) \rightarrow 0 (t \rightarrow 0)
+% 	\end{equation}
+% 	for all inputs and initial states. \\
+% 	Equivalently, the system is strongly detectable if and only if all its zeros $s$ satisfy $Re[s] < 0$.
+% \end{definition}
+% \newpage
+% \begin{definition}\label{def: Strong Det*}
+% 	The system \eqref{ecu: CH2 Sigma} is strongly$^*$ detectable if 
+% 	\begin{equation}
+% 		y(t)\rightarrow 0 (t \rightarrow 0)  \quad  \textup{ implies }  \quad  x(t) \rightarrow 0 (t \rightarrow 0)
+% 	\end{equation}
+% 	for all inputs and initial states. \\
+% 	Equivalently, the system is strongly$^*$ detectable if and only if it is strongly detectable and additionally
+% %	i.e.
+% %	\begin{equation}\label{ecu: Fase minima}
+% %		\begin{split}
+% %			rank
+% %			\begin{bmatrix}
+% %				sI-A & -D\\
+% %				C & 0	
+% %			\end{bmatrix}=n+m, \quad \forall s\in \mathbb{C}
+% %		\end{split}
+% %	\end{equation}
+
+% 	\begin{equation}\label{ecu: Cond rel deg 1}
+% 			rank(CD) = rank(D)
+% 	\end{equation} 
+% \end{definition}
+% which is equivalent to have relative degree one, with respect to the unknown input.
+
+% Consequently of these definitions strong observability implies strong detectability but it does not imply strong$^*$ detectability.
+
+% As mentioned before, all the invariant properties of the given system can be easily obtained from the structural decomposition. It can be now stated the next property of the system and subsystems in SCB.
+
+% \begin{property}\label{prop: CH2 SCB strong obsv}
+% 	\cite{Chen2004} The system $\Sigma_{SCB}$ in \eqref{ecu: Sigma SCB} is strongly observable if and only if, $x_a$ and $x_c$ are non-existent.
+% \end{property}
+
+% \section{Conditions for the existence of Unknown Input Observers}\label{sec: CH2 Cond existence}
+% In \cite{Hautus1983},\cite{Trentelman2001} the necessary and sufficient conditions for observability of LTI systems with unknown inputs were studied. Such conditions are described in terms of the aforementioned properties related to the structure of the system.
+
+% \begin{theorem}
+% \cite{Hautus1983} Under the assumption that the unknown input $\omega(t)$ is a completely arbitrary signal, e.g. it may be unbounded. The system $\Sigma$ in \eqref{ecu: CH2 Sigma} has a Unknown Input Observer (UIO) if and only if it is strongly detectable$^*$.
+
+% \end{theorem}
+
+% In Definition \ref{def: Strong Det}, strong detectability is equivalent to have minimum phase condition, therefore, since for strong observable systems the rank of the Rosenbrock's matrix has to be equal to $n + m, \forall s\in \mathbb{C}$ or the absence of invariant zeros, strong detectability imply strong detectability. Nevertheless, from \eqref{ecu: Cond rel deg 1} an extra relative degree one condition is required for strong detectability$^*$. Based on the definition we can emphasize:
+
+% \begin{observation}
+% 	Strong detectability or even strong observability is not sufficient for the existence of an Unknown Input Observer.
+% \end{observation}
+
+% Since the conditions of minimum phase and relative degree one are necessary and sufficient, it is impossible to overcome them without imposing another restrictions to the problem formulation. Therefore, hereafter the following is assumed
+
+% \begin{assumtion}
+% 	The unknown input $\omega(t)$ is uniformly bounded, i.e. there exist some $\Delta \in \RE_{\geq 0}$ such that $\norm{\omega(t)}\leq\Delta$.
+% \end{assumtion}
+
+% \section{Homogeneity and Bl-homogeneity}
+% Homogeneity is the property whereby objects such as functions or vector fields scale in a consistent fashion with respect to a scaling operation called a dilation \cite{Bernuau2014}, which is essentially an action of the multiplicative group of positive real numbers on the state space \cite{Bhat2005}. Homogeneity with respect to the standard dilation is one of the two axioms for linearity, the other being additivity. Many familiar properties of linear systems follow, in fact, from homogeneity alone. The first step of homogeneity consists in homogeneous polynomials. The Euler’s homogeneous function theorem was the first result linking homogeneity with analysis. And in control theory, homogeneity appeared with Massera and Hahn in the 50’s. 
+
+% \begin{definition}
+% 	Let $n$ and $m$ be two positive integers. A mapping $f: \RE^n \rightarrow \RE^m$ is said to be homogeneous (in the classical sense) with degree $l \in \RE$ if and only if $\forall \epsilon>0: \quad f(\epsilon x) = \epsilon^lf(x)$.
+% \end{definition}
+
+% The main issue with the classical homogeneity was its very restrictive field of use. Hence, a generalization of the classical homogeneity was proposed by V.I. Zubov in 50s and developed by H. Hermes in the 90’s using different weights, leading to weighted homogeneity. Nowadays, this is the most popular definition of homogeneity \cite{Bernuau2014}.
+
+% \begin{definition}
+% 	Fix a set of Coordinate $(x_1,...,x_n)\in \RE^n$. Let $\epsilon>0$ all real numbers and $r=(r_1,...,r_n)$ be a n-upled of positive real numbers. The dilation operator is defined as $\Delta_{\epsilon}^{r}x = \left[ \epsilon^{r_1}x_1,...,\epsilon^{r_n}x_n \right]^T$, where the numbers $r_i>0$ are the weights of the Coordinate. The map also can be written as $\Delta_{\epsilon}^{r}x = diag(\epsilon^{r_1},...,\epsilon^{r_n})x$, where $\Delta_{\epsilon}^{r}$ is the dilation matrix and $x$ the vector of Coordinate.
+% \end{definition}
+
+% \begin{definition}
+% 	It is said that
+% 	\begin{itemize} 
+% 		\item A function $V: \RE^n \rightarrow \RE$ is $r$-homogeneous of degree $l$ or $(r,l)$-homogeneous for short, if the equality $V(\Delta_{\epsilon}^{r}x) = \epsilon^lV(x), \forall x\in \RE^n  \textbackslash \{0 \}, \forall \epsilon >0$ holds.
+% 		\item A vector field $f: \RE^n \rightarrow \RE^n$ (resp. a vector-set field $F: \RE^n \rightrightarrows\RE^n$) is $r$-homogeneous of degree $l$, if the equality $f(\Delta_{\epsilon}^{r}x) = \epsilon^l \Delta_{\epsilon}^{r} f(x)$ (resp. $F(\Delta_{\epsilon}^{r}x) = \epsilon^l \Delta_{\epsilon}^{r} F(x)$) $\forall x\in \RE^n  \textbackslash \{0 \}, \forall \epsilon >0$ holds.
+% 		\item A system $\dot{x} = f(x)$ is homogeneous if and only if $f$ is so.
+% 	\end{itemize}
+% \end{definition}
+
+% An extension to this concept has is the homogeneity in the bi-limit or bl-homogeneity for short.
+
+% \begin{definition}
+% 	A function $\varphi: \RE^n \rightarrow \RE$ is said to be homogeneous in the $0$-limit with associated triple $(r_0,l_0,\varphi_0)$, if it is approximated near $x=0$ by the $(r_0,l_0)$-homogeneous function $\varphi_0$. It is said to be homogeneous in the $\infty$-limit with associated triple $(r_{\infty},l_{\infty},\varphi_{\infty})$, if it is approximated near $x=\infty$ by the $(r_{\infty},l_{\infty})$-homogeneous function $\varphi_{\infty}$. Similar definitions apply for vector fields and set-valued vector fields.
+	
+% 	Consequently, a function $\varphi: \RE^n \rightarrow \RE$ (or a vector field or set-valued vector field) is said to be homogeneous in the bi-limit if it is homogeneous in the $0$-limit and homogeneous in the $\infty$-limit.
+% \end{definition}
+
+% There are several results related to the homogeneity of functions, which are going to be useful for the stability analysis in the following chapters. Here we recall some of them. Firstly, let us mention that the regularity of a homogeneous mapping $V$ is related to its degree:
+
+% \begin{theorem}\label{theo: Regularity}
+% 	Suppose $V: \RE^n \rightarrow \RE$ is continuous on $\RE^n \textbackslash \{0 \}$ and homogeneous of degree $l$. Then
+% 	\begin{itemize}
+% 		\item If $l<0$, then $V$ is continuous on $\RE^n$ if and only if $V\equiv 0$.
+% 		\item If $l=0$, then $V$ is continuous on $\RE^n$ if and only if $V\equiv V(0)$.
+% 		\item If $l>0$, then $V$ is continuous on $\RE^n$.
+% 	\end{itemize}
+% \end{theorem}
+% The proof of this Theorem \ref{theo: Regularity} is given in \cite{Bhat2005}. 
+
+% The following lemma asserts that sign-definite, homogeneous functions are radially unbounded.
+
+% \begin{lemma}
+% 	Suppose $V: \RE^n \rightarrow \RE$ is continuous and homogeneous, then
+% 	\begin{itemize}
+% 		\item If $V$ is sign definite, then $V$ is radially unbounded.
+% 		\item If $n>1$ and $V$ is proper, then $V$ is sign definite.
+% 	\end{itemize}
+% \end{lemma}
+
+% This property is useful in the task of Lyapunov functions construction. Another useful result, but in bl-homogeneous functions, which going to be used in the proof of main result is as follows.
+
+% \begin{lemma}
+% 	Let $\gamma: \RE^n \rightarrow \RE$ and  $\eta: \RE^n \rightarrow \RE_{\leq 0}$ be two upper semicontinuous (u.s.c.) single-valued bl-homogeneous functions, with the same weights $r_0$ and $r_1$, degrees $m_0$ and $m_{\infty}$, and approximating functions $\eta_{0},\eta_{\infty}$ and $\gamma_0,\gamma_{\infty}$ which are u.s.c. Suppose that $\forall x\in\RE^n$, $\gamma(x)\leq 0$, $\gamma_0(x)\leq 0$, $\gamma_{\infty}(x)\leq 0$. If $\gamma(x)=0 \wedge x\neq 0 \Rightarrow \eta(x)<0$, $\gamma_{\iota}(x)=0 \wedge x\neq 0 \Rightarrow \eta_{\iota}(x)<0$ for $\iota \in \{0,\infty\}$, then there are constants $\lambda^*\in\RE$, $c_0>0,c_{\infty}>0$ such that for all $\lambda \geq max\{\lambda_0,\lambda_{\infty}\}, \lambda_0 \geq \lambda^*$, $\lambda_{\infty}>\lambda^*$ and for all $x\in \RE^n \textbackslash \{0 \}$,
+% 	\begin{equation}
+% 		\begin{split}
+% 		\eta(x)+\lambda\gamma(x) \leq -c_0\norm{x}_{r_0,p}^{m_0} - c_{\infty}\norm{x}_{r_{\infty},p}^{m_{\infty}}, \\
+% 		\eta_{\iota}(x)+\lambda\gamma_{\iota}(x) \leq -c_{\iota}\norm{x}_{r_{\iota},p}^{m_{\iota}}, \quad \iota \in \{0,\infty\}
+% 		\end{split}
+% 	\end{equation}
+% \end{lemma}
+
+
+% \subsection{Stability of homogeneous systems}
+% There are some crucial stability results that appear in the literature for the special case of systems that are homogeneous with respect to dilations of the form  $\Delta_{\epsilon}^{r}x$. But before presenting them, we formalize the concepts of stability, and the classical results in Lyapunov stability will be remembered.
+
+% \begin{definition}
+% 	Consider the autonomous system 
+% 	\begin{equation}\label{ecu: sys Lyap}
+% 		\dot{x}=f(x)
+% 	\end{equation}
+% 	with $f: \RE^n \rightarrow \RE^n$. Then \\
+% 	The equilibrium point $x=0$ of \eqref{ecu: sys Lyap} is 
+% 	\begin{itemize}
+% 		\item Stable if, for each $\epsilon>0$, there is $\delta=\delta(\epsilon)>$0 such that 
+% 		\begin{equation}
+% 			\norm{x(0)} < \delta \Rightarrow \norm{x(t)}<\epsilon, \forall t\geq 0
+% 		\end{equation}
+% 		\item Unstable if it is not stable.
+% 		\item Asymptotically stable if it is stable  and $\delta$ can be chosen such that
+% 		\begin{equation}
+% 			\norm{x(0)} < \delta \Rightarrow \lim_{t\to \infty} x(t)=0
+% 		\end{equation}
+% 	\end{itemize}
+% \end{definition}
+
+% The well known Lyapunov's stability theorem is as follows, taken from \cite{Khalil2003}
+
+% \begin{theorem}
+% 	Let $x=0$ be an equilibrium point for \eqref{ecu: sys Lyap} and $D\subset \RE^n$ be a domain containing $x=0$. Let $V: D\rightarrow \RE$ be a continuously differentiable function such that
+% 	\begin{equation}
+% 		\begin{split}
+% 		V(0) = 0 \quad and \quad V(x) &> 0 \quad in \quad D \textbackslash \{0 \} \\
+% 		\dot{V}(x) &\leq 0 \quad in \quad D
+% 		\end{split}
+% 	\end{equation}
+% 	Then, $x=0$ is stable. Moreover, if 
+% 	\begin{equation}
+% 		\dot{V}(x) < 0 \quad in \quad D \textbackslash \{0 \}
+% 	\end{equation}
+% 	then, $x=0$ is asymptotically stable.
+% \end{theorem}
+
+% This is local result, which can be extended to globally stability as shown in the next theorem
+
+% \begin{theorem}
+% 		Let $x=0$ be an equilibrium point for \eqref{ecu: sys Lyap}. Let $V: \RE^n \rightarrow \RE^n$ be a continuously differentiable function such that
+% 	\begin{equation}
+% 			V(0) = 0 \quad and \quad V(x) > 0 \quad \forall x \neq 0 \\
+% 	\end{equation}
+% 	$V$ is radially unbounded, i.e.
+% 	\begin{equation}
+% 		\norm{x} \rightarrow \infty \Rightarrow V(x) \rightarrow \infty
+% 	\end{equation}
+% 	and
+% 	\begin{equation}
+% 		\dot{V}(x) < 0 \quad \forall x\neq 0
+% 	\end{equation}
+% 	then, $x=0$ is globally asymptotically stable.
+% \end{theorem} 
+
+% Additionally, we will recall a few definitions about stability in some stronger sense. 
+
+% \begin{definition}
+% 	\cite{Bhat2005} The system \eqref{ecu: sys Lyap} is said to be finite-time stable (FTS) at the origin (on an open neighborhood $\mathcal{V} \subset \RE^n$ of the origin) if:
+% 	\begin{itemize}
+% 		\item There exists a funtion $\delta\in \mathcal{K}$ such that for all $x_0\in \mathcal{V}$ we have $\norm{(x_0)}\leq \delta(\norm{x_0})$ for all $t\geq 0$.
+% 		\item There exists a function $T:\mathcal{V}\textbackslash \{0 \} \rightarrow \RE_{+}$ such that for all $x_0\in \mathcal{V}\textbackslash \{0 \}$, $x(x_0)$ is defined, unique, nonzero on $[0,T(x_0))$ and $\lim_{t\rightarrow T(x0)}x(x_0) = 0$. $T:\RE^n \rightarrow \RE_{+} \cup \{0\}$ is the settling-time function.
+% 	\end{itemize}
+% 	If $\mathcal{V}=\RE^n$, the the system is called globally FTS.
+	
+% 	For differential inclusions (DI) the notion has been defined to deals with all solutions originated from a given initial condition. Details can be seen in the reference.
+% \end{definition}
+
+% Finally, the fixed-time (FxT) stability is a particular case of the FTS property.
+
+% \begin{definition}
+% 	The system \eqref{ecu: sys Lyap} is said to be FxT stable at the origin if it is globally FTS and the settling-time function $T$ is bounded, i.e. $\exists \bar{T}>0$ such that $T(x)<\bar{T}$ for all $x\in \RE^n$.
+% \end{definition}
+
+% \subsection{Homogeneous Lyapunov functions}
+% Now we are completely ready to set down the some principal implications about stability for homogeneous and bl-homogeneous systems, these are important because the observer construction in the next chapter keeps this properties, which will be useful in the mathematical analysis of stability and convergence. 
+
+% \begin{theorem}
+% 	\cite{Bernuau2014} Let \eqref{ecu: sys Lyap} be a homogeneous system, if the origin is a locally stable equilibrium point, then the origin is globally asymptotically stable.
+% \end{theorem}
+
+% It is well known that an asymptotically stable linear system possesses a strict Lyapunov function which is a quadratic form. It turns out that any homogeneous asymptotically stable system admits a homogeneous strict Lyapunov function, not necessarily quadratic. The following theorem formalizes the existence of a Lyapunov function for a homogeneous system
+
+% \begin{theorem}\label{theo: Hom V}
+% 	\cite{BacciottiAndRosier2005} Let $f$ a continuous vector field on $\RE^n$ such that the origin is a locally asymptotically stable equilibrium point. Assume that $f$ is $r$-homogeneous of degree $l$ with $r \in (0,+\infty)^n$. Then, for any $k\in \mathbb{N}$ and any $p > k\cdot max_i\{r_i\}$, there exists a strict Lyapunov function $V$ for the system \eqref{ecu: sys Lyap}, which is $r$-homogeneous of degree $p$ and of class $\mathcal{C}^k$. As a direct  consequence, the time derivative $V=\langle \nabla V,f \rangle$ is $r$-homogeneous of degree $l+p$.
+% \end{theorem} 
+
+% The following corollary shows that the rate convergence of trajectories for homogeneous asymptotically stable system is completely characterized by the degree of the vector field.
+
+% \begin{corollary}\label{Cor: CH2 Corollary 2.1}
+% 	Let $f,l$ defined as in Theorem \ref{theo: Hom V}
+% 	\begin{itemize}
+% 		\item If $l>0$, then the origin is asymptotically stable.
+% 		\item If $l=0$, then the origin es exponentially stable.
+% 		\item If $l<0$, then the origin is finite-time stable.
+% 	\end{itemize}
+% \end{corollary}
+
+% There are some important points 
+% \begin{observation}\label{obs: Sys Homogeneous}
+% 	In homogeneous systems we have that
+% \begin{itemize}
+% 	\item Finite Time Stability (FTS) is equivalent to an infinite eigenvalue assignation for the closed-loop system at the origin, therefore the right-hand side of the ordinary differential equation cannot be locally Lipschitz at the origin.
+% 	\item There exists the settling time function $T(x_0)$ that determines the time for a solution to reach the equilibrium, this function depends on the initial condition of a solution. In general this function $T$ can grow unboundedly (possibly more than linearly).
+% \end{itemize}
+% \end{observation}
+
+% The main issue with $T$ is its continuity at the origin. For continuous systems, the continuity of $T$ at $0$ is equivalent to the continuity of $T$ everywhere. The bi-limit homogeneity application allows us to have a globally bounded $T$, which means that in practice one gets a FxT convergence to the origin for all initial conditions.
+
+% A recently application of bl-homogeneity to the observation problem is in the differentiators developed with correction terms having property of being homogeneous in the bi-limit, therefore, under some assumptions of uniform bounding the differentiator is able to estimate exactly in FxT the true derivatives of a signal $f$. In fact, these results are closely linked to this work. 
+
+% \newpage
+% \section{Arbitrary Order Fixed-Time Differentiators}
+% \cite{Moreno2021} Given a signal $f(t)$ defined on $[0,\infty)$, the objective is to estimate some of its time derivatives. $f(t)$ is composed of a base signal $f_0$ n-times differentiable, and a uniformly bounded noise $v(t)$, i.e.$f(t)=f_0(t)+v(t)$ and $|f_0^{(n)}(t)|\leq \Delta$ with $\Delta \geq 0$.
+
+% Defining the variables $\varsigma_1=f_0(t), \varsigma_2=\dot{f}_0(t), .... ,\varsigma_n=f_0^{(n-1)}(t)$, where $f_0^{(i)}(t)=\frac{d^i}{dt^i}f_0(t)$. A state representation of $f_0$ is
+% \begin{equation}
+% 	\begin{split}
+% 		\dot{\varsigma}_i &= \varsigma_{i+1} \qquad i=1,...,n-1 \\
+% 		\dot{\varsigma}_n &= f_0^{(n)}(t)
+% 	\end{split}
+% \end{equation}
+
+% In order to estimate the derivatives $f_0^{(i)}(t)$ for $i=1,...,n-1$ we have the following nonlinear family of differentiators
+% \begin{equation}\label{ecu: dif Mor}
+% 	\begin{split}
+% 	\dot{x}_i &= -k_i\phi_i(x_1-y)+x_{i+1}, \qquad i=1,...,n-1 \\
+% 	\dot{x}_n &= -k_n\phi_n(x_1-y)
+% 	\end{split}
+% \end{equation}
+% where the nonlinear output injection terms, given by
+% \begin{equation}
+% 	\phi_i(z) = \varphi_i \circ ...\varphi_2 \circ \varphi_1(z)
+% \end{equation} 
+% are the composition of the monotonic growing functions
+% \begin{equation}\label{ecu: varphi}
+% 	\varphi_i(s) = \kappa_i \lceil s \rfloor^{\frac{r_{0,i+1}}{r_{0,i}}} + \theta_i \lceil s \rfloor^{\frac{r_{\infty,i+1}}{r_{\infty,i}}} 
+% \end{equation}
+% with powers selected as $r_{0,n}=r_{\infty,n}=1$, and for $i=1,...,n+1$
+% \begin{equation}
+% 	\begin{split}
+% 	r_{0,i} = r_{0,i+1}-d_0 = 1-(n-i)d_0 \\
+% 	r_{\infty,i} = r_{\infty,i+1}-d_\infty = 1-(n-i)d_\infty
+% 	\end{split}
+% \end{equation}
+% which are completely defined by two parameters $-1 \leq d_0 \leq d_\infty < \frac{1}{n-1}$. With this selection the first term in \eqref{ecu: varphi} is dominating for small values of $s$, while the second one is dominating for large values of $s$.
+
+% Differentiator (\ref{ecu: dif Mor}) is not homogeneous, but it is homogeneous in the bi-limit, that is, near to the origin it is approximated by a homogeneous system of degree $d_0$ and far from the origin it is approximated by a homogeneous system of degree $d_\infty$. Although the scaling properties of the homogeneous systems are lost, the design of bl-homogeneous differentiators is more flexible, since the properties near the origin and far from it can be assigned independently.
+
+% If we select $d_0 = d_{\infty} = d$ the differentiator \eqref{ecu: dif Mor} becomes homogeneous. And making $d = 0$ it is obtained the High-Gain differentiator, for $d = -1$ Levant’s Robust and Exact Differentiator (RED) is recovered and for other values of $d$ the family of continuous differentiators in \cite{CruzZavala2016}\cite{Sanchez2018}\cite{CruzZavala2019}\cite{Jbara2021} is attained. For polynomial signals note that if $d < 0$ (resp. $d = 0$) the estimation converges in finite-time (resp. exponentially). For $d > 0$ the convergence is asymptotic, but it attains any neighborhood of zero in a time which is uniform in the initial conditions.
+
+% A particular case of interest for the differentiator is a property that is only achieved when $d_0 = -1$. In that case $\phi_n$ is discontinuous and it induces a Higher-Order Sliding-Mode at the origin, allowing the estimation to converge (in the absence of noise) exactly, robustly and in finite-time to the real values of the signal derivatives when the $n$-th derivative of the signal is bounded by a non zero constant $\Delta \in \RE_{\geq 0}$, i.e. $|f_0^{(n)}(t)|\leq \Delta$. For all other values of $d_0 > -1$, the convergence is only achieved if $\Delta=0$.
+
+% As we mentioned in Observation \ref{obs: Sys Homogeneous}, one of the disadvantages in homogeneous (including Levant’s RED) differentiators with $d_0 < 0$, is that the convergence time, although finite, grows unboundedly (and faster than linearly) with the size of the initial estimation error. One of the nice features of the bl-homogeneous design in general and of the proposed differentiator \eqref{ecu: dif Mor} in particular, is that assigning a positive homogeneity degree to the $\infty$-limit approximation $d_{\infty} > 0$ and a negative homogeneity degree to the $0$-limit approximation $d_0 < 0$, it is possible to counteract this effect: Convergence of the estimation will be achieved in Fixed-Time \cite{Moreno2021}.
+
+% The main result of this differentiators \eqref{ecu: dif Mor} can be expressed formally as follows. In the absence of noise, it is able to estimate asymptotically the first $n-1$ derivatives of the signal $f_0(t)$. Let $\mathscr{F}^{n}_{0} \triangleq \left\lbrace f^{(n)}(t) \equiv 0 \right\rbrace$ represent the class of polynomial signals and $\mathscr{F}^{n}_{\Delta} \triangleq \left\lbrace \left| f^{(n)}(t)\right| \leq \Delta \right\rbrace$ corresponds to the class of $n$-Lipschitz signals.
+
+% \begin{assumtion}\label{asump: blh differentiator}
+% 	$f(t)=f_0(t)+\nu(t)$, with $f_0(t)$ $n-$times differentiable, $|f^{(n)}(t)|\leq \Delta$, and $\nu(t)$ a uniformly bounded measurable signal.
+% \end{assumtion}
+% Then it is possible to have the following statement
+
+% \begin{theorem}\label{theo: est diff blh}
+% 	\cite{Moreno2021} Let the function $f(t)=f_0(t)$ be such that Assumption \ref{asump: blh differentiator} is fulfilled. Select $-1 \leq d_0 \leq d_\infty < \frac{1}{n-1}$ and choose arbitrary positive (internal) gains $\kappa_i>0$ and $\theta_i>0$, for $i=1,...,n$. Suppose that either $\Delta=0$ or $d_0=-1$. Under this conditions, and in the absence of noise ($\nu(t) \equiv 0$) there exist appropriate gains $k_i>0$, for $i=1,...,n$, such that the solutions bl-homogeneous differentiator \eqref{ecu: dif Mor} converge globally and asymptotically to the derivatives of signal, i.e. $x_i(t) \rightarrow f_0^{(i-1)}(t)$ as $t \rightarrow \infty$. In particular, they converge in Fixed-Time, i.e. $\exists \bar{T}>0$ such that for any $x_i(0) \in \mathbb{R}^n$, $x_i(t) \equiv f_0^{(i-1)}(t)$ for $t \geq \bar{T}$ for $i=1,...,n$ if either
+% 	\begin{eqnarray*}
+% 		&(a)& \quad -1 < d_0 < 0 < d_\infty < \frac{1}{n-1} \quad and \quad f(t)\in \mathscr{F}^{n}_{0},  \quad or \\
+% 		&(b)& \quad -1 = d_0 < 0 < d_\infty < \frac{1}{n-1} \quad and \quad f(t)\in \mathscr{F}^{n}_{\Delta}.
+% 	\end{eqnarray*}
+% \end{theorem}
+
+% In the presence of noise ($\nu(t) \neq 0$) it is proved to have ISS. The proof of this Theorem \ref{theo: est diff blh}, which is of essential importance in this work is detailed in \cite{Moreno2021}.
+
+% This differentiator can be seen as an observer for a special type of SISO systems, composed by a chain of $n$ integrators and with a unknown input. The idea of this work is generalizing this observer to a family of MIMO-LTI systems by decomposing the original system in a set of subsystems and designing a bl-homogeneous observer composed by a set of sub-observers with unknown inputs. And proof that the convergence is achieved exactly and in fixed time by appropriately selecting the set of gains in the observer. 
+
+% With the necessary theory of homogeneous and bl-homogeneous systems given in this chapter, we are ready to present the main contribution of this work in Chapters 3 and 4.
+
+
+
+%Observer
+%It is important to note that observer (17)-(19) is not a simple use of a HOSM differentiator, replacing the ideal derivatives in observer (16), but it is an observer, with discontinuous injection terms.
+

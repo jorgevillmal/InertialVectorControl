@@ -1,0 +1,376 @@
+\documentclass[11pt,letterpaper,twoside,openright]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+%preámbulo configuración de página
+\usepackage[width=165mm,top=15mm,bottom=25mm,bindingoffset=20mm,includehead]{geometry}
+
+%Preámbulo de Color de texto =================================================================
+\usepackage{color}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+\definecolor{verde}{rgb}{0.0, 0.5, 0.0}
+
+%preámbulo captions==========================================================================
+\usepackage{caption}
+\captionsetup{margin=40pt,format=hang,indention=-.5cm,font={footnotesize, rm},labelfont=bf,labelsep=colon}
+
+%preámbulo encabezados=======================================================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\setlength{\headheight}{15pt} 
+
+%preambulo portada
+
+
+
+%preámbulo matemáticas=======================================================================
+%\spanishdecimal{.}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{dsfont}
+\usepackage{mathrsfs}
+\newcommand{\sign}[1]{\mathrm{sign(#1)}} 
+\newcommand{\refe}[1]{(\ref{#1})}
+\newcommand{\rojo}[1]{{\color{red} #1}}
+\newcommand{\RE}{\mathbb{R}}
+\newcommand{\sig}[2]{\lceil#1\rfloor^{#2}}
+\newcommand{\abs}[2]{|#1|^{#2}}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\usepackage{color}   
+\setcounter{MaxMatrixCols}{20}
+%\decimalpoint
+
+
+%preámbulo sistema internacional de unidades================================================
+\usepackage{siunitx}
+
+
+%preámbulo referencias========================================================================
+\usepackage[numbers]{natbib}
+%\bibliographystyle{plainnat}
+%preámbulo Marcadores=======================================================================
+\usepackage[hidelinks, breaklinks=true, backref=page,colorlinks=true,linkcolor=blue,citecolor=magenta]{hyperref}
+
+
+%preámbulo de gráficos=========================================================================
+\usepackage{graphicx}
+\graphicspath{{figuras/}}
+\usepackage{subfigure}
+\usepackage{float}
+
+%Preámbulo tabla=============================================================================
+\usepackage{multirow, array}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\definecolor{SeaGreen}{rgb}{0.13, 0.7, 0.67}
+\definecolor{Peach}{rgb}{0.97, 0.51, 0.47}
+\definecolor{LimeGreen}{rgb}{0.31, 0.78, 0.47}
+\definecolor{bananayellow}{rgb}{1.0, 0.88, 0.21}
+\usepackage{enumerate}
+%preámbulo de apéndices======================================================================
+\usepackage[toc,page]{appendix}
+\renewcommand{\appendixpagename}{Apéndices}
+
+%preámbulo de url============================================================================
+\usepackage{url}
+
+%preámbulo de nomenclatura==================================================================
+\usepackage[intoc,spanish]{nomencl}
+\makenomenclature
+\usepackage{etoolbox}
+
+
+%Preámbulo para código de programación=======================================================
+\usepackage{listings}
+\lstset{ 
+	backgroundcolor=\color{white},
+	rulesepcolor=\color{black},
+	%
+	stringstyle=\ttfamily,
+	showstringspaces = false,
+	basicstyle=\footnotesize\ttfamily,
+	commentstyle=\color{gray45},
+	keywordstyle=\bfseries,
+	%
+}
+\renewcommand{\lstlistingname}{Listado}
+
+%Preámbulo numeros decimales================================================================
+%\spanishdecimal{.}
+
+%Redifiniendo Titulos==========================================================================
+\usepackage{titlesec}
+\newcommand{\bigrule}{\titlerule[0.5mm]}
+\titleformat{\chapter}[display] % Se cambia el formato del capitulo
+%{\bfseries\Huge} % por defecto se usarán caracteres de tamaño \Huge en negrita
+{\bfseries\Huge} % por defecto se usarán caracteres de tamaño \Huge en negrita
+{% contenido de la etiqueta
+	\titlerule % línea horizontal
+	\filright % texto alineado a la derecha
+	\Large\chaptertitlename\ % "Capítulo" o "Apéndice" en tamaño \Large en lugar de \Huge
+	\Large\thechapter} % número de capítulo en tamaño \Large
+{0mm} % espacio mínimo entre etiqueta y cuerpo
+{\filright} % texto del cuerpo alineado a la derecha
+[\vspace{0.5mm} \bigrule] % después del cuerpo, dejar espacio vertical y trazar línea horizontal gruesa
+
+%Preámbulo utilidades=========================================================================
+\usepackage{pdfpages}	%Incluye hojas de de archivos PDF
+\usepackage{siunitx}			%Sitema internacional de unidades
+\usepackage[T1]{fontenc}	%Fuentes
+\usepackage{textcomp}		%Fuentes
+
+%preámbulo teoremas, Definiciones y Proposiciones ==============================================================================================================
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{observation}{Observation}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{property}{Property}[chapter]
+\newtheorem{assumtion}{Assumption}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+
+%preámbulo acronimo ===================================================
+\usepackage{acronym}
+\acrodef{fl}[FL]{Función de Lyapunov} \acused{fl}
+\acrodef{pd}[p.d.]{positiva definida}
+\acrodef{ae}[AE]{asintóticamente estable}
+\acrodef{gae}[GAE]{global y asintóticamente estable}
+
+
+%preámbulo de nomenclatura ==========================================
+%\usepackage[intoc, spanish]{nomencl}
+\makenomenclature
+\nomenclature{$MCC$}{Modo de conducción continua}
+%FIN DEL PREÁMBULO===================================================
+
+
+
+
+%====================================================================
+%====================================================================
+%                                                  INICIO DEL DOCUMENTO
+%====================================================================
+%====================================================================
+\begin{document}
+
+%====================================================================
+%                                                                      Macros
+%====================================================================
+%\newcommand{Nombre}{Formula- Imagen lo que seas}
+
+%====================================================================
+%                        Portada
+%====================================================================
+\thispagestyle{empty}
+
+\begin{titlepage}
+	%\newgeometry{top=2.4cm,hmargin=3.7cm,bottom=2.4cm}
+	%\thispagestyle{empty}
+	
+	\begin{center}
+		\includegraphics[height=4.5cm]{UNAM.png}	
+	\end{center}
+	%	\begin{figure}[ht]
+		%		\minipage{0.76\textwidth}
+		%		\includegraphics[width=4cm]{UNAM.png}
+		%		\label{EscudoUNAM}
+		%		\endminipage
+		%		\minipage{0.32\textwidth}
+		%		\includegraphics[height = 4cm ,width=3.5cm]{FI.jpg}
+		%		\label{EscudoFC}
+		%		\endminipage
+		%	\end{figure}
+	
+	\begin{center}
+		%		\includegraphics[height=3.5cm]{unam_azul.pdf}\\
+		%		\vspace{1cm}
+		\textbf{{\Large UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO}}\\
+		PROGRAMA DE MAESTRÍA Y DOCTORADO EN INGENIERÍA\\
+		INGENIERÍA ELÉCTRICA – CONTROL\\
+		\vspace{2cm}
+		\textbf{APLICACIÓN DE MEDICIONES DE VECTORES INERCIALES EN EL CONTROL DE SEGUIMIENTO DE UN UAV QUADROTOR: UN ENFOQUE EXPERIMENTAL}
+		\\
+		\vspace{2cm}
+		TESIS\\
+		QUE PARA OPTAR POR EL GRADO DE:\\
+		MAESTRO EN INGENIERÍA\\
+		\vspace{2cm}
+		PRESENTA:\\
+		JORGE MANUEL VILLARREAL MALDONADO\\
+		\vspace{1.8cm}
+		TUTOR PRINCIPAL\\
+		DR. YU TANG XU\\
+		FACULTAD DE INGENIERÍA, UNAM\\
+		
+		\vspace{1.8cm}
+		CIUDAD UNIVERSITARIA, CD. MX. SEPTIEMBRE 2, 2023\\
+	\end{center}
+	
+\end{titlepage}
+
+		%\begin{center}
+		%	\includegraphics[height=4.5cm]{UNAM.png}	
+		%\end{center}
+		%%	\begin{figure}[ht]
+		%	%		\minipage{0.76\textwidth}
+		%	%		\includegraphics[width=4cm]{UNAM.png}
+		%	%		\label{EscudoUNAM}
+		%	%		\endminipage
+		%	%		\minipage{0.32\textwidth}
+		%	%		\includegraphics[height = 4cm ,width=3.5cm]{FI.jpg}
+		%	%		\label{EscudoFC}
+		%	%		\endminipage
+		%	%	\end{figure}
+		%
+		%\begin{center}
+		%	
+		%	\textbf{{\large UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO}}\\
+		%	MASTER AND DOCTORATE PROGRAM IN ENGINEERING\\
+		%	ELECTRICAL ENGINEERING - CONTROL\\
+		%	\vspace{2cm}
+		%	{\large BL-HOMOGENEOUS SLIDING-MODE OBSERVERS DESIGN \\
+		%		FOR MIMO LINEAR SYSTEMS}
+		%	\\
+		%	\vspace{2cm}
+		%	\textbf{THESIS}\\
+		%	PRESENTED FOR THE DEGREE OF\\
+		%	MASTER IN ENGINEERING\\
+		%	\vspace{2cm}
+		%	PRESENTS:\\
+		%	\textbf{RENE MELENDEZ PEREZ}\\
+		%	\vspace{1.8cm}
+		%	PRINCIPAL DIRECTOR\\
+		%	\textbf{DR. LEONID FRIDMAN}\\FACULTY OF ENGINEERING, UNAM\\
+		%	
+		%	\vspace{1.8cm}
+		%	MEXICO CITY, JULY 2022\\
+		%\end{center}
+
+\newpage
+\thispagestyle{empty}
+$\ $
+
+
+\newpage
+\thispagestyle{empty}
+\vspace{30mm}
+
+\noindent JURADO ASIGNADO:
+\vspace{8mm}
+
+\begin{tabbing}
+%	Presidente: \ \ \ \ \ \ \ \=Dr. Arteaga Pérez Marco Antonio \\ [3mm]
+%	Secretario: \> Dr. Moreno Pérez Jaime Alberto\\ [3mm]
+%	1er. Vocal: \> Dr. Fridman Leonid\\ [3mm]
+%	2o. Vocal: \> Dr. Rocha Cózatl Edmundo Gabriel\\ [3mm]
+%	3er. Vocal: \> Dr. Dávila Montoya Jorge Ángel\\ [12mm]
+\end{tabbing}
+
+\vspace{1.5cm}
+\noindent La tesis se realizó en el Posgrado de Ingeniería, UNAM.\\
+
+\begin{center}
+	TUTOR  DE  TESIS:\\\vspace{.04cm}
+	DR. YU TANG XU\\
+	\vspace{2cm}
+	--------------------------------------------------\\
+	FIRMA
+\end{center}
+
+\newpage
+\thispagestyle{empty}
+%$\ $
+%====================================================================
+%    
+
+
+\newpage
+%\include{Cascaras/Agradecimientos}
+\chapter*{Agradecimientos} 
+\thispagestyle{empty}
+\begin{flushright}
+
+\end{flushright}
+\newpage
+\thispagestyle{empty}
+$\ $   
+    
+    
+\newpage
+%\include{Cascaras/Agradecimientos}
+\chapter*{Acknowledgment} 
+\thispagestyle{empty}
+\begin{flushright}
+	
+\end{flushright}
+\newpage
+\thispagestyle{empty}
+$\ $
+
+\include{Capitulos/Resumen}
+\include{Capitulos/Abstract}
+
+
+%====================================================================
+
+%\include{Cascaras/IndiceContenidos}
+\tableofcontents % indice de contenidos
+\thispagestyle{empty}
+
+%Índice de Figuras====================================================================================================
+%\include{Cascaras/IndiceFiguras}
+\listoffigures % indice de figuras
+\addcontentsline{toc}{chapter}{List of Figures} % para que aparezca en el indice de contenidos
+\setcounter{page}{1}
+\pagenumbering{Roman} 
+
+%Lista de Acrónimos =====================================================================================================
+%\include{Cascaras/ListaAcronimos}
+\chapter*{List of acronyms} % Lista de acrónimos
+\addcontentsline{toc}{chapter}{List of acronyms} % para que aparezca en el indice de contenidos
+\markboth{List of acronyms}{List of acronyms}
+\begin{tabular}{cl}
+	HOSM	&\hspace{1.5cm} Higher-Order Sliding Modes\\\\
+	UIO		&\hspace{1.5cm} Unknown Input Observer	\\\\
+	SMO		&\hspace{1.5cm} Sliding Mode Observer \\\\
+	Bl		&\hspace{1.5cm} Bi-limit\\\\
+	LTI	   	&\hspace{1.5cm} Linear Time Invariant \\\\
+	SCB	   	&\hspace{1.5cm} Special Coordinate Basis\\\\
+	MIMO	&\hspace{1.5cm} Multiple-input Multiple-output\\\\
+	LF		&\hspace{1.5cm} Lyapunov Function\\\\
+	Bl-LF	&\hspace{1.5cm} Bl-homogeneous Lyapunov Function\\\\
+	SM		&\hspace{1.5cm} Sliding mode\\\\
+	FT		&\hspace{1.5cm} Finite-Time\\\\
+	FxT		&\hspace{1.5cm} Fixed-Time\\\\
+	RED		&\hspace{1.5cm} Robust Exact Differentiator\\\\
+	OMC		&\hspace{1.5cm} Observer Matching Condition \\\\
+	ISS		&\hspace{1.5cm} Input to State Stability \\\\
+\end{tabular}
+
+
+%Nomenglatura =====================================================================================================
+
+%\include{Cascaras/Nomenclatura}
+
+% Capitulos ==========================================================================================================
+\include{Capitulos/Capitulo1}
+\include{Capitulos/Capitulo2}
+\include{Capitulos/Capitulo3}
+\include{Capitulos/Capitulo4}
+\include{Capitulos/Capitulo5}
+%====================================================================
+%                                                                 Bibliografia
+%====================================================================
+\bibliographystyle{apalike} 
+\bibliography{Citas}
+
+\end{document}

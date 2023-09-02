@@ -1,0 +1,14 @@
+\newpage
+%\include{Cascaras/Agradecimientos}
+\chapter*{Resumen} 
+El presente trabajo se centra en la implementación experimental y análisis detallado de un controlador de seguimiento para un vehículo aéreo no tripulado (UAV) tipo quadrotor, con énfasis en el modelo Bebop 2. El diseño inicial del controlador se compone de dos componentes esenciales: un bucle de control de posición saturada externa y un bucle de control de actitud interna. El primero tiene la tarea de definir una dirección de empuje que esté libre de singularidades, garantizando así un seguimiento exponencial global. Por otro lado, el control de actitud interna se fundamenta en mediciones precisas de vectores inerciales y tasas de giro, permitiendo un seguimiento adecuado de la actitud deseada para la correcta posición del UAV.
+
+Para asegurar la eficacia y robustez del controlador propuesto, se estableció un protocolo de pruebas dividido en tres fases esenciales. La primera fase consistió en simulaciones computacionales realizadas en MATLAB, cuyo objetivo principal fue corroborar y afinar los datos teóricos del controlador. Una vez validados estos resultados, se avanzó a la segunda fase, que implicó la creación de un ambiente de simulación controlada en ROS y Gazebo. Esta simulación, más avanzada, incorporó parámetros reales y se basó en las especificaciones técnicas y computacionales del dron Bebop 2, permitiendo así una aproximación más cercana a las condiciones reales de vuelo.
+
+La tercera y última fase representó la culminación del proyecto: la implementación y prueba del controlador en un entorno real utilizando el dron Bebop 2. Los ensayos en este entorno permitieron no solo validar la eficacia del controlador en condiciones reales, sino también evaluar su robustez frente a posibles perturbaciones y variables no consideradas en las simulaciones.
+
+Los resultados obtenidos a lo largo de estas fases demuestran que el controlador propuesto no solo es efectivo en teoría, sino que también es aplicable y confiable en escenarios prácticos, ofreciendo una solución robusta para el seguimiento y control de UAVs tipo quadrotor en diversas condiciones.
+
+\newpage
+\thispagestyle{empty}
+$\ $

@@ -1,0 +1,170 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.11.4)  16 APR 2016 18:46
+entering extended mode
+**Titulo.tex
+(Titulo.tex
+LaTeX2e <2015/01/01> patch level 2
+Babel <3.9m> and hyphenation patterns for 69 languages loaded.
+
+! LaTeX Error: Environment titlepage undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 \begin{titlepage}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2 \begin{center}
+                  
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 2--2
+[] 
+ []
+
+
+Overfull \hbox (79.5662pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 Implementaci[]on 
+ []
+
+
+Overfull \hbox (11.82217pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 de 
+ []
+
+
+Overfull \hbox (12.26663pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 un 
+ []
+
+
+Overfull \hbox (22.17766pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 con- 
+ []
+
+
+Overfull \hbox (21.84431pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 tro- 
+ []
+
+
+Overfull \hbox (29.88878pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 lador 
+ []
+
+
+Overfull \hbox (17.95547pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 por 
+ []
+
+
+Overfull \hbox (17.5999pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 mo- 
+ []
+
+
+Overfull \hbox (17.17772pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 dos 
+ []
+
+
+Overfull \hbox (57.91084pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 deslizantes 
+ []
+
+
+Overfull \hbox (23.19989pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 para 
+ []
+
+
+Overfull \hbox (12.26663pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 un 
+ []
+
+
+Overfull \hbox (22.17766pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 con- 
+ []
+
+
+Overfull \hbox (21.511pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 ver- 
+ []
+
+
+Overfull \hbox (27.55544pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 tidor 
+ []
+
+
+Overfull \hbox (11.82217pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 de 
+ []
+
+
+Overfull \hbox (16.15263pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 DC 
+ []
+
+
+Overfull \hbox (3.77774pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 - 
+ []
+
+
+Overfull \hbox (16.15263pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 DC 
+ []
+
+
+Overfull \hbox (20.86655pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 tipo 
+ []
+
+
+Overfull \hbox (30.90814pt too wide) in paragraph at lines 4--6
+ \OT1/cmr/m/sc/10 Boost 
+ []
+
+
+! LaTeX Error: \begin{document} ended by \end{titlepage}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 \end{titlepage}
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+)
+! Emergency stop.
+<*> Titulo.tex
+              
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 12 strings out of 493673
+ 137 string characters out of 3143960
+ 53455 words of memory out of 3000000
+ 3459 multiletter control sequences out of 15000+200000
+ 3941 words of font info for 15 fonts, out of 3000000 for 9000
+ 1025 hyphenation exceptions out of 8191
+ 13i,1n,10p,136b,121s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!

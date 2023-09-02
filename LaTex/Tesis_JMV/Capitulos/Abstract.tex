@@ -1,0 +1,14 @@
+\newpage
+%\include{Cascaras/Agradecimientos}
+\chapter*{Abstract} 
+This study focuses on the experimental implementation and detailed analysis of a tracking controller for a quadrotor unmanned aerial vehicle (UAV), specifically the Bebop 2 model. The initial controller design consists of two essential components: an outer saturated position control loop and an inner attitude control loop. The former is tasked with defining a thrust direction free from singularities, thereby ensuring global exponential tracking. On the other hand, the inner attitude control is grounded on precise inertial vector measurements and gyro rates, enabling accurate tracking of the desired attitude for the UAV's proper positioning.
+
+To ensure the efficacy and robustness of the proposed controller, a three-phase testing protocol was established. The first phase involved computational simulations conducted in MATLAB, primarily aimed at corroborating and refining the controller's theoretical data. Once these results were validated, the study progressed to the second phase, which entailed the creation of a controlled simulation environment in ROS and Gazebo. This more advanced simulation incorporated real parameters and was based on the technical and behavioral specifications of the Bebop 2 drone, allowing for a closer approximation to real flight conditions.
+
+The third and final phase marked the culmination of the project: the implementation and testing of the controller in a real environment using the Bebop 2 drone. Trials in this setting not only validated the controller's efficacy under real conditions but also assessed its robustness against potential disturbances and variables not considered in the simulations.
+
+The results obtained throughout these phases demonstrate that the proposed controller is not only effective in theory but also applicable and reliable in practical scenarios, offering a robust solution for tracking and controlling quadrotor UAVs under various conditions.
+
+\newpage
+\thispagestyle{empty}
+$\ $
