@@ -38,16 +38,57 @@ En este contexto, surge la necesidad de investigaciones que no solo aborden los 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \section{Formulación del problema}
 
+El control preciso de vehículos aéreos no tripulados (UAVs) es esencial para una amplia gama de aplicaciones. A pesar de los avances teóricos, la implementación práctica de estos controladores en drones reales sigue siendo un desafío significativo. En el artículo "Tracking Control of a Quadrotor UAV by Using Inertial Vector Measurements", dirigido por Eduardo Espíndola y Yu Tang, se presenta un controlador que utiliza mediciones vectoriales inerciales para el seguimiento preciso de trayectorias. La principal característica de este controlador es su capacidad para determinar y corregir errores de posición y orientación utilizando solo mediciones inerciales, sin la necesidad de sistemas de referencia externos.
+
+El comportamiento y la respuesta del dron se describen mediante el siguiente modelo matemático:
+
+\begin{align*}
+	\dot{x} &= v,\\
+	m\dot{v} &= -mge_z + fRe_z + f_d,\\
+	\dot{R} &= R(\omega)^\wedge,\\
+	M\dot{\omega} &= (M\omega)^\wedge\omega + \tau + \tau_d.
+\end{align*}
+
+Donde:
+\begin{itemize}
+	\item \( x \) representa la posición del UAV.
+	\item \( v \) es la velocidad del UAV.
+	\item \( R \) es la matriz de rotación que describe la orientación del UAV.
+	\item \( \omega \) es la velocidad angular del UAV.
+	\item \( f \) es la fuerza de empuje generada por los motores.
+	\item \( \tau \) es el par de torsión.
+	\item \( f_d \) y \( \tau_d \) son las perturbaciones en la fuerza y el par de torsión, respectivamente.
+	\item \( m \) es la masa del UAV.
+	\item \( g \) es la aceleración debida a la gravedad.
+	\item \( e_z \) es el vector unitario en la dirección z.
+\end{itemize}
+
+El controlador propuesto en el artículo se basa en este modelo para diseñar leyes de control que permitan al UAV seguir trayectorias deseadas con alta precisión. Sin embargo, llevar este controlador del papel al mundo real presenta desafíos. La implementación en un entorno de desarrollo controlado, como ROS y Gazebo, es el primer paso y una parte esencial para validar su eficacia. En este entorno, se utilizan las especificaciones exactas del dron Bebop 2, lo que es crucial para garantizar una transición fluida y precisa al dron real. Posteriormente, se realizarán pruebas en el Bebop 2 para evaluar su desempeño en condiciones reales y determinar si cumple con las expectativas basadas en la teoría.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 % Objetivos
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \section{Objetivos}
-El presente trabajo de tesis tiene como objetivos:
+\subsection*{Objetivo General}
+
+Desarrollar, implementar y validar un controlador avanzado para un dron, basándose en el enfoque propuesto en el artículo "Tracking Control of a Quadrotor UAV by Using Inertial Vector Measurements", con el fin de lograr un seguimiento preciso de trayectorias y actitudes deseadas en un dron real Bebop 2.
+
+\subsection*{Objetivos Específicos}
+
 \begin{itemize}
-  \item D
-  \item P
-  \item I
-  \item E
+	\item Realizar un análisis exhaustivo del controlador presentado en el artículo de Eduardo Espíndola y Yu Tang, comprendiendo su metodología y la innovación de emplear mediciones vectoriales inerciales para el control de trayectorias en vehículos aéreos no tripulados.
+	
+	\item Estudiar y describir con detalle el modelo matemático del dron, enfocándose en las ecuaciones dinámicas que lo rigen. Este estudio debe permitir una comprensión profunda de la relación entre las variables de control y el comportamiento dinámico del dron.
+	
+	\item Implementar inicialmente el controlador en un entorno de simulación MATLAB, donde se realizarán pruebas en condiciones ideales para verificar su funcionamiento. Posteriormente, se introducirán perturbaciones acotadas para evaluar la robustez y adaptabilidad del controlador frente a situaciones no ideales.
+	
+	\item Adaptar y optimizar el controlador para su implementación en un entorno de simulación más avanzado y realista, como ROS y Gazebo. En este entorno, se utilizarán las especificaciones y características del dron Bebop 2, lo que permitirá una simulación más cercana a las condiciones reales de operación.
+	
+	\item Ejecutar una serie de pruebas en el entorno ROS y Gazebo, evaluando el desempeño del controlador en diferentes escenarios y condiciones. Estas pruebas deben incluir situaciones con y sin perturbaciones, para determinar la eficacia y precisión del controlador en un entorno simulado avanzado.
+	
+	\item Implementar el controlador en un dron real Bebop 2 y llevar a cabo pruebas de campo. Estas pruebas tienen como objetivo validar el desempeño del controlador en condiciones reales, y comparar los resultados obtenidos con las simulaciones previas.
+	
+	\item Documentar y analizar los desafíos, limitaciones y problemas encontrados durante la implementación y las pruebas en el dron real. A partir de este análisis, se propondrán soluciones, mejoras o adaptaciones para futuras investigaciones o implementaciones en otros modelos de drones o en condiciones diferentes.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
