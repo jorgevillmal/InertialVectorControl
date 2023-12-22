@@ -1,0 +1,43 @@
+@startuml
+
+!define RECTANGLE class
+
+RECTANGLE UAV_Model {
+    +compute_dynamics()
+    +update_state()
+    +get_state()
+}
+
+RECTANGLE Controller {
+    +compute_control_input()
+    +update_desired_state()
+    +get_control_input()
+}
+
+RECTANGLE Sensor {
+    +get_measurement()
+    +add_noise()
+    +update_state()
+}
+
+RECTANGLE Simulator {
+    +run_simulation()
+    +log_state()
+    +save_results()
+}
+
+RECTANGLE Visualizer {
+    +update_plot()
+    +save_plot()
+    +show_animation()
+}
+
+UAV_Model -[hidden]-> Controller
+UAV_Model --|> Sensor: Observer
+Controller -[hidden]-> Sensor
+Controller --|> Simulator: uses
+Sensor --|> Simulator: uses
+Simulator --|> Visualizer: uses
+
+@enduml
+
