@@ -1,0 +1,96 @@
+classdef Simulador < handle
+    properties
+        quadcopter          % Objeto Quadcopter que almacena el estado del dron
+        estadoQuadcopter    % Objeto EstadoQuadcopter para actualizar el estado del dron
+        simulationTime      % Tiempo total de simulación en segundos
+        dt                  % Delta de tiempo para cada paso de simulación
+        currentTime         % Contador de tiempo actual dentro de la simulación
+    end
+
+    methods
+        function obj = Simulador(quadcopter, estadoQuadcopter, simulationTime, dt)
+            % Validar que quadcopter es de la clase Quadcopter
+            if ~isa(quadcopter, 'Quadcopter')
+                error('Simulador:InvalidParameter', 'El primer argumento debe ser una instancia de Quadcopter.');
+            end
+            
+            % Validar que estadoQuadcopter es de la clase EstadoQuadcopter
+            if ~isa(estadoQuadcopter, 'EstadoQuadcopter')
+                error('Simulador:InvalidParameter', 'El segundo argumento debe ser una instancia de EstadoQuadcopter.');
+            end
+            
+            % Verificar que simulationTime y dt sean numéricos y positivos
+            if ~isnumeric(simulationTime) || ~isnumeric(dt) || simulationTime <= 0 || dt <= 0
+                error('Simulador:InvalidParameter', 'El tiempo de simulación y dt deben ser numéricos y mayores que cero.');
+            end
+            
+            % Asignar propiedades después de validar
+            obj.quadcopter = quadcopter;
+            obj.estadoQuadcopter = estadoQuadcopter;
+            obj.simulationTime = simulationTime;
+            obj.dt = dt;
+            obj.currentTime = 0;
+            
+            disp('Simulador inicializado correctamente.');
+        end
+
+        function start(obj)
+            % Método para comenzar la simulación.
+            disp('Iniciando la simulación...');
+            while obj.currentTime < obj.simulationTime
+                % Actualizar el estado del Quadcopter
+
+                disp(['Antes de updateState - Tiempo actual de simulación: ', num2str(obj.currentTime)]);
+                obj.estadoQuadcopter.updateState(obj.dt);
+                disp(['Después de updateState - Tiempo Quadcopter: ', num2str(obj.quadcopter.time)]);
+
+                
+                % Sincronizar el tiempo del Quadcopter con el tiempo de simulación
+                obj.quadcopter.time = obj.currentTime;
+
+                % Incrementar el tiempo de simulación
+                obj.currentTime = obj.currentTime + obj.dt;
+
+                % Verifica si se ha pasado de simulationTime en el último incremento
+                if obj.currentTime > obj.simulationTime
+                    obj.currentTime = obj.simulationTime;
+                    obj.quadcopter.time = obj.currentTime;
+                    break; % Salir del bucle, ya que se ha alcanzado el tiempo de simulación
+                end
+
+                % Opcional: añadir aquí la visualización o registro de datos
+                % Por ahora, simplemente imprimimos el estado actual para depuración
+                currentState = obj.quadcopter.getState();
+                disp('Estado actual del Quadcopter:');
+                disp(['Posición: ', num2str(currentState.position')]); % Transpone si es necesario
+                disp(['Velocidad: ', num2str(currentState.velocity')]); % Transpone si es necesario
+                disp(['Orientación (Matriz): ', mat2str(currentState.orientation)]);
+                disp(['Velocidad angular: ', num2str(currentState.angularVelocity')]); % Transpone si es necesario
+            end
+            disp('Simulación finalizada.');
+        end
+
+        function step(obj)
+            disp(['Simulando paso en tiempo: ', num2str(obj.currentTime)]);
+
+            % Actualiza el estado del quadcopter usando la instancia de EstadoQuadcopter
+            obj.estadoQuadcopter.updateState(obj.dt);
+
+            % Incrementa el contador de tiempo actual de la simulación
+            obj.currentTime = obj.currentTime + obj.dt;
+
+            % Asegurarse de que el tiempo en Quadcopter esté sincronizado con el tiempo de simulación
+            assert(obj.quadcopter.time == obj.currentTime, 'Desincronización del tiempo entre Quadcopter y Simulador.');
+
+            % Opcional: añadir aquí la visualización o registro de datos
+            % Por ahora, simplemente imprimimos el estado actual para depuración
+            currentState = obj.quadcopter.getState();
+            disp('Estado actual del Quadcopter:');
+            disp(['Posición: ', num2str(currentState.position')]); % Transpone si es necesario
+            disp(['Velocidad: ', num2str(currentState.velocity')]); % Transpone si es necesario
+            disp(['Orientación (Matriz): ', mat2str(currentState.orientation)]);
+            disp(['Velocidad angular: ', num2str(currentState.angularVelocity')]); % Transpone si es necesario
+        end
+
+    end
+end

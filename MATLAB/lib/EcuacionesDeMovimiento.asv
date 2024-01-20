@@ -1,0 +1,37 @@
+classdef EcuacionesDeMovimiento
+    
+    methods
+        
+
+        function EvalEOM(obj)
+            % EvalEOM: Evalúa las ecuaciones del movimiento del cuadricóptero.
+            % Calcula la dinámica de traslación y rotación basada en las ecuaciones de movimiento.
+
+            % Dinámica de traslación (Ecuación 2)
+            % Calcula la aceleración lineal del cuadricóptero. La fuerza de la gravedad actúa en la dirección negativa de z,
+            % y la fuerza del rotor actúa en la dirección de la matriz de actitud R.
+            % fd se asume que está incluido en la fuerza del rotor obj.f
+            gravityForce = -obj.m * obj.g * [0; 0; 1];
+            rotorForce = obj.f * (obj.R * [0; 0; 1]);
+            translationalAcceleration = (gravityForce + rotorForce) / obj.m;
+
+            % Actualizar la velocidad y la posición del cuadricóptero
+            obj.dotS(1:3) = obj.v;                 % Velocidad actual
+            obj.dotS(4:6) = translationalAcceleration; % Aceleración calculada
+
+            % Dinámica de orientación (Ecuación 3)
+            % Calcula la tasa de cambio de la matriz de actitud R usando la matriz antisimétrica de la velocidad angular omega.
+            obj.dotR = obj.R * wedgeMap(obj.omega);
+
+            % Dinámica del momento angular (Ecuación 4)
+            % Calcula la aceleración angular del cuadricóptero. Incluye el efecto giroscópico y los momentos aplicados.
+            % τd se asume que está incluido en el momento obj.tau
+            gyroscopicEffect = cross(obj.omega, (obj.M * obj.omega));
+            angularAcceleration = obj.M \ (gyroscopicEffect + obj.tau);
+
+            % Actualizar la velocidad angular del cuadricóptero
+            obj.dotS(7:9) = angularAcceleration; % Aceleración angular calculada
+        end
+
+    end
+end

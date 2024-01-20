@@ -1,0 +1,47 @@
+@startuml
+
+class Quadcopter {
+    - position: Vector
+    - velocity: Vector
+    - orientation: Matrix
+    - angularVelocity: Vector
+    - mass: Double
+    - inertialMatrix: Matrix
+    - gyro: Vector
+    - controlInputs: Struct
+    - time: Double
+    + setState(newState: Struct): Void
+    + getState(): Struct
+    + getPhysicalProperties(): (Double, Vector, Matrix)
+}
+
+class EstadoQuadcopter {
+    - quadcopter: Quadcopter
+    - ecuacionesMovimiento: EcuacionesDeMovimiento
+    + updateState(dt: Double): Void
+    + getState(): Struct
+}
+
+class EcuacionesDeMovimiento {
+    - g: Double = 0
+    + evalEOM(state: Struct, m: Double, M: Matrix): (Vector, Vector, Vector)
+    + wedge(omega: Vector): Matrix
+}
+
+class Simulador {
+    - quadcopter: Quadcopter
+    - estadoQuadcopter: EstadoQuadcopter
+    - simulationTime: Double
+    - dt: Double
+    - currentTime: Double
+    + start(): Void
+    + step(): Void
+}
+
+Quadcopter "1" -- "1" EstadoQuadcopter
+EstadoQuadcopter "1" -- "1" EcuacionesDeMovimiento
+Simulador "1" -- "1" EstadoQuadcopter
+Simulador "1" -- "1" Quadcopter
+
+@enduml
+

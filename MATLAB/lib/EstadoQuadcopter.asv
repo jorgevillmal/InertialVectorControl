@@ -1,0 +1,69 @@
+classdef EstadoQuadcopter < handle
+    properties
+        quadcopter           % Instancia de Quadcopter para acceder y modificar su estado.
+        ecuacionesMovimiento % Instancia de EcuacionesDeMovimiento para calcular la dinámica.
+    end
+
+    methods
+        function obj = EstadoQuadcopter(quadcopter, ecuacionesMovimiento)
+            % Constructor que inicializa el EstadoQuadcopter con las instancias de Quadcopter
+            % y EcuacionesDeMovimiento proporcionadas.
+            if nargin ~= 2
+                error('EstadoQuadcopter requires a Quadcopter instance and EcuacionesDeMovimiento instance.');
+            end
+            obj.quadcopter = quadcopter;
+            obj.ecuacionesMovimiento = ecuacionesMovimiento;
+        end
+
+        function updateState(obj, dt)
+            % Actualiza el estado del Quadcopter basándose en las derivadas del estado.
+            disp('EstadoQuadcopter.updateState: Obteniendo el estado actual.');
+            state = obj.quadcopter.getState();
+            % Aquí podrías también validar si controlInputs debe afectar la actualización.
+
+            % Calcular las derivadas del estado usando EcuacionesDeMovimiento.
+            [dotPos, dotVel, dotOmega] = obj.ecuacionesMovimiento.evalEOM(state, obj.quadcopter.mass, obj.quadcopter.inertialMatrix);
+            disp(['dotPos: ', num2str(dotPos')]);
+            disp(['dotVel: ', num2str(dotVel')]);
+            disp(['dotOmega: ', num2str(dotOmega')]);
+
+
+            % Integrar las derivadas para obtener el nuevo estado.
+            newState.position = state.position + dotPos * dt;
+            newState.velocity = state.velocity + dotVel * dt;
+            disp(['New State Position: ', num2str(newState.position')]);
+            disp(['New State Velocity: ', num2str(newState.velocity')]);
+
+
+            % Actualizar la orientación usando la matriz de rotación.
+            R = state.orientation; % Matriz de rotación actual
+            omegaHat = obj.ecuacionesMovimiento.wedge(dotOmega); % Convertir la velocidad angular en una matriz antisimétrica
+            dR = R * omegaHat; % Derivada de la matriz de rotación
+            newState.orientation = R + dR * dt; % Actualización de Euler simplificada para la matriz de rotación
+
+            % Normalizar la nueva matriz de rotación para corregir errores numéricos
+            [U, ~, V] = svd(newState.orientation);
+            newState.orientation = U * V';
+
+            newState.angularVelocity = state.angularVelocity + dotOmega * dt;
+
+            % Actualizar la propiedad time del Quadcopter
+            obj.quadcopter.time = obj.quadcopter.time + dt;
+
+            % Actualizar el estado del Quadcopter con los nuevos valores
+            obj.quadcopter.setState(newState);
+
+            disp('EstadoQuadcopter.updateState: Estado actualizado.');
+            disp(['Nueva posición: ', num2str(newState.position')]);
+            disp(['Nueva velocidad: ', num2str(newState.velocity')]);
+            disp(['Nueva orientación (Matriz): ', mat2str(newState.orientation)]);
+            disp(['Nueva velocidad angular: ', num2str(newState.angularVelocity')]);
+            disp(['Tiempo actualizado: ', num2str(obj.quadcopter.time)]);
+        end
+
+        function state = getState(obj)
+            % Devuelve el estado actual del Quadcopter.
+            state = obj.quadcopter.getState();
+        end
+    end
+end
